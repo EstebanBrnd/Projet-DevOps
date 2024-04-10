@@ -9,11 +9,8 @@ import java.io.IOException;
 
 import java.lang.NumberFormatException;
 import java.lang.Integer;
-import java.lang.Double;
 import java.lang.String;
 import java.lang.Class;
-
-import projetdevops.Couple;
 
 public class Dataframe {
     ArrayList<Couple<String,Class>> columnsNamesAndClasses;
@@ -31,25 +28,28 @@ public class Dataframe {
         }
         for (int i = 1; i < list.size(); i++){
             String[] columns = list.get(i).split(",");
-            //System.out.println("Colonne : ");
             int j = 0;
             for (String column : columns){
-                // System.out.println("J : " + j + " Column : " + column);
-                data.get(j).add(column);
+                if (columnsNamesAndClasses.get(j).getSecond() == Integer.class){
+                    data.get(j).add(Integer.parseInt(column));
+                } else if (columnsNamesAndClasses.get(j).getSecond() == Float.class){
+                    data.get(j).add(Float.parseFloat(column));
+                } else {
+                    data.get(j).add(column);
+                }
                 j++;
             }
         }
-        //afficheData();
     }
 
-    public void afficheData(){
+    /*public void afficheData(){
         for (int i = 0; i < data.size(); i++){
-            System.out.println("Colonne " + i + " : ");
+            System.out.println("Colonne " + i + " : " + columnsNamesAndClasses.get(i).getFirst() + " de type " + columnsNamesAndClasses.get(i).getSecond());
             for (int j = 0; j < data.get(i).size(); j++){
                 System.out.println("Elt " + j + " : " + data.get(i).get(j));
             }
         }
-    }
+    }*/
 
     public ArrayList<String> extractFile(String filename){
         try
@@ -84,8 +84,8 @@ public class Dataframe {
                 res.add(new Couple<String,Class>(columns_name[i], Integer.class));
             } catch (NumberFormatException e){
                 try {
-                    Double.parseDouble(column);
-                    res.add(new Couple<String,Class>(columns_name[i], Double.class));
+                    Float.parseFloat(column);
+                    res.add(new Couple<String,Class>(String.valueOf(i), Float.class));
                 } catch (NumberFormatException e2){
                     res.add(new Couple<String,Class>(columns_name[i], String.class));
                 }
@@ -99,9 +99,9 @@ public class Dataframe {
     public Dataframe(ArrayList<Class> types){
         columnsNamesAndClasses = new ArrayList<>();
         data = new ArrayList<>();
-        Integer i = 0;
+        int i = 0;
         for (Class type : types){
-            columnsNamesAndClasses.add(new Couple<String,Class>(i.toString(),type));
+            columnsNamesAndClasses.add(new Couple<String,Class>(String.valueOf(i),type));
             // Ajoute une arraylist de type type à data
             data.add(new ArrayList<Class>());
             i++;
