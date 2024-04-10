@@ -41,14 +41,14 @@ public class Dataframe {
         }
     }
 
-    /*public void afficheData(){
+    public void afficheData(){
         for (int i = 0; i < data.size(); i++){
             System.out.println("Colonne " + i + " : " + columnsNamesAndClasses.get(i).getFirst() + " de type " + columnsNamesAndClasses.get(i).getSecond());
             for (int j = 0; j < data.get(i).size(); j++){
                 System.out.println("Elt " + j + " : " + data.get(i).get(j));
             }
         }
-    }*/
+    }
 
     public ArrayList<String> extractFile(String filename){
         try
@@ -104,5 +104,29 @@ public class Dataframe {
             data.add(new ArrayList<Class>());
             i++;
         }
+    }
+
+    public Dataframe iloc(int i){
+        ArrayList<Class> types = new ArrayList<>();
+        types.add(columnsNamesAndClasses.get(i).getSecond());
+        Dataframe iloc = new Dataframe(types);
+        for (int j = 0; j < data.get(i).size(); j++){
+            iloc.data.get(0).add(data.get(i).get(j));
+        }
+        return iloc;
+    }
+
+    public boolean equals(Dataframe obj) {
+        if(this.data.size() != obj.data.size()){
+            return false;
+        }
+        for (int i = 0; i < this.data.size(); i++){
+            for (int j = 0; j < this.data.get(i).size(); j++){
+                if(!this.data.get(i).get(j).equals(obj.data.get(i).get(j))){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }

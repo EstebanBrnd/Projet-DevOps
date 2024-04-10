@@ -1,6 +1,7 @@
 package projetdevops;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -46,6 +47,7 @@ public class DataframeTest {
                 assertEquals(expected.data.get(i).get(j),actual.data.get(i).get(j));
             }
         }
+        assertTrue(expected.equals(actual));
     }
 
     @Test
@@ -61,4 +63,59 @@ public class DataframeTest {
         thrown.expect(IllegalArgumentException.class);
         Dataframe test = new Dataframe("");
     }
+
+    @Test
+    public void test_select_rows_with_integer(){
+        ArrayList<Class> types = new ArrayList<>();
+        types.add(Integer.class);
+        Dataframe expected = new Dataframe(types);
+        expected.data.get(0).add(2);
+        expected.data.get(0).add(3);
+        expected.data.get(0).add(4);
+
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe iloc = test.iloc(1);
+        for (int i = 0; i < expected.data.size(); i++){
+            for (int j = 0; j < expected.data.get(i).size(); j++){
+                assertEquals(expected.data.get(i).get(j),iloc.data.get(i).get(j));
+            }
+        }
+        assertTrue(expected.equals(iloc));
+    }
+
+    @Test
+    public void test_select_rows_with_integer_list(){
+        assertTrue(true);
+    }
+
+    @Test
+    public void test_select_rows_with_slice_object(){
+        assertTrue(true);
+    }
+
+    @Test
+    public void test_select_rows_with_boolean_mask(){
+        assertTrue(true);
+    }
+
+    @Test
+    public void test_select_both_with_integer(){
+        assertTrue(true);
+    }
+
+    @Test
+    public void test_select_both_with_integer_list(){
+        assertTrue(true);
+    }
+
+    @Test
+    public void test_select_both_with_slice_object(){
+        assertTrue(true);
+    }
+
+    @Test
+    public void test_select_both_with_boolean_mask(){
+        assertTrue(true);
+    }
+
 }
