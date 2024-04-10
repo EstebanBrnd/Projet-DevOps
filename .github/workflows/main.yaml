@@ -1,6 +1,6 @@
-name : Run tests before merging
+name: Run tests before merging
 
-on : 
+on: 
   pull_request:
     branches:
       - main
@@ -8,7 +8,7 @@ on :
 
 
 jobs:
-  tests:
+  tests-check:
     name: Tests check
     runs-on: ubuntu-latest
 
