@@ -116,6 +116,96 @@ public class Dataframe {
         return iloc;
     }
 
+    public Dataframe iloc(int[] integerArray){
+        ArrayList<Class> types = new ArrayList<>();
+        for (int i : integerArray){
+            System.out.println(i);
+            types.add(columnsNamesAndClasses.get(i).getSecond());
+        }
+        Dataframe iloc = new Dataframe(types);
+        int index = 0;
+        for (int i : integerArray){
+            for (int j = 0; j < data.get(i).size(); j++){
+                iloc.data.get(index).add(data.get(i).get(j));
+            }
+            index ++;
+        }
+        return iloc;
+    }
+
+    public Dataframe iloc(Boolean[] booleans) {
+        if(booleans.length > columnsNamesAndClasses.size()){
+            throw new IllegalArgumentException("La taille du tableau de booleans doit être inférieure ou égale à la taille du dataframe");
+        }
+
+        ArrayList<Class> types = new ArrayList<>();
+        for (int i = 0; i < booleans.length; i++){
+            if (booleans[i]){
+                types.add(columnsNamesAndClasses.get(i).getSecond());
+            }
+        }
+        Dataframe iloc = new Dataframe(types);
+        int index = 0;
+        for (int i = 0; i < booleans.length; i++){
+            if (booleans[i]){
+                for (int j = 0; j < data.get(i).size(); j++){
+                    iloc.data.get(index).add(data.get(i).get(j));
+                }
+                index ++;
+            }
+        }
+        return iloc;
+    }
+
+    public Dataframe iloc(int i, int j){
+        ArrayList<Class> types = new ArrayList<>();
+        types.add(columnsNamesAndClasses.get(i).getSecond());
+        Dataframe iloc = new Dataframe(types);
+        iloc.data.get(0).add(data.get(i).get(j));
+        return iloc;
+    }
+
+    public Dataframe iloc(int[] iS, int[] jS) {
+        ArrayList<Class> types = new ArrayList<>();
+        for (int i : iS){
+            types.add(columnsNamesAndClasses.get(i).getSecond());
+        }
+        Dataframe iloc = new Dataframe(types);
+        int index = 0;
+        for (int i : iS){
+            for (int j : jS){
+                iloc.data.get(index).add(data.get(i).get(j));
+            }
+            index ++;
+        }
+        return iloc;
+    }
+
+    public Dataframe iloc(Boolean[] iBooleans, Boolean[] jBooleans) {
+        if(iBooleans.length > columnsNamesAndClasses.size() || jBooleans.length > data.get(0).size()){
+            throw new IllegalArgumentException("La taille des tableaux de booleans doit être inférieure ou égale à la taille du dataframe");
+        }
+
+        ArrayList<Class> types = new ArrayList<>();
+        for (int i = 0; i < iBooleans.length; i++){
+            if (iBooleans[i]){
+                types.add(columnsNamesAndClasses.get(i).getSecond());
+            }
+        }
+        Dataframe iloc = new Dataframe(types);
+        int index = 0;
+        for (int i = 0; i < iBooleans.length; i++){
+            if (iBooleans[i]){
+                for (int j = 0; j < data.get(i).size(); j++){
+                    if(jBooleans[j])
+                        iloc.data.get(index).add(data.get(i).get(j));
+                }
+                index ++;
+            }
+        }
+        return iloc;
+    }
+
     public boolean equals(Dataframe obj) {
         if(this.data.size() != obj.data.size()){
             return false;
@@ -129,4 +219,5 @@ public class Dataframe {
         }
         return true;
     }
+
 }

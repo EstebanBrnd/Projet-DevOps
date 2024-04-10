@@ -85,37 +85,129 @@ public class DataframeTest {
 
     @Test
     public void test_select_rows_with_integer_list(){
-        assertTrue(true);
+        ArrayList<Class> types = new ArrayList<>();
+        types.add(Integer.class);
+        types.add(Double.class);
+        Dataframe expected = new Dataframe(types);
+        expected.data.get(0).add(2);
+        expected.data.get(0).add(3);
+        expected.data.get(0).add(4);
+        expected.data.get(1).add(2f);
+        expected.data.get(1).add(4f);
+        expected.data.get(1).add(8f);
+
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe iloc = test.iloc(new int[]{1, 3});
+        for (int i = 0; i < expected.data.size(); i++){
+            for (int j = 0; j < expected.data.get(i).size(); j++){
+                assertEquals(expected.data.get(i).get(j),iloc.data.get(i).get(j));
+            }
+        }
+        assertTrue(expected.equals(iloc));
     }
 
     @Test
-    public void test_select_rows_with_slice_object(){
-        assertTrue(true);
+    public void test_select_rows_with_empty_integer_list(){
+        ArrayList<Class> types = new ArrayList<>();
+        Dataframe expected = new Dataframe(types);
+
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe iloc = test.iloc(new int[]{});
+        for (int i = 0; i < expected.data.size(); i++){
+            for (int j = 0; j < expected.data.get(i).size(); j++){
+                assertEquals(expected.data.get(i).get(j),iloc.data.get(i).get(j));
+            }
+        }
+        assertTrue(expected.equals(iloc));
     }
 
     @Test
     public void test_select_rows_with_boolean_mask(){
-        assertTrue(true);
+        ArrayList<Class> types = new ArrayList<>();
+        types.add(Integer.class);
+        types.add(Double.class);
+        Dataframe expected = new Dataframe(types);
+        expected.data.get(0).add(2);
+        expected.data.get(0).add(3);
+        expected.data.get(0).add(4);
+        expected.data.get(1).add(2f);
+        expected.data.get(1).add(4f);
+        expected.data.get(1).add(8f);
+
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe iloc = test.iloc(new Boolean[]{false, true,false,true,false});
+        for (int i = 0; i < expected.data.size(); i++){
+            for (int j = 0; j < expected.data.get(i).size(); j++){
+                assertEquals(expected.data.get(i).get(j),iloc.data.get(i).get(j));
+            }
+        }
+        assertTrue(expected.equals(iloc));
+    }
+
+    @Test
+    public void test_select_rows_with_boolean_mask_of_too_much_size(){
+        thrown.expect(IllegalArgumentException.class);
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe iloc = test.iloc(new Boolean[]{false, true,false,true,false,true,false,true});
     }
 
     @Test
     public void test_select_both_with_integer(){
-        assertTrue(true);
+        ArrayList<Class> types = new ArrayList<>();
+        types.add(Double.class);
+        Dataframe expected = new Dataframe(types);
+        expected.data.get(0).add(4f);
+
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe iloc = test.iloc(3, 1);
+        for (int i = 0; i < expected.data.size(); i++){
+            for (int j = 0; j < expected.data.get(i).size(); j++){
+                assertEquals(expected.data.get(i).get(j),iloc.data.get(i).get(j));
+            }
+        }
+        assertTrue(expected.equals(iloc));
     }
 
     @Test
     public void test_select_both_with_integer_list(){
-        assertTrue(true);
-    }
+        ArrayList<Class> types = new ArrayList<>();
+        types.add(Integer.class);
+        types.add(Double.class);
+        Dataframe expected = new Dataframe(types);
+        expected.data.get(0).add(3);
+        expected.data.get(0).add(4);
+        expected.data.get(1).add(4f);
+        expected.data.get(1).add(8f);
 
-    @Test
-    public void test_select_both_with_slice_object(){
-        assertTrue(true);
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe iloc = test.iloc(new int[]{1, 3}, new int[]{1, 2});
+        for (int i = 0; i < expected.data.size(); i++){
+            for (int j = 0; j < expected.data.get(i).size(); j++){
+                assertEquals(expected.data.get(i).get(j),iloc.data.get(i).get(j));
+            }
+        }
+        assertTrue(expected.equals(iloc));
     }
 
     @Test
     public void test_select_both_with_boolean_mask(){
-        assertTrue(true);
+        ArrayList<Class> types = new ArrayList<>();
+        types.add(Integer.class);
+        types.add(Double.class);
+        Dataframe expected = new Dataframe(types);
+        expected.data.get(0).add(3);
+        expected.data.get(0).add(4);
+        expected.data.get(1).add(4f);
+        expected.data.get(1).add(8f);
+
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe iloc = test.iloc(new Boolean[]{false, true,false,true,false}, new Boolean[]{false, true,true});
+        for (int i = 0; i < expected.data.size(); i++){
+            for (int j = 0; j < expected.data.get(i).size(); j++){
+                assertEquals(expected.data.get(i).get(j),iloc.data.get(i).get(j));
+            }
+        }
+        assertTrue(expected.equals(iloc));
     }
 
 }
