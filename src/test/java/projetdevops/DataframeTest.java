@@ -19,5 +19,9 @@ public class DataframeTest {
             assertEquals(test.data.size(),2);
             assertEquals(test.data.get(0).size(),0);
             assertEquals(test.data.get(1).size(),0);
+            assertEquals(test.columnsNamesAndClasses.get(0).getFirst(),"0");
+            assertEquals(test.columnsNamesAndClasses.get(0).getSecond(),Integer.class);
+            assertEquals(test.columnsNamesAndClasses.get(1).getFirst(),"1");
+            assertEquals(test.columnsNamesAndClasses.get(1).getSecond(),String.class);
         }
 }
