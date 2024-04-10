@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class DataframeCsvTest {
     
     @Test
-    public void test_init_dataframe(){
+    public void test_init_dataframe_csv(){
         Dataframe test = new Dataframe("src/test/resources/data.csv");
         assertEquals(test.columnsNamesAndClasses.size(),4);
         assertEquals(test.data.size(),4);

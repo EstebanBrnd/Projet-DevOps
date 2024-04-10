@@ -75,17 +75,17 @@ public class Dataframe {
     public ArrayList<Couple<String,Class>> typeInference (String line){
         String[] columns = line.split(",");
         ArrayList<Couple<String,Class>> res = new ArrayList<Couple<String,Class>>();
-        Integer i = 0;
+        int i = 0;
         for (String column : columns){
             try {
                 Integer.parseInt(column);
-                res.add(new Couple<String,Class>(Integer.toString(i), Integer.class));
+                res.add(new Couple<String,Class>(String.valueOf(i), Integer.class));
             } catch (NumberFormatException e){
                 try {
                     Double.parseDouble(column);
-                    res.add(new Couple<String,Class>(Integer.toString(i), Double.class));
+                    res.add(new Couple<String,Class>(String.valueOf(i), Double.class));
                 } catch (NumberFormatException e2){
-                    res.add(new Couple<String,Class>(Integer.toString(i), String.class));
+                    res.add(new Couple<String,Class>(String.valueOf(i), String.class));
                 }
             }
             i++;
