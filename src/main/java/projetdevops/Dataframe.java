@@ -41,14 +41,35 @@ public class Dataframe {
         }
     }
 
-    /*public void afficheData(){
+    public void afficheData(){
         for (int i = 0; i < data.size(); i++){
             System.out.println("Colonne " + i + " : " + columnsNamesAndClasses.get(i).getFirst() + " de type " + columnsNamesAndClasses.get(i).getSecond());
             for (int j = 0; j < data.get(i).size(); j++){
                 System.out.println("Elt " + j + " : " + data.get(i).get(j));
             }
         }
-    }*/
+    }
+
+    public void afficherPremieresLignes() {
+        int rowCount = 1;
+        for (int i = 0; i < rowCount; i++) {
+            System.out.println("Colonne " + i + " : " + columnsNamesAndClasses.get(i).getFirst() + " de type " + columnsNamesAndClasses.get(i).getSecond());
+            for (int j = 0; j < data.size(); j++) {
+                System.out.println("Elt " + j + " : " + data.get(j).get(i));
+            }
+        }
+    }
+
+    public void afficherDernieresLignes() {
+        int rowCount = 1;
+        int startingIndex = data.get(0).size() - rowCount; // Calculate the starting index
+        for (int i = startingIndex; i < data.get(0).size(); i++) {
+            System.out.println("Colonne " + i + " : " + columnsNamesAndClasses.get(i).getFirst() + " de type " + columnsNamesAndClasses.get(i).getSecond());
+            for (int j = 0; j < data.size(); j++) {
+                System.out.println("Elt " + j + " : " + data.get(j).get(i));
+            }
+        }
+    }
 
     public ArrayList<String> extractFile(String filename){
         try
