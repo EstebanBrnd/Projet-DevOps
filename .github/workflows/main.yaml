@@ -1,0 +1,29 @@
+name : Run tests before merging
+
+on : 
+  pull_request:
+    branches:
+      - main
+      - dev
+
+
+jobs:
+  tests:
+    name: Tests check
+    runs-on: ubuntu-latest
+
+  steps:
+    - name: Checkout repo
+      uses: actions/checkout@v2
+
+    - name: Java setup
+      uses: actions/setup-java@v2
+      with:
+        java-version: '17'
+        distribution: 'adopt'
+
+    - name: Execution des tests
+      run: mvn test
+
+  
+
