@@ -10,32 +10,22 @@ import java.util.ArrayList;
 
 public class DataframeTest {
     
-
-    
-        @Test
-        public void test_init_dataframe_tableau(){
-            ArrayList<Couple<String,Class>> types = new ArrayList<>();
-            types.add(new Couple<String,Class>("test_label1",Integer.class));
-            types.add(new Couple<String,Class>("test_label2",String.class));
-            Dataframe test = new Dataframe(types);
-            assertEquals(test.columnsNamesAndClasses.size(),2);
-            assertEquals(test.data.size(),2);
-            assertEquals(test.data.get(0).size(),0);
-            assertEquals(test.data.get(1).size(),0);
-            assertEquals(test.columnsNamesAndClasses.get(0).getFirst(),"test_label1");
-            assertEquals(test.columnsNamesAndClasses.get(0).getSecond(),Integer.class);
-            assertEquals(test.columnsNamesAndClasses.get(1).getFirst(),"test_label2");
-            assertEquals(test.columnsNamesAndClasses.get(1).getSecond(),String.class);
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void test_init_dataframe_csv(){
-        Dataframe test = new Dataframe("src/test/resources/data.csv");
+    public void test_init_dataframe_tableau(){
+        Dataframe test = DataframeTestMother.DataframeTestMother();
         assertEquals(test.columnsNamesAndClasses.size(),5);
         assertEquals(test.data.size(),test.columnsNamesAndClasses.size());
         assertEquals(test.data.get(0).size(),3);
         assertEquals(test.data.get(1).size(),3);
+        assertEquals(test.columnsNamesAndClasses.get(0).getFirst(),"0");
+        assertEquals(test.columnsNamesAndClasses.get(0).getSecond(),String.class);
+        assertEquals(test.columnsNamesAndClasses.get(1).getFirst(),"1");
+        assertEquals(test.columnsNamesAndClasses.get(1).getSecond(),Integer.class);
+        assertEquals(test.columnsNamesAndClasses.get(3).getFirst(),"3");
+        assertEquals(test.columnsNamesAndClasses.get(3).getSecond(),Double.class);
     }
 
     @Test
@@ -61,5 +51,51 @@ public class DataframeTest {
     public void test_dataframe_csv_empty(){
         thrown.expect(IllegalArgumentException.class);
         Dataframe test = new Dataframe("");
+    }
+
+    @Test
+    public void test_init_dataframe_csv(){
+        Dataframe test = new Dataframe("src/test/resources/data2.csv");
+        assertEquals(test.columnsNamesAndClasses.size(),4);
+        assertEquals(test.data.size(),4);
+        assertEquals(test.data.get(0).size(),4);
+        assertEquals(test.data.get(1).size(),4);
+    }
+
+    @Test
+    public void test_init_dataframe_csv2(){
+        Dataframe test = new Dataframe("src/test/resources/data2.csv");
+        assertEquals(test.columnsNamesAndClasses.get(0).getFirst(),"Nom");
+        assertEquals(test.columnsNamesAndClasses.get(0).getSecond(),String.class);
+        assertEquals(test.columnsNamesAndClasses.get(1).getFirst(),"Prenom");
+        assertEquals(test.columnsNamesAndClasses.get(1).getSecond(),String.class);
+        assertEquals(test.columnsNamesAndClasses.get(2).getFirst(),"Age");
+        assertEquals(test.columnsNamesAndClasses.get(2).getSecond(),Integer.class);
+        assertEquals(test.columnsNamesAndClasses.get(3).getFirst(),"Avenir");
+        assertEquals(test.columnsNamesAndClasses.get(3).getSecond(),String.class);
+    }
+
+    @Test
+    public void test_init_dataframe_csv3(){
+        Dataframe test = new Dataframe("src/test/resources/data2.csv");
+        assertEquals(test.data.get(0).get(0),"Quintela");
+        assertEquals(test.data.get(1).get(0),"David");
+        assertEquals(test.data.get(2).get(0),42);
+        assertEquals(test.data.get(3).get(0),"Retraite");
+
+        assertEquals(test.data.get(0).get(1),"Bouvier");
+        assertEquals(test.data.get(1).get(1),"Lilou");
+        assertEquals(test.data.get(2).get(1),21);
+        assertEquals(test.data.get(3).get(1),"Aucun");
+
+        assertEquals(test.data.get(0).get(2),"Matyasik");
+        assertEquals(test.data.get(1).get(2),"Lukasz");
+        assertEquals(test.data.get(2).get(2),22);
+        assertEquals(test.data.get(3).get(2),"President");
+
+        assertEquals(test.data.get(0).get(3),"Barneaud");
+        assertEquals(test.data.get(1).get(3),"Esteban");
+        assertEquals(test.data.get(2).get(3),21);
+        assertEquals(test.data.get(3).get(3),"Agent secret");
     }
 }
