@@ -10,23 +10,24 @@ import java.util.ArrayList;
 
 public class DataframeTest {
     
+
+    
+        @Test
+        public void test_init_dataframe_tableau(){
+            ArrayList<Couple<String,Class>> types = new ArrayList<>();
+            types.add(new Couple<String,Class>("test_label1",Integer.class));
+            types.add(new Couple<String,Class>("test_label2",String.class));
+            Dataframe test = new Dataframe(types);
+            assertEquals(test.columnsNamesAndClasses.size(),2);
+            assertEquals(test.data.size(),2);
+            assertEquals(test.data.get(0).size(),0);
+            assertEquals(test.data.get(1).size(),0);
+            assertEquals(test.columnsNamesAndClasses.get(0).getFirst(),"test_label1");
+            assertEquals(test.columnsNamesAndClasses.get(0).getSecond(),Integer.class);
+            assertEquals(test.columnsNamesAndClasses.get(1).getFirst(),"test_label2");
+            assertEquals(test.columnsNamesAndClasses.get(1).getSecond(),String.class);
     @Rule
     public ExpectedException thrown = ExpectedException.none();
-
-    @Test
-    public void test_init_dataframe_tableau(){
-        Dataframe test = DataframeTestMother.DataframeTestMother();
-        assertEquals(test.columnsNamesAndClasses.size(),5);
-        assertEquals(test.data.size(),test.columnsNamesAndClasses.size());
-        assertEquals(test.data.get(0).size(),3);
-        assertEquals(test.data.get(1).size(),3);
-        assertEquals(test.columnsNamesAndClasses.get(0).getFirst(),"0");
-        assertEquals(test.columnsNamesAndClasses.get(0).getSecond(),String.class);
-        assertEquals(test.columnsNamesAndClasses.get(1).getFirst(),"1");
-        assertEquals(test.columnsNamesAndClasses.get(1).getSecond(),Integer.class);
-        assertEquals(test.columnsNamesAndClasses.get(3).getFirst(),"3");
-        assertEquals(test.columnsNamesAndClasses.get(3).getSecond(),Double.class);
-    }
 
     @Test
     public void test_init_dataframe_csv(){
