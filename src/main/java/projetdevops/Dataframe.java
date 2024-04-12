@@ -41,34 +41,38 @@ public class Dataframe {
         }
     }
 
-    public void afficheData(){
-        for (int i = 0; i < data.size(); i++){
-            System.out.println("Colonne " + i + " : " + columnsNamesAndClasses.get(i).getFirst() + " de type " + columnsNamesAndClasses.get(i).getSecond());
-            for (int j = 0; j < data.get(i).size(); j++){
-                System.out.println("Elt " + j + " : " + data.get(i).get(j));
+    public String afficheData() {
+        StringBuilder output = new StringBuilder();
+        for (int i = 0; i < data.size(); i++) {
+            output.append("Colonne ").append(i).append(" : ").append(columnsNamesAndClasses.get(i).getFirst()).append(" de type ").append(columnsNamesAndClasses.get(i).getSecond()).append("\n");
+            for (int j = 0; j < data.get(i).size(); j++) {
+                output.append("Elt ").append(j).append(" : ").append(data.get(i).get(j)).append("\n");
             }
         }
+        return output.toString();
     }
 
-    public void afficherPremieresLignes() {
-        int rowCount = 1;
+    public String afficherPremieresLignes(int rowCount) {
+        StringBuilder output = new StringBuilder();
         for (int i = 0; i < rowCount; i++) {
-            System.out.println("Colonne " + i + " : " + columnsNamesAndClasses.get(i).getFirst() + " de type " + columnsNamesAndClasses.get(i).getSecond());
+            output.append("Colonne ").append(i).append(" : ").append(columnsNamesAndClasses.get(i).getFirst()).append(" de type ").append(columnsNamesAndClasses.get(i).getSecond()).append("\n");
             for (int j = 0; j < data.size(); j++) {
-                System.out.println("Elt " + j + " : " + data.get(j).get(i));
+                output.append("Elt ").append(j).append(" : ").append(data.get(j).get(i)).append("\n");
             }
         }
+        return output.toString();
     }
 
-    public void afficherDernieresLignes() {
-        int rowCount = 1;
+    public String afficherDernieresLignes(int rowCount) {
         int startingIndex = data.get(0).size() - rowCount; // Calculate the starting index
+        StringBuilder output = new StringBuilder();
         for (int i = startingIndex; i < data.get(0).size(); i++) {
-            System.out.println("Colonne " + i + " : " + columnsNamesAndClasses.get(i).getFirst() + " de type " + columnsNamesAndClasses.get(i).getSecond());
+            output.append("Colonne ").append(i).append(" : ").append(columnsNamesAndClasses.get(i).getFirst()).append(" de type ").append(columnsNamesAndClasses.get(i).getSecond()).append("\n");
             for (int j = 0; j < data.size(); j++) {
-                System.out.println("Elt " + j + " : " + data.get(j).get(i));
+                output.append("Elt ").append(j).append(" : ").append(data.get(j).get(i)).append("\n");
             }
         }
+        return output.toString();
     }
 
     public ArrayList<String> extractFile(String filename){

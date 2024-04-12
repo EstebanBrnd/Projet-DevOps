@@ -1,5 +1,6 @@
 package projetdevops;
-
+import java.io.FileWriter;
+import java.io.IOException;
 import org.junit.Test;
 
 
@@ -12,7 +13,8 @@ public class PrintDataFrameTest {
         System.out.println();
         System.out.println("Tout Lignes");
         System.out.println();
-        test.afficheData();
+        String output = test.afficheData(); // Capture the output
+        saveToCsv(output, "all_lines.csv");
     }
     @Test
     public void firstLines() {
@@ -20,7 +22,9 @@ public class PrintDataFrameTest {
         System.out.println();
         System.out.println("First Lignes");
         System.out.println();
-        test.afficherPremieresLignes();
+        int rowCount = 1;
+        String output = test.afficherPremieresLignes(rowCount); // Capture the output for the first 5 rows
+        saveToCsv(output, "first_lines.csv");
     }
     @Test
     public void lastLines() {
@@ -28,7 +32,20 @@ public class PrintDataFrameTest {
         System.out.println();
         System.out.println("Dernieres Lignes");
         System.out.println();
-        test.afficherDernieresLignes();
+        int rowCount = 1;
+        String output = test.afficherDernieresLignes(rowCount); // Capture the output for the last 5 rows
+        saveToCsv(output, "last_lines.csv");
+    }
+
+    private void saveToCsv(String data, String filename) {
+        try {
+            FileWriter writer = new FileWriter(filename);
+            writer.write(data);
+            writer.close();
+            System.out.println("Output saved to " + filename);
+        } catch (IOException e) {
+            System.err.println("Error writing to CSV file: " + e.getMessage());
+        }
     }
 }
 
