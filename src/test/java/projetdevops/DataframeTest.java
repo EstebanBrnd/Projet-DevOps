@@ -91,7 +91,7 @@ public class DataframeTest {
         assertEquals(test.data.get(0).get(2),"Matyasik");
         assertEquals(test.data.get(1).get(2),"Lukasz");
         assertEquals(test.data.get(2).get(2),22);
-        assertEquals(test.data.get(3).get(2),"Président");
+        assertEquals(test.data.get(3).get(2),"President");
 
         assertEquals(test.data.get(0).get(3),"Barneaud");
         assertEquals(test.data.get(1).get(3),"Esteban");
