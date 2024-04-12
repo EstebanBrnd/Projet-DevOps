@@ -17,6 +17,12 @@ public class Dataframe {
 
     ArrayList<ArrayList> data;
 
+    public Dataframe(ArrayList<Couple<String,Class>> types){
+        columnsNamesAndClasses = new ArrayList<>();
+        data = new ArrayList<>();
+        for (Couple<String,Class> couple : types){
+            columnsNamesAndClasses.add(new Couple<String,Class>(couple.getFirst(),couple.getSecond()));
+
     public Dataframe(String filename){
         ArrayList<String> list = extractFile(filename);
 
@@ -96,15 +102,4 @@ public class Dataframe {
     }
     
 
-    public Dataframe(ArrayList<Class> types){
-        columnsNamesAndClasses = new ArrayList<>();
-        data = new ArrayList<>();
-        int i = 0;
-        for (Class type : types){
-            columnsNamesAndClasses.add(new Couple<String,Class>(String.valueOf(i),type));
-            // Ajoute une arraylist de type type à data
-            data.add(new ArrayList<Class>());
-            i++;
-        }
-    }
 }
