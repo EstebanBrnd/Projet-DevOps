@@ -24,5 +24,10 @@ jobs:
       - name: Execution des tests
         run: mvn test
 
+      - name: Generate JaCoCo report
+        run: mvn jacoco:report
+
+      - name: Check code coverage
+        run: mvn jacoco:check
   
 
