@@ -20,8 +20,14 @@ public class Dataframe {
     public Dataframe(ArrayList<Couple<String,Class>> types){
         columnsNamesAndClasses = new ArrayList<>();
         data = new ArrayList<>();
+        if (types.size() == 0){
+            return;
+        }
         for (Couple<String,Class> couple : types){
             columnsNamesAndClasses.add(new Couple<String,Class>(couple.getFirst(),couple.getSecond()));
+            data.add(new ArrayList());
+        }
+    }
 
     public Dataframe(String filename){
         ArrayList<String> list = extractFile(filename);

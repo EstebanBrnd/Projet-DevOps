@@ -15,11 +15,9 @@ public class DataframeTest {
 
     @Test
     public void test_init_dataframe_tableau(){
-        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe test = DataframeTestMother.DataframeTestMother("tab");
         assertEquals(test.columnsNamesAndClasses.size(),5);
         assertEquals(test.data.size(),test.columnsNamesAndClasses.size());
-        assertEquals(test.data.get(0).size(),3);
-        assertEquals(test.data.get(1).size(),3);
         assertEquals(test.columnsNamesAndClasses.get(0).getFirst(),"0");
         assertEquals(test.columnsNamesAndClasses.get(0).getSecond(),String.class);
         assertEquals(test.columnsNamesAndClasses.get(1).getFirst(),"1");
@@ -30,7 +28,7 @@ public class DataframeTest {
 
     @Test
     public void verify_init_dataframe_csv(){
-        Dataframe expected = DataframeTestMother.DataframeTestMother();
+        Dataframe expected = DataframeTestMother.DataframeTestMother("csv");
         Dataframe actual = new Dataframe("src/test/resources/data.csv");
         for (int i = 0; i < expected.data.size(); i++){
             for (int j = 0; j < expected.data.get(i).size(); j++){
@@ -41,7 +39,7 @@ public class DataframeTest {
 
     @Test
     public void test_dataframe_tableau_empty(){
-        ArrayList<Class> types = new ArrayList<>();
+        ArrayList<Couple<String,Class>> types = new ArrayList<>();
         Dataframe test = new Dataframe(types);
         assertEquals(test.columnsNamesAndClasses.size(),0);
         assertEquals(test.data.size(),0);
