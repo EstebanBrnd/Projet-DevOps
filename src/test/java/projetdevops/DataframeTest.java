@@ -84,6 +84,20 @@ public class DataframeTest {
     }
 
     @Test
+    public void test_select_rows_with_integer_out_of_bound(){
+        thrown.expect(IllegalArgumentException.class);
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe iloc = test.iloc(10);
+    }
+
+    @Test
+    public void test_select_rows_with_integer_negative(){
+        thrown.expect(IllegalArgumentException.class);
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe iloc = test.iloc(-1);
+    }
+
+    @Test
     public void test_select_rows_with_integer_list(){
         ArrayList<Class> types = new ArrayList<>();
         types.add(Integer.class);
@@ -119,6 +133,20 @@ public class DataframeTest {
             }
         }
         assertTrue(expected.equals(iloc));
+    }
+
+    @Test
+    public void test_select_rows_with_integer_list_out_of_bound(){
+        thrown.expect(IllegalArgumentException.class);
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe iloc = test.iloc(new int[]{1, 3, 10});
+    }
+
+    @Test
+    public void test_select_rows_with_integer_list_negative(){
+        thrown.expect(IllegalArgumentException.class);
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe iloc = test.iloc(new int[]{1, 3, -1});
     }
 
     @Test
@@ -169,6 +197,34 @@ public class DataframeTest {
     }
 
     @Test
+    public void test_select_both_with_integer_out_of_bound(){
+        thrown.expect(IllegalArgumentException.class);
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe iloc = test.iloc(10, 1);
+    }
+
+    @Test
+    public void test_select_both_with_integer_out_of_bound2(){
+        thrown.expect(IllegalArgumentException.class);
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe iloc = test.iloc(1, 10);
+    }
+
+    @Test
+    public void test_select_both_with_integer_negative(){
+        thrown.expect(IllegalArgumentException.class);
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe iloc = test.iloc(-1, 1);
+    }
+
+    @Test
+    public void test_select_both_with_integer_negative2(){
+        thrown.expect(IllegalArgumentException.class);
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe iloc = test.iloc(1, -1);
+    }
+
+    @Test
     public void test_select_both_with_integer_list(){
         ArrayList<Class> types = new ArrayList<>();
         types.add(Integer.class);
@@ -187,6 +243,20 @@ public class DataframeTest {
             }
         }
         assertTrue(expected.equals(iloc));
+    }
+
+    @Test
+    public void test_select_both_with_integer_list_out_of_bound(){
+        thrown.expect(IllegalArgumentException.class);
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe iloc = test.iloc(new int[]{1, 3, 10}, new int[]{1, 2});
+    }
+
+    @Test
+    public void test_select_both_with_integer_list_out_of_bound2(){
+        thrown.expect(IllegalArgumentException.class);
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe iloc = test.iloc(new int[]{1, 3}, new int[]{1, 20});
     }
 
     @Test
