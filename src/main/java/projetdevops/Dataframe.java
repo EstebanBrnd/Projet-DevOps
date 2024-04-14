@@ -107,6 +107,12 @@ public class Dataframe {
     }
 
     public Dataframe iloc(int i){
+        if(i >= columnsNamesAndClasses.size() ){
+            throw new IllegalArgumentException("L'index est supérieur à la taille du dataframe");
+        }
+        if(i <= 0){
+            throw new IllegalArgumentException("L'index est négatif");
+        }
         ArrayList<Class> types = new ArrayList<>();
         types.add(columnsNamesAndClasses.get(i).getSecond());
         Dataframe iloc = new Dataframe(types);
@@ -119,7 +125,12 @@ public class Dataframe {
     public Dataframe iloc(int[] integerArray){
         ArrayList<Class> types = new ArrayList<>();
         for (int i : integerArray){
-            System.out.println(i);
+            if(i >= columnsNamesAndClasses.size() ){
+                throw new IllegalArgumentException("L'index est supérieur à la taille du dataframe");
+            }
+            if(i <= 0){
+                throw new IllegalArgumentException("L'index est négatif");
+            }
             types.add(columnsNamesAndClasses.get(i).getSecond());
         }
         Dataframe iloc = new Dataframe(types);
@@ -158,6 +169,12 @@ public class Dataframe {
     }
 
     public Dataframe iloc(int i, int j){
+        if(i >= columnsNamesAndClasses.size() || j >= data.get(0).size()){
+            throw new IllegalArgumentException("L'index est supérieur à la taille du dataframe");
+        }
+        if( i <= 0 || j <= 0){
+            throw new IllegalArgumentException("L'index est négatif");
+        }
         ArrayList<Class> types = new ArrayList<>();
         types.add(columnsNamesAndClasses.get(i).getSecond());
         Dataframe iloc = new Dataframe(types);
@@ -165,7 +182,27 @@ public class Dataframe {
         return iloc;
     }
 
-    public Dataframe iloc(int[] iS, int[] jS) {
+    public Dataframe iloc(int[] iS, int[] jS)
+    {
+        for(int i : iS)
+        {
+            if(i >= columnsNamesAndClasses.size() ){
+                throw new IllegalArgumentException("L'index est supérieur à la taille du dataframe");
+            }
+            if(i <= 0){
+                throw new IllegalArgumentException("L'index est négatif");
+            }
+        }
+        for(int j : jS)
+        {
+            if(j >= data.get(0).size()){
+                throw new IllegalArgumentException("L'index est supérieur à la taille du dataframe");
+            }
+            if(j <= 0){
+                throw new IllegalArgumentException("L'index est négatif");
+            }
+        }
+
         ArrayList<Class> types = new ArrayList<>();
         for (int i : iS){
             types.add(columnsNamesAndClasses.get(i).getSecond());
