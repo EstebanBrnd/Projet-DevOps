@@ -54,6 +54,9 @@ jobs:
         with:
           name: github-pages-${{ github.run_id }}
           path: ./docs
+
+      - name: Affiche ReadMe
+        run: cat ./docs/index.md
         
       - name: Deploiement sur GitHub Pages
         uses: actions/deploy-pages@v1
