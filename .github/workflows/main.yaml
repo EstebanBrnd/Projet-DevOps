@@ -33,11 +33,15 @@ jobs:
 
       - name: Copie de ReadMe
         run: cp README.md ./docs/index.md
-
+        
+      - name: Check code coverage
+        run: mvn verify
+  
+      - name: Generate JaCoCo report
+        run: mvn jacoco:report
+        
       - name: Deploiement sur GitHub Pages
         uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
           branch: gh-pages
           folder: docs
-  
-
