@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class DataframeTestMother {
 
     public static Dataframe DataframeTestMother(String type){
-        ArrayList<Couple<String,Class>> types = new ArrayList<>();
+        ArrayList<ArrayList<Class>> types = new ArrayList<>();
         types.add(new Couple<String,Class>("0", String.class));
         types.add(new Couple<String,Class>("1", Integer.class));
         types.add(new Couple<String,Class>("2", Integer.class));
