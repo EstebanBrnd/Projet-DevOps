@@ -54,14 +54,43 @@ public class Dataframe {
         }
     }
 
-    /*public void afficheData(){
-        for (int i = 0; i < data.size(); i++){
-            System.out.println("Colonne " + i + " : " + columnsNamesAndClasses.get(i).getFirst() + " de type " + columnsNamesAndClasses.get(i).getSecond());
-            for (int j = 0; j < data.get(i).size(); j++){
-                System.out.println("Elt " + j + " : " + data.get(i).get(j));
+    public String afficheData() {
+        StringBuilder output = new StringBuilder();
+        for (int i = 0; i < data.size(); i++) {
+            output.append("Colonne ").append(i).append(" : ").append(columnsNamesAndClasses.get(i).getFirst()).append(" de type ").append(columnsNamesAndClasses.get(i).getSecond()).append("\n");
+            for (int j = 0; j < data.get(i).size(); j++) {
+                output.append("Elt ").append(j).append(" : ").append(data.get(i).get(j)).append("\n");
             }
         }
-    }*/
+        return output.toString();
+    }
+
+    public String afficherPremieresLignes(int rowCount) {
+        if (rowCount > data.get(0).size()){
+            throw new IllegalArgumentException("Le nombre de lignes demandé est supérieur au nombre de lignes du dataframe");
+        }
+        if (rowCount <=0){
+            throw new IllegalArgumentException("Le nombre de lignes demandé est négatif ou nul");
+        }
+        StringBuilder output = new StringBuilder();
+        for (int i = 0; i < rowCount; i++) {
+            for (int j = 0; j < data.size(); j++) {
+                output.append(data.get(j).get(i)).append("\n");
+            }
+        }
+        return output.toString();
+    }
+
+    public String afficherDernieresLignes(int rowCount) {
+        int startingIndex = data.get(0).size() - rowCount; // Calculate the starting index
+        StringBuilder output = new StringBuilder();
+        for (int i = startingIndex; i < data.get(0).size(); i++) {
+            for (int j = 0; j < data.size(); j++) {
+                output.append(data.get(j).get(i)).append("\n");
+            }
+        }
+        return output.toString();
+    }
 
     public ArrayList<String> extractFile(String filename){
         try
