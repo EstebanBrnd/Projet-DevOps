@@ -1,5 +1,6 @@
 # Projet de DevOps de M1 INFO
 
+![Workflow](https://github.com/EstebanBrnd/Projet-DevOps/actions/workflows/main/badge.svg)
 
 Collaborateurs :   
 
