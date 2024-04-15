@@ -74,9 +74,8 @@ public class Dataframe {
         }
         StringBuilder output = new StringBuilder();
         for (int i = 0; i < rowCount; i++) {
-            output.append("Colonne ").append(i).append(" : ").append(columnsNamesAndClasses.get(i).getFirst()).append(" de type ").append(columnsNamesAndClasses.get(i).getSecond()).append("\n");
             for (int j = 0; j < data.size(); j++) {
-                output.append("Elt ").append(j).append(" : ").append(data.get(j).get(i)).append("\n");
+                output.append(data.get(j).get(i)).append("\n");
             }
         }
         return output.toString();
@@ -86,9 +85,8 @@ public class Dataframe {
         int startingIndex = data.get(0).size() - rowCount; // Calculate the starting index
         StringBuilder output = new StringBuilder();
         for (int i = startingIndex; i < data.get(0).size(); i++) {
-            output.append("Colonne ").append(i).append(" : ").append(columnsNamesAndClasses.get(i).getFirst()).append(" de type ").append(columnsNamesAndClasses.get(i).getSecond()).append("\n");
             for (int j = 0; j < data.size(); j++) {
-                output.append("Elt ").append(j).append(" : ").append(data.get(j).get(i)).append("\n");
+                output.append(data.get(j).get(i)).append("\n");
             }
         }
         return output.toString();

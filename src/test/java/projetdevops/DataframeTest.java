@@ -89,6 +89,8 @@ public class DataframeTest {
             String line;
             int i = 0;
             while ((line = reader.readLine()) != null) {
+                System.out.println("Expected: " + line);
+                System.out.println("Actual: " + lines[i]);
                 assert(lines[i].equals(line));
                 i++;
             }
@@ -118,6 +120,7 @@ public class DataframeTest {
         } catch (IOException e) {
             System.err.println("Error reading from file: " + e.getMessage());
         }
+    }
     public void test_init_dataframe_csv(){
         Dataframe test = new Dataframe("src/test/resources/data2.csv");
         assertEquals(test.columnsNamesAndClasses.size(),4);
