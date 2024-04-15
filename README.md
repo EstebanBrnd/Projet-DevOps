@@ -1,7 +1,6 @@
 # Projet de DevOps de M1 INFO
 
 ![Workflow](https://github.com/EstebanBrnd/Projet-DevOps/actions/workflows/main.yaml/badge.svg)
-![tests-check](https://github.com/<OWNER>/<REPO>/actions/workflows/tests-check.yml/badge.svg)
 
 Collaborateurs :   
 
