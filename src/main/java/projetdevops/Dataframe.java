@@ -97,7 +97,7 @@ public class Dataframe {
             } catch (NumberFormatException e){
                 try {
                     Float.parseFloat(column);
-                    res.add(new Couple<String,Class>(String.valueOf(i), Float.class));
+                    res.add(new Couple<String,Class>(columns_name[i], Float.class));
                 } catch (NumberFormatException e2){
                     res.add(new Couple<String,Class>(columns_name[i], String.class));
                 }
