@@ -18,51 +18,49 @@ public class Dataframe {
     ArrayList<ArrayList> data;
     //dataframe a partir d'un tableau de tableau de class et d'un tableau de nom de colonne
 
-    public Dataframe(ArrayList<Couple<String,Class>> types){
-        columnsNamesAndClasses = new ArrayList<>();
-        data = new ArrayList<>();
-        if (types.size() == 0){
-            return;
-        }
-        for (Couple<String,Class> couple : types){
-            columnsNamesAndClasses.add(new Couple<String,Class>(couple.getFirst(),couple.getSecond()));
-            data.add(new ArrayList());
-        }
-    }
+    // public Dataframe(ArrayList<Couple<String,Class>> types){
+    //     columnsNamesAndClasses = new ArrayList<>();
+    //     data = new ArrayList<>();
+    //     if (types.size() == 0){
+    //         return;
+    //     }
+    //     for (Couple<String,Class> couple : types){
+    //         columnsNamesAndClasses.add(new Couple<String,Class>(couple.getFirst(),couple.getSecond()));
+    //         data.add(new ArrayList());
+    //     }
+    // }
 
     public Dataframe( ArrayList<ArrayList<String>> data, ArrayList<String> columnNames){
         columnsNamesAndClasses = new ArrayList<>();
         this.data = new ArrayList<>();
-        // for (Couple<String,Class> couple : types){
-        //     columnsNamesAndClasses.add(new Couple<String,Class>(couple.getFirst(),couple.getSecond()));
-        // }
-        // for (int i = 0; i < d.size(); i++){
-        //     data.add(new ArrayList());
-        //     for (int j = 0; j < d.get(i).size(); j++){
-        //         data.get(i).add(d.get(i).get(j));
-        //     }
-            
-        // }
+       
         
         for (int j=0; j < data.size(); j++){
-            this.data.add(data.get(j));
-            if(data.get(j).get(0) == Integer.class){
+            this.data.add(new ArrayList());
+            try {
+                Integer.parseInt(data.get(j).get(0));
                 columnsNamesAndClasses.add(new Couple<String,Class>(columnNames.get(j), Integer.class));
+            } catch (NumberFormatException e){
+                try {
+                    Float.parseFloat(data.get(j).get(0));
+                    columnsNamesAndClasses.add(new Couple<String,Class>(columnNames.get(j), Float.class));
+                } catch (NumberFormatException e2){
+                    columnsNamesAndClasses.add(new Couple<String,Class>(columnNames.get(j), String.class));
+                }
             }
-            else if(data.get(j).get(0) == Float.class){
-                columnsNamesAndClasses.add(new Couple<String,Class>(columnNames.get(j), Float.class));
-            }
-            else{
-                columnsNamesAndClasses.add(new Couple<String,Class>(columnNames.get(j), String.class));
-            }
-            
+            for(int i=0; i < data.get(j).size(); i++){
+                if (columnsNamesAndClasses.get(j).getSecond() == Integer.class){
+                    this.data.get(j).add(Integer.parseInt(data.get(j).get(i)));
+                } else if (columnsNamesAndClasses.get(j).getSecond() == Float.class){
+                    this.data.get(j).add(Float.parseFloat(data.get(j).get(i)));
+                } else {
+                    this.data.get(j).add(data.get(j).get(i));
+                }
+            }   
+
         }
     }
-
-
-
-
-
+   
 
     public Dataframe(String filename){
         ArrayList<String> list = extractFile(filename);
@@ -88,14 +86,14 @@ public class Dataframe {
         }
     }
 
-    /*public void afficheData(){
+    public void afficheData(){
         for (int i = 0; i < data.size(); i++){
             System.out.println("Colonne " + i + " : " + columnsNamesAndClasses.get(i).getFirst() + " de type " + columnsNamesAndClasses.get(i).getSecond());
             for (int j = 0; j < data.get(i).size(); j++){
                 System.out.println("Elt " + j + " : " + data.get(i).get(j));
             }
         }
-    }*/
+    }
 
     public ArrayList<String> extractFile(String filename){
         try

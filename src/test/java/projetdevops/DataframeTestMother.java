@@ -31,13 +31,4 @@ public class DataframeTestMother {
         Dataframe test = new Dataframe(data, columnNames);
         return test;
     }
-    public static void main(String[] args)
-    {
-        try {
-            Dataframe test = DataframeTestMother();
-            test.afficheData();
-        } catch (Exception e) {
-            System.out.println("Test failed");
-        }
-    }
 }
