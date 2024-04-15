@@ -67,7 +67,7 @@ public class DataframeTest {
             String line;
             int i = 0;
             while ((line = reader.readLine()) != null) {
-                assert(lines[i].equals(line));
+                assertEquals(lines[i], line);
                 i++;
             }
             reader.close();
@@ -89,9 +89,7 @@ public class DataframeTest {
             String line;
             int i = 0;
             while ((line = reader.readLine()) != null) {
-                System.out.println("Expected: " + line);
-                System.out.println("Actual: " + lines[i]);
-                assert(lines[i].equals(line));
+                assertEquals(lines[i], line);
                 i++;
             }
             reader.close();
@@ -112,7 +110,7 @@ public class DataframeTest {
             String line;
             int i = 0;
             while ((line = reader.readLine()) != null) {
-                assert(lines[i].equals(line));
+                assertEquals(lines[i], line);
                 i++;
             }
             reader.close();
