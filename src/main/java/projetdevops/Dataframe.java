@@ -17,11 +17,22 @@ public class Dataframe {
 
     ArrayList<ArrayList> data;
     //dataframe a partir d'un tableau de tableau de class et d'un tableau de nom de colonne
-    
 
-    public Dataframe( ArrayList<ArrayList<Class>> d, ArrayList<String> n){
+    public Dataframe(ArrayList<Couple<String,Class>> types){
         columnsNamesAndClasses = new ArrayList<>();
         data = new ArrayList<>();
+        if (types.size() == 0){
+            return;
+        }
+        for (Couple<String,Class> couple : types){
+            columnsNamesAndClasses.add(new Couple<String,Class>(couple.getFirst(),couple.getSecond()));
+            data.add(new ArrayList());
+        }
+    }
+
+    public Dataframe( ArrayList<ArrayList<String>> data, ArrayList<String> columnNames){
+        columnsNamesAndClasses = new ArrayList<>();
+        this.data = new ArrayList<>();
         // for (Couple<String,Class> couple : types){
         //     columnsNamesAndClasses.add(new Couple<String,Class>(couple.getFirst(),couple.getSecond()));
         // }
@@ -33,16 +44,16 @@ public class Dataframe {
             
         // }
         
-        for (int j=0; j < d.size(); j++){
-            data.add(d.get(j));
-            if(d.get(j).get(0) == Integer.class){
-                columnsNamesAndClasses.add(new Couple<String,Class>(n.get(j), Integer.class));
+        for (int j=0; j < data.size(); j++){
+            this.data.add(data.get(j));
+            if(data.get(j).get(0) == Integer.class){
+                columnsNamesAndClasses.add(new Couple<String,Class>(columnNames.get(j), Integer.class));
             }
-            else if(d.get(j).get(0) == Float.class){
-                columnsNamesAndClasses.add(new Couple<String,Class>(n.get(j), Float.class));
+            else if(data.get(j).get(0) == Float.class){
+                columnsNamesAndClasses.add(new Couple<String,Class>(columnNames.get(j), Float.class));
             }
             else{
-                columnsNamesAndClasses.add(new Couple<String,Class>(n.get(j), String.class));
+                columnsNamesAndClasses.add(new Couple<String,Class>(columnNames.get(j), String.class));
             }
             
         }
