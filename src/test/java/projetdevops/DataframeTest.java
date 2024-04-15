@@ -16,26 +16,29 @@ public class DataframeTest {
     @Test
     public void test_init_dataframe_affichage(){
         Dataframe test = DataframeTestMother.DataframeTestMother();
-        test.afficheData();
+        System.out.println(test.afficheData());
     }
 
     @Test
     public void test_init_dataframe_tableau(){
         Dataframe test = DataframeTestMother.DataframeTestMother();
+        System.out.println(test.afficheData());
         assertEquals(test.columnsNamesAndClasses.size(),5);
         assertEquals(test.data.size(),test.columnsNamesAndClasses.size());
-        assertEquals(test.columnsNamesAndClasses.get(0).getFirst(),"0");
-        assertEquals(test.columnsNamesAndClasses.get(0).getSecond(),String.class);
-        assertEquals(test.columnsNamesAndClasses.get(1).getFirst(),"1");
-        assertEquals(test.columnsNamesAndClasses.get(1).getSecond(),Integer.class);
-        assertEquals(test.columnsNamesAndClasses.get(3).getFirst(),"3");
-        assertEquals(test.columnsNamesAndClasses.get(3).getSecond(),Double.class);
+        assertEquals(test.columnsNamesAndClasses.get(0), new Couple<>("Nom",String.class));
+        assertEquals(test.columnsNamesAndClasses.get(1), new Couple<>("Nombre",Integer.class));
+        assertEquals(test.columnsNamesAndClasses.get(3), new Couple<>("Float",Float.class));
+
+        assertEquals(test.data.get(0).get(0),"Test");
+        assertEquals(test.data.get(1).get(1),3);
+        assertEquals(test.data.get(3).get(1),4f);
     }
 
     @Test
     public void verify_init_dataframe_csv(){
         Dataframe expected = DataframeTestMother.DataframeTestMother();
         Dataframe actual = new Dataframe("src/test/resources/data.csv");
+        System.out.println(actual.afficheData());
         for (int i = 0; i < expected.data.size(); i++){
             for (int j = 0; j < expected.data.get(i).size(); j++){
                 assertEquals(expected.data.get(i).get(j),actual.data.get(i).get(j));
