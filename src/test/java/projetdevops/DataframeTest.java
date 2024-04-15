@@ -193,8 +193,9 @@ public class DataframeTest {
     public void test_max_colonne(){
         Dataframe test = new Dataframe("src/test/resources/data2.csv");
         float max = test.max_colonne("Age");
-        assertEquals(max,42.0,0.1);
-        assertNull(test.max_colonne("Nom"));
+        assertEquals(42.0,max,0.1);
+        thrown.expect(IllegalArgumentException.class);
+        test.max_colonne("Nom");
     }
 
     @Test
@@ -202,7 +203,8 @@ public class DataframeTest {
         Dataframe test = new Dataframe("src/test/resources/data2.csv");
         float min = test.min_colonne("Age");
         assertEquals(min,21.0,0.1);
-        assertNull(test.min_colonne("Nom"));
+        thrown.expect(IllegalArgumentException.class);
+        test.min_colonne("Nom");
     }
 
     @Test
@@ -235,7 +237,7 @@ public class DataframeTest {
         
         assertNull(min.get(0));
         assertNull(min.get(1));
-        assertEquals(min.get(2),42,0.1);
+        assertEquals(min.get(2),21,0);
         assertNull(min.get(3));
     }
 }

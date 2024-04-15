@@ -256,16 +256,16 @@ public class Dataframe {
         if (columnsNamesAndClasses.get(index).getSecond() == Integer.class){
             int min = Integer.MAX_VALUE;
             for (int j = 1; j < data.size(); j++){
-                if ((int)data.get(j).get(index) < min){
-                    min = (int)data.get(j).get(index);
+                if ((int)data.get(index).get(j) < min){
+                    min = (int)data.get(index).get(j);
                 }
             }
             return (float)min;
         } else if (columnsNamesAndClasses.get(index).getSecond() == Float.class){
             float min = Float.MAX_VALUE;
             for (int j = 1; j < data.size(); j++){
-                if ((float)data.get(j).get(index) < min){
-                    min = (float)data.get(j).get(index);
+                if ((float)data.get(index).get(j) < min){
+                    min = (float)data.get(index).get(j);
                 }
             }
             return min;
@@ -280,22 +280,22 @@ public class Dataframe {
         for (int i = 0; i < columnsNamesAndClasses.size(); i++){
             if (columnsNamesAndClasses.get(i).getSecond() == Integer.class){
                 int min = Integer.MAX_VALUE;
-                for (int j = 1; j < data.size(); j++){
-                    if ((int)data.get(j).get(i) < min){
-                        min = (int)data.get(j).get(i);
+                for (int j = 0; j < data.size(); j++){
+                    if ((int)data.get(i).get(j) < min){
+                        min = (int)data.get(i).get(j);
                     }
                 }
                 res.add((float)min);
             } else if (columnsNamesAndClasses.get(i).getSecond() == Float.class){
                 float min = Float.MAX_VALUE;
-                for (int j = 1; j < data.size(); j++){
-                    if ((float)data.get(j).get(i) < min){
-                        min = (float)data.get(j).get(i);
+                for (int j = 0; j < data.size(); j++){
+                    if ((float)data.get(i).get(j) < min){
+                        min = (float)data.get(i).get(j);
                     }
                 }
                 res.add(min);
             } else {
-                res.add(Float.NaN);
+                res.add(null);
             }
         }
         return res;
@@ -314,17 +314,17 @@ public class Dataframe {
         }
         if (columnsNamesAndClasses.get(index).getSecond() == Integer.class){
             int max = Integer.MIN_VALUE;
-            for (int j = 1; j < data.size(); j++){
-                if ((int)data.get(j).get(index) > max){
-                    max = (int)data.get(j).get(index);
+            for (int j = 0; j < data.size(); j++){
+                if ((int)data.get(index).get(j) > max){
+                    max = (int)data.get(index).get(j);
                 }
             }
             return (float)max;
         } else if (columnsNamesAndClasses.get(index).getSecond() == Float.class){
             float max = Float.MIN_VALUE;
-            for (int j = 1; j < data.size(); j++){
-                if ((float)data.get(j).get(index) > max){
-                    max = (float)data.get(j).get(index);
+            for (int j = 0; j < data.size(); j++){
+                if ((float)data.get(index).get(j) > max){
+                    max = (float)data.get(index).get(j);
                 }
             }
             return max;
@@ -339,22 +339,22 @@ public class Dataframe {
         for (int i = 0; i < columnsNamesAndClasses.size(); i++){
             if (columnsNamesAndClasses.get(i).getSecond() == Integer.class){
                 int max = Integer.MIN_VALUE;
-                for (int j = 1; j < data.size(); j++){
-                    if ((int)data.get(j).get(i) > max){
-                        max = (int)data.get(j).get(i);
+                for (int j = 0; j < data.size(); j++){
+                    if ((int)data.get(i).get(j) > max){
+                        max = (int)data.get(i).get(j);
                     }
                 }
                 res.add((float)max);
             } else if (columnsNamesAndClasses.get(i).getSecond() == Float.class){
                 float max = Float.MIN_VALUE;
-                for (int j = 1; j < data.size(); j++){
-                    if ((float)data.get(j).get(i) > max){
-                        max = (float)data.get(j).get(i);
+                for (int j = 0; j < data.size(); j++){
+                    if ((float)data.get(i).get(j) > max){
+                        max = (float)data.get(i).get(j);
                     }
                 }
                 res.add(max);
             } else {
-                res.add(Float.NaN);
+                res.add(null);
             }
         }
         return res;
