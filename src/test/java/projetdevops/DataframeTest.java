@@ -184,7 +184,9 @@ public class DataframeTest {
         Dataframe test = new Dataframe("src/test/resources/data2.csv");
         float mean = test.mean_colonne("Age");
         assertEquals(mean,26.5,0.1);
-        assertNull(test.mean_colonne("Nom"));
+        // On attend IllegalArgumentException car la colonne "Nom" n'est pas numérique
+        thrown.expect(IllegalArgumentException.class);
+        test.mean_colonne("Nom");
     }
 
     @Test
@@ -208,12 +210,11 @@ public class DataframeTest {
         Dataframe test = new Dataframe("src/test/resources/data2.csv");
         ArrayList<Float> mean = test.mean();
         
-        //assertNull(mean.get(0));
-        //assertNull(mean.get(1));
+        assertNull(mean.get(0));
+        assertNull(mean.get(1));
+        
         assertEquals(mean.get(2),26.5,0.1);
         assertNull(mean.get(3));
-
-
     }
 
     @Test

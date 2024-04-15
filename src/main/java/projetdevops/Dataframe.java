@@ -11,6 +11,9 @@ import java.lang.NumberFormatException;
 import java.lang.Integer;
 import java.lang.String;
 import java.lang.Class;
+import java.lang.Float;
+
+import java.io.FileWriter;
 
 public class Dataframe {
     ArrayList<Couple<String,Class>> columnsNamesAndClasses;
@@ -65,13 +68,14 @@ public class Dataframe {
 
     public Dataframe(String filename){
         ArrayList<String> list = extractFile(filename);
-        columnsNamesAndClasses = typeInference(list.get(0));
+
+        columnsNamesAndClasses = typeInference(list.get(0),list.get(1));
         // Ajout des données dans data
         data = new ArrayList<ArrayList>();
         for (int i = 0; i < columnsNamesAndClasses.size(); i++){
             data.add(new ArrayList());
         }
-        for (int i = 0; i < list.size(); i++){
+        for (int i = 1; i < list.size(); i++){
             String[] columns = list.get(i).split(",");
             int j = 0;
             for (String column : columns){
@@ -149,50 +153,68 @@ public class Dataframe {
         throw new IllegalArgumentException("Erreur extraction des données du fichier");
     }
 
-    public ArrayList<Couple<String,Class>> typeInference (String line){
+    public ArrayList<Couple<String,Class>> typeInference (String first_line,String line){
+        String[] columns_name = first_line.split(",");
         String[] columns = line.split(",");
         ArrayList<Couple<String,Class>> res = new ArrayList<Couple<String,Class>>();
         int i = 0;
         for (String column : columns){
             try {
                 Integer.parseInt(column);
-                res.add(new Couple<String,Class>(String.valueOf(i), Integer.class));
+                res.add(new Couple<String,Class>(columns_name[i], Integer.class));
             } catch (NumberFormatException e){
                 try {
                     Float.parseFloat(column);
-                    res.add(new Couple<String,Class>(String.valueOf(i), Float.class));
+                    res.add(new Couple<String,Class>(columns_name[i], Float.class));
                 } catch (NumberFormatException e2){
-                    res.add(new Couple<String,Class>(String.valueOf(i), String.class));
+                    res.add(new Couple<String,Class>(columns_name[i], String.class));
                 }
             }
             i++;
         }
         return res;
     }
+    
+    public void printFile(String filename, String content){
+        // Ajoute le contenu à la fin du fichier
+        try {
+            FileWriter myWriter = new FileWriter(filename, true);
+            myWriter.write(content + "\n");
+            myWriter.close();
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
+
     public float mean_colonne(String column){
         int index = -1;
+        // Trouve la bonne colonne
         for (int i = 0; i < columnsNamesAndClasses.size(); i++){
-            if (columnsNamesAndClasses.get(i).getFirst()==column){
+            if (columnsNamesAndClasses.get(i).getFirst().equals(column)){
                 index = i;
                 break;
             }
         }
+        // Colonne non trouvée
         if (index == -1){
             throw new IllegalArgumentException("La colonne " + column + " n'existe pas");
         }
+        // Calcul de la moyenne
         if (columnsNamesAndClasses.get(index).getSecond() == Integer.class){
             int sum = 0;
             for (int j = 0; j < data.size(); j++){
-                sum += (int)data.get(j).get(index);
+                sum += (int)data.get(index).get(j);
             }
             return (float)sum/data.size();
         } else if (columnsNamesAndClasses.get(index).getSecond() == Float.class){
             float sum = 0;
             for (int j = 0; j < data.size(); j++){
-                sum += (float)data.get(j).get(index);
+                sum += (float)data.get(index).get(j);
             }
-            return sum/data.size();
+            return (float)sum/data.size();
         } else {
+            System.out.println("PAS BON");
             throw new IllegalArgumentException("La colonne " + column + " contient des chaines de caractères");
         }
             
@@ -204,17 +226,17 @@ public class Dataframe {
             if (columnsNamesAndClasses.get(i).getSecond() == Integer.class){
                 int sum = 0;
                 for (int j = 0; j < data.size(); j++){
-                    sum += (int)data.get(j).get(i);
+                    sum += (int)data.get(i).get(j);
                 }
                 res.add((float)sum/data.size());
             } else if (columnsNamesAndClasses.get(i).getSecond() == Float.class){
                 float sum = 0;
                 for (int j = 0; j < data.size(); j++){
-                    sum += (float)data.get(j).get(i);
+                    sum += (float)data.get(i).get(j);
                 }
                 res.add(sum/data.size());
             } else {
-                res.add(Float.NaN);
+                res.add(null);
             }
         }
         return res;
