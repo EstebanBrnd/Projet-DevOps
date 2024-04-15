@@ -98,6 +98,35 @@ public class Dataframe {
         return output.toString();
     }
 
+
+    public String afficherPremieresLignes(int rowCount) {
+        if (rowCount > data.get(0).size()){
+            throw new IllegalArgumentException("Le nombre de lignes demandé est supérieur au nombre de lignes du dataframe");
+        }
+        if (rowCount <=0){
+            throw new IllegalArgumentException("Le nombre de lignes demandé est négatif ou nul");
+        }
+        StringBuilder output = new StringBuilder();
+        for (int i = 0; i < rowCount; i++) {
+            for (int j = 0; j < data.size(); j++) {
+                output.append(data.get(j).get(i)).append("\n");
+            }
+        }
+        return output.toString();
+    }
+
+    public String afficherDernieresLignes(int rowCount) {
+        int startingIndex = data.get(0).size() - rowCount; // Calculate the starting index
+        StringBuilder output = new StringBuilder();
+        for (int i = startingIndex; i < data.get(0).size(); i++) {
+            for (int j = 0; j < data.size(); j++) {
+                output.append(data.get(j).get(i)).append("\n");
+            }
+        }
+        return output.toString();
+    }
+
+
     public ArrayList<String> extractFile(String filename){
         try
 		{

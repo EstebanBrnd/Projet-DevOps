@@ -6,6 +6,11 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+
 import java.util.ArrayList;
 
 public class DataframeTest {
@@ -66,6 +71,68 @@ public class DataframeTest {
     }
 
     @Test
+    public void allLines() {
+        Dataframe test = new Dataframe("src/test/resources/data.csv");
+        String output = test.afficheData(); // Capture the output
+        String[] lines = output.split("\n");
+        File file = new File("src/test/resources/all_lines.expected");
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String line;
+            int i = 0;
+            while ((line = reader.readLine()) != null) {
+                assertEquals(lines[i], line);
+                i++;
+            }
+            reader.close();
+            System.out.println("All lines are correct");
+        } catch (IOException e) {
+            System.err.println("Error reading from file: " + e.getMessage());
+        }
+        
+    }
+    @Test
+    public void firstLines() {
+        Dataframe test = new Dataframe("src/test/resources/data.csv");
+        int rowCount = 1;
+        String output = test.afficherPremieresLignes(rowCount); // Capture the output for the first 5 rows
+        String[] lines = output.split("\n");
+        File file = new File("src/test/resources/first_lines.expected");
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String line;
+            int i = 0;
+            while ((line = reader.readLine()) != null) {
+                assertEquals(lines[i], line);
+                i++;
+            }
+            reader.close();
+            System.out.println("First lines are correct");
+        } catch (IOException e) {
+            System.err.println("Error reading from file: " + e.getMessage());
+        }
+    }
+    @Test
+    public void lastLines() {
+        Dataframe test = new Dataframe("src/test/resources/data.csv");
+        int rowCount = 1;
+        String output = test.afficherDernieresLignes(rowCount); // Capture the output for the last 5 rows
+        String[] lines = output.split("\n");
+        File file = new File("src/test/resources/last_lines.expected");
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String line;
+            int i = 0;
+            while ((line = reader.readLine()) != null) {
+                assertEquals(lines[i], line);
+                i++;
+            }
+            reader.close();
+            System.out.println("Last lines are correct");
+        } catch (IOException e) {
+            System.err.println("Error reading from file: " + e.getMessage());
+        }
+    }
     public void test_init_dataframe_csv(){
         Dataframe test = new Dataframe("src/test/resources/data2.csv");
         assertEquals(test.columnsNamesAndClasses.size(),4);
