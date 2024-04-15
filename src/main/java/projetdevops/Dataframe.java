@@ -169,6 +169,172 @@ public class Dataframe {
         }
         return res;
     }
-    
+    public float mean_colonne(String column){
+        int index = -1;
+        for (int i = 0; i < columnsNamesAndClasses.size(); i++){
+            if (columnsNamesAndClasses.get(i).getFirst()==column){
+                index = i;
+                break;
+            }
+        }
+        if (index == -1){
+            throw new IllegalArgumentException("La colonne " + column + " n'existe pas");
+        }
+        if (columnsNamesAndClasses.get(index).getSecond() == Integer.class){
+            int sum = 0;
+            for (int j = 0; j < data.size(); j++){
+                sum += (int)data.get(j).get(index);
+            }
+            return (float)sum/data.size();
+        } else if (columnsNamesAndClasses.get(index).getSecond() == Float.class){
+            float sum = 0;
+            for (int j = 0; j < data.size(); j++){
+                sum += (float)data.get(j).get(index);
+            }
+            return sum/data.size();
+        } else {
+            throw new IllegalArgumentException("La colonne " + column + " contient des chaines de caractères");
+        }
+            
+    }
 
+    public ArrayList<Float> mean(){
+        ArrayList<Float> res = new ArrayList<Float>();
+        for (int i = 0; i < columnsNamesAndClasses.size(); i++){
+            if (columnsNamesAndClasses.get(i).getSecond() == Integer.class){
+                int sum = 0;
+                for (int j = 0; j < data.size(); j++){
+                    sum += (int)data.get(j).get(i);
+                }
+                res.add((float)sum/data.size());
+            } else if (columnsNamesAndClasses.get(i).getSecond() == Float.class){
+                float sum = 0;
+                for (int j = 0; j < data.size(); j++){
+                    sum += (float)data.get(j).get(i);
+                }
+                res.add(sum/data.size());
+            } else {
+                res.add(Float.NaN);
+            }
+        }
+        return res;
+    }
+
+    public float min_colonne(String column){
+        int index = -1;
+        for (int i = 0; i < columnsNamesAndClasses.size(); i++){
+            if (columnsNamesAndClasses.get(i).getFirst().equals(column)){
+                index = i;
+                break;
+            }
+        }
+        if (index == -1){
+            throw new IllegalArgumentException("La colonne " + column + " n'existe pas");
+        }
+        if (columnsNamesAndClasses.get(index).getSecond() == Integer.class){
+            int min = Integer.MAX_VALUE;
+            for (int j = 1; j < data.size(); j++){
+                if ((int)data.get(j).get(index) < min){
+                    min = (int)data.get(j).get(index);
+                }
+            }
+            return (float)min;
+        } else if (columnsNamesAndClasses.get(index).getSecond() == Float.class){
+            float min = Float.MAX_VALUE;
+            for (int j = 1; j < data.size(); j++){
+                if ((float)data.get(j).get(index) < min){
+                    min = (float)data.get(j).get(index);
+                }
+            }
+            return min;
+        } else {
+            throw new IllegalArgumentException("La colonne " + column + " contient des chaines de caractères");
+        }
+            
+    }
+
+    public ArrayList<Float> min(){
+        ArrayList<Float> res = new ArrayList<Float>();
+        for (int i = 0; i < columnsNamesAndClasses.size(); i++){
+            if (columnsNamesAndClasses.get(i).getSecond() == Integer.class){
+                int min = Integer.MAX_VALUE;
+                for (int j = 1; j < data.size(); j++){
+                    if ((int)data.get(j).get(i) < min){
+                        min = (int)data.get(j).get(i);
+                    }
+                }
+                res.add((float)min);
+            } else if (columnsNamesAndClasses.get(i).getSecond() == Float.class){
+                float min = Float.MAX_VALUE;
+                for (int j = 1; j < data.size(); j++){
+                    if ((float)data.get(j).get(i) < min){
+                        min = (float)data.get(j).get(i);
+                    }
+                }
+                res.add(min);
+            } else {
+                res.add(Float.NaN);
+            }
+        }
+        return res;
+    }
+
+    public Float max_colonne(String column){
+        int index = -1;
+        for (int i = 0; i < columnsNamesAndClasses.size(); i++){
+            if (columnsNamesAndClasses.get(i).getFirst().equals(column)){
+                index = i;
+                break;
+            }
+        }
+        if (index == -1){
+            throw new IllegalArgumentException("La colonne " + column + " n'existe pas");
+        }
+        if (columnsNamesAndClasses.get(index).getSecond() == Integer.class){
+            int max = Integer.MIN_VALUE;
+            for (int j = 1; j < data.size(); j++){
+                if ((int)data.get(j).get(index) > max){
+                    max = (int)data.get(j).get(index);
+                }
+            }
+            return (float)max;
+        } else if (columnsNamesAndClasses.get(index).getSecond() == Float.class){
+            float max = Float.MIN_VALUE;
+            for (int j = 1; j < data.size(); j++){
+                if ((float)data.get(j).get(index) > max){
+                    max = (float)data.get(j).get(index);
+                }
+            }
+            return max;
+        } else {
+            throw new IllegalArgumentException("La colonne " + column + " contient des chaines de caractères");
+        }
+            
+    }
+
+    public ArrayList<Float> max(){
+        ArrayList<Float> res = new ArrayList<Float>();
+        for (int i = 0; i < columnsNamesAndClasses.size(); i++){
+            if (columnsNamesAndClasses.get(i).getSecond() == Integer.class){
+                int max = Integer.MIN_VALUE;
+                for (int j = 1; j < data.size(); j++){
+                    if ((int)data.get(j).get(i) > max){
+                        max = (int)data.get(j).get(i);
+                    }
+                }
+                res.add((float)max);
+            } else if (columnsNamesAndClasses.get(i).getSecond() == Float.class){
+                float max = Float.MIN_VALUE;
+                for (int j = 1; j < data.size(); j++){
+                    if ((float)data.get(j).get(i) > max){
+                        max = (float)data.get(j).get(i);
+                    }
+                }
+                res.add(max);
+            } else {
+                res.add(Float.NaN);
+            }
+        }
+        return res;
+    }
 }
