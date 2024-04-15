@@ -12,10 +12,16 @@ public class DataframeTest {
     
     @Rule
     public ExpectedException thrown = ExpectedException.none();
+    
+    @Test
+    public void test_init_dataframe_affichage(){
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        test.afficheData();
+    }
 
     @Test
     public void test_init_dataframe_tableau(){
-        Dataframe test = DataframeTestMother.DataframeTestMother("tab");
+        Dataframe test = DataframeTestMother.DataframeTestMother();
         assertEquals(test.columnsNamesAndClasses.size(),5);
         assertEquals(test.data.size(),test.columnsNamesAndClasses.size());
         assertEquals(test.columnsNamesAndClasses.get(0).getFirst(),"0");
@@ -28,7 +34,7 @@ public class DataframeTest {
 
     @Test
     public void verify_init_dataframe_csv(){
-        Dataframe expected = DataframeTestMother.DataframeTestMother("csv");
+        Dataframe expected = DataframeTestMother.DataframeTestMother();
         Dataframe actual = new Dataframe("src/test/resources/data.csv");
         for (int i = 0; i < expected.data.size(); i++){
             for (int j = 0; j < expected.data.get(i).size(); j++){
@@ -39,16 +45,21 @@ public class DataframeTest {
 
     @Test
     public void test_dataframe_tableau_empty(){
-        ArrayList<Couple<String,Class>> types = new ArrayList<>();
-        Dataframe test = new Dataframe(types);
+        ArrayList<ArrayList<String>> data = new ArrayList<>();
+        ArrayList<String> columnNames = new ArrayList<>();
+        Dataframe test = new Dataframe(data,columnNames);
         assertEquals(test.columnsNamesAndClasses.size(),0);
         assertEquals(test.data.size(),0);
+        
     }
 
     @Test
     public void test_dataframe_csv_empty(){
         thrown.expect(IllegalArgumentException.class);
         Dataframe test = new Dataframe("");
+        assertEquals(test.columnsNamesAndClasses.size(),0);
+        assertEquals(test.data.size(),0);
+
     }
 
     @Test
