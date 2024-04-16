@@ -16,16 +16,49 @@ public class Dataframe {
     ArrayList<Couple<String,Class>> columnsNamesAndClasses;
 
     ArrayList<ArrayList> data;
+    //dataframe a partir d'un tableau de tableau de class et d'un tableau de nom de colonne
 
-    public Dataframe(ArrayList<Couple<String,Class>> types){
+    // public Dataframe(ArrayList<Couple<String,Class>> types){
+    //     columnsNamesAndClasses = new ArrayList<>();
+    //     data = new ArrayList<>();
+    //     if (types.size() == 0){
+    //         return;
+    //     }
+    //     for (Couple<String,Class> couple : types){
+    //         columnsNamesAndClasses.add(new Couple<String,Class>(couple.getFirst(),couple.getSecond()));
+    //         data.add(new ArrayList());
+    //     }
+    // }
+
+    public Dataframe( ArrayList<ArrayList<String>> data, ArrayList<String> columnNames){
         columnsNamesAndClasses = new ArrayList<>();
-        data = new ArrayList<>();
-        if (types.size() == 0){
-            return;
+        this.data = new ArrayList<>();
+       
+        for (int j=0; j < data.size(); j++){
+            this.data.add(new ArrayList());
+            try {
+                Integer.parseInt(data.get(j).get(0));
+                columnsNamesAndClasses.add(new Couple<String,Class>(columnNames.get(j), Integer.class));
+            } catch (NumberFormatException e){
+                try {
+                    Float.parseFloat(data.get(j).get(0));
+                    columnsNamesAndClasses.add(new Couple<String,Class>(columnNames.get(j), Float.class));
+                } catch (NumberFormatException e2){
+                    columnsNamesAndClasses.add(new Couple<String,Class>(columnNames.get(j), String.class));
+                }
+            }
         }
-        for (Couple<String,Class> couple : types){
-            columnsNamesAndClasses.add(new Couple<String,Class>(couple.getFirst(),couple.getSecond()));
-            data.add(new ArrayList());
+        for (int j=0; j < data.size(); j++){
+            for(int i=0; i < data.get(j).size(); i++){
+                if (columnsNamesAndClasses.get(j).getSecond() == Integer.class){
+                    this.data.get(j).add(Integer.parseInt(data.get(j).get(i)));
+                } else if (columnsNamesAndClasses.get(j).getSecond() == Float.class){
+                    this.data.get(j).add(Float.parseFloat(data.get(j).get(i)));
+                } else {
+                    this.data.get(j).add(data.get(j).get(i));
+                }
+            }   
+
         }
     }
 
@@ -54,6 +87,59 @@ public class Dataframe {
         }
     }
 
+    public ArrayList<String> extractFile(String filename){
+        try
+        {
+            File file = new File(filename);
+            FileReader fr = new FileReader(file);
+            BufferedReader br = new BufferedReader(fr);
+            ArrayList<String> list = new ArrayList<String>();
+            String line;
+            while((line = br.readLine()) != null)
+            {
+                list.add(line);
+            }
+            fr.close();
+            return list;
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+        throw new IllegalArgumentException("Erreur extraction des données du fichier");
+    }
+
+    public ArrayList<Couple<String,Class>> typeInference (String first_line,String line){
+        String[] columns_name = first_line.split(",");
+        String[] columns = line.split(",");
+        ArrayList<Couple<String,Class>> res = new ArrayList<Couple<String,Class>>();
+        int i = 0;
+        for (String column : columns){
+            try {
+                Integer.parseInt(column);
+                res.add(new Couple<String,Class>(columns_name[i], Integer.class));
+            } catch (NumberFormatException e){
+                try {
+                    Float.parseFloat(column);
+                    res.add(new Couple<String,Class>(columns_name[i], Float.class));
+                } catch (NumberFormatException e2){
+                    res.add(new Couple<String,Class>(columns_name[i], String.class));
+                }
+            }
+            i++;
+        }
+        return res;
+    }
+
+
+
+
+
+
+
+
+
+
     public String afficheData() {
         StringBuilder output = new StringBuilder();
         for (int i = 0; i < data.size(); i++) {
@@ -64,6 +150,7 @@ public class Dataframe {
         }
         return output.toString();
     }
+
 
     public String afficherPremieresLignes(int rowCount) {
         if (rowCount > data.get(0).size()){
@@ -91,50 +178,5 @@ public class Dataframe {
         }
         return output.toString();
     }
-
-    public ArrayList<String> extractFile(String filename){
-        try
-		{
-			File file = new File(filename);
-			FileReader fr = new FileReader(file);  			
-			BufferedReader br = new BufferedReader(fr);  
-			ArrayList<String> list = new ArrayList<String>();  
-			String line;
-			while((line = br.readLine()) != null)
-			{
-				list.add(line);    
-			}
-			fr.close();    
-            return list;
-		}
-		catch(IOException e)
-		{
-			e.printStackTrace();
-		}
-        throw new IllegalArgumentException("Erreur extraction des données du fichier");
-    }
-
-    public ArrayList<Couple<String,Class>> typeInference (String first_line,String line){
-        String[] columns_name = first_line.split(",");
-        String[] columns = line.split(",");
-        ArrayList<Couple<String,Class>> res = new ArrayList<Couple<String,Class>>();
-        int i = 0;
-        for (String column : columns){
-            try {
-                Integer.parseInt(column);
-                res.add(new Couple<String,Class>(columns_name[i], Integer.class));
-            } catch (NumberFormatException e){
-                try {
-                    Float.parseFloat(column);
-                    res.add(new Couple<String,Class>(columns_name[i], Float.class));
-                } catch (NumberFormatException e2){
-                    res.add(new Couple<String,Class>(columns_name[i], String.class));
-                }
-            }
-            i++;
-        }
-        return res;
-    }
-    
 
 }
