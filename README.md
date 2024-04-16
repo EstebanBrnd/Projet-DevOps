@@ -1,6 +1,8 @@
 # Projet de DevOps de M1 INFO
 
+
 ![Workflow](https://github.com/EstebanBrnd/Projet-DevOps/actions/workflows/main.yaml/badge.svg)
+![Workflow](https://github.com/EstebanBrnd/Projet-DevOps/actions/workflows/docker.yaml/badge.svg)
 
 Collaborateurs :   
 
@@ -8,6 +10,7 @@ Lilou Bouvier - lilou.bouvier@etu.univ-grenoble-alpes.fr
 David Quintela - david.quintela@etu.univ-grenoble-alpes.fr  
 Lukasz Matyasik - lukasz.matyasik@etu.univ-grenoble-alpes.fr  
 Esteban Barneaud - esteban.barneaud@etu.univ-grenoble-alpes.fr
+
 
 Go to [Authors](/AUTHORS)
 
