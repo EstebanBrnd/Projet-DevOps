@@ -214,7 +214,6 @@ public class Dataframe {
             }
             return (float)sum/data.size();
         } else {
-            System.out.println("PAS BON");
             throw new IllegalArgumentException("La colonne " + column + " contient des chaines de caractères");
         }
             
