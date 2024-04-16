@@ -70,4 +70,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/projetdevops:latest  
+          tags: ghcr.io/EstebanBrnd/projetdevops:latest  
