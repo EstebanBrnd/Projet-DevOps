@@ -43,7 +43,7 @@ public class DataframeTest {
     public void verify_init_dataframe_csv(){
         Dataframe expected = DataframeTestMother.DataframeTestMother();
         Dataframe actual = new Dataframe("src/test/resources/data.csv");
-        System.out.println(actual.afficheData());
+        System.out.println( actual.afficheData() );
         for (int i = 0; i < expected.data.size(); i++){
             for (int j = 0; j < expected.data.get(i).size(); j++){
                 assertEquals(expected.data.get(i).get(j),actual.data.get(i).get(j));
