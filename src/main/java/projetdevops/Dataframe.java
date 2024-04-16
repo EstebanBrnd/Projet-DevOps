@@ -11,7 +11,10 @@ import java.lang.NumberFormatException;
 import java.lang.Integer;
 import java.lang.String;
 import java.lang.Class;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 public class Dataframe {
     ArrayList<Couple<String,Class>> columnsNamesAndClasses;
@@ -208,13 +211,6 @@ public class Dataframe {
                 throw new IllegalArgumentException("L'index est négatif");
             }
         }
-        if (integerArray.length == 0) {
-            ArrayList<String> names = new ArrayList<>();
-            for (Couple<String, Class> column : columnsNamesAndClasses) {
-                names.add(column.getFirst());
-            }
-            return new Dataframe(new ArrayList<>(), names);
-        }
         Dataframe res = this.iloc(integerArray[0]);
         for (int i = 1; i < integerArray.length; i++) {
             res = res.concat(this.iloc(integerArray[i]));
@@ -235,6 +231,9 @@ public class Dataframe {
         int[] integerArray = new int[integerArrayList.size()];
         for (int i = 0; i < integerArrayList.size(); i++){
             integerArray[i] = integerArrayList.get(i);
+        }
+        if(integerArray.length == 0){
+            return new Dataframe(new ArrayList<>(), getColumnNames());
         }
         return iloc(integerArray);
     }
@@ -325,27 +324,69 @@ public class Dataframe {
         for (int i = 0; i < jArrayList.size(); i++){
             jArray[i] = jArrayList.get(i);
         }
+        if(iArray.length == 0 && jArray.length == 0){
+            return new Dataframe(new ArrayList<>(), getColumnNames());
+        }
         return iloc(iArray, jArray);
     }
 
     public Dataframe loc(String label){
-        return null;
+        for(String columnName : getColumnNames()){
+            if (columnName.equals(label)){
+                return iloc(new int[]{}, new int[]{getColumnNames().indexOf(label)});
+            }
+        }
+        throw new IllegalArgumentException("La colonne n'existe pas");
     }
 
     public Dataframe loc(String[] labels){
-        return null;
+        ArrayList<Integer> indexes = new ArrayList<>();
+        if(labels.length == 0){
+            return this;
+        }
+        for(String label : labels){
+            if(!getColumnNames().contains(label)){
+                throw new IllegalArgumentException("La colonne" + label + "n'existe pas");
+            }
+                indexes.add(getColumnNames().indexOf(label));
+        }
+        int[] indexesArray = new int[indexes.size()];
+        for (int i = 0; i < indexes.size(); i++){
+            indexesArray[i] = indexes.get(i);
+        }
+        return iloc(new int[]{}, indexesArray);
     }
 
     public Dataframe loc(Boolean[] booleans){
-        return null;
+        if(booleans.length > columnsNamesAndClasses.size()){
+            throw new IllegalArgumentException("La taille du tableau de booleans doit être inférieure ou égale à la taille du dataframe");
+        }
+        ArrayList<Integer> indexes = new ArrayList<>();
+        for(int i = 0; i < booleans.length; i++){
+            if(booleans[i]){
+                indexes.add(i);
+            }
+        }
+        int[] indexesArray = new int[indexes.size()];
+        for (int i = 0; i < indexes.size(); i++){
+            indexesArray[i] = indexes.get(i);
+        }
+        if(indexesArray.length == 0){
+            return new Dataframe(new ArrayList<>(), getColumnNames());
+        }
+        return iloc(new int[]{},indexesArray);
     }
 
-    public Dataframe loc(String row, String column){
-        return null;
+    public Dataframe loc(String column, String row){
+        if(!data.get(0).contains(row)){
+            throw new IllegalArgumentException("La ligne" + row + "n'existe pas");
+        }
+        int index = data.get(0).indexOf(row);
+        return loc(column).iloc(new int[]{index},new int[]{});
     }
 
-    public Dataframe loc(Boolean condition){
-        return null;
+    public Dataframe loc(Boolean[] columnBooleans, Boolean[] rowBooleans){
+        return iloc(rowBooleans,columnBooleans);
     }
 
     public boolean equals(Dataframe obj) {
