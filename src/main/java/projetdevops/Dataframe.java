@@ -62,16 +62,16 @@ public class Dataframe {
         }
     }
 
-
     public Dataframe(String filename){
         ArrayList<String> list = extractFile(filename);
-        columnsNamesAndClasses = typeInference(list.get(0));
+
+        columnsNamesAndClasses = typeInference(list.get(0),list.get(1));
         // Ajout des données dans data
         data = new ArrayList<ArrayList>();
         for (int i = 0; i < columnsNamesAndClasses.size(); i++){
             data.add(new ArrayList());
         }
-        for (int i = 0; i < list.size(); i++){
+        for (int i = 1; i < list.size(); i++){
             String[] columns = list.get(i).split(",");
             int j = 0;
             for (String column : columns){
@@ -86,6 +86,59 @@ public class Dataframe {
             }
         }
     }
+
+    public ArrayList<String> extractFile(String filename){
+        try
+        {
+            File file = new File(filename);
+            FileReader fr = new FileReader(file);
+            BufferedReader br = new BufferedReader(fr);
+            ArrayList<String> list = new ArrayList<String>();
+            String line;
+            while((line = br.readLine()) != null)
+            {
+                list.add(line);
+            }
+            fr.close();
+            return list;
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+        throw new IllegalArgumentException("Erreur extraction des données du fichier");
+    }
+
+    public ArrayList<Couple<String,Class>> typeInference (String first_line,String line){
+        String[] columns_name = first_line.split(",");
+        String[] columns = line.split(",");
+        ArrayList<Couple<String,Class>> res = new ArrayList<Couple<String,Class>>();
+        int i = 0;
+        for (String column : columns){
+            try {
+                Integer.parseInt(column);
+                res.add(new Couple<String,Class>(columns_name[i], Integer.class));
+            } catch (NumberFormatException e){
+                try {
+                    Float.parseFloat(column);
+                    res.add(new Couple<String,Class>(columns_name[i], Float.class));
+                } catch (NumberFormatException e2){
+                    res.add(new Couple<String,Class>(columns_name[i], String.class));
+                }
+            }
+            i++;
+        }
+        return res;
+    }
+
+
+
+
+
+
+
+
+
 
     public String afficheData() {
         StringBuilder output = new StringBuilder();
@@ -125,50 +178,5 @@ public class Dataframe {
         }
         return output.toString();
     }
-
-
-    public ArrayList<String> extractFile(String filename){
-        try
-		{
-			File file = new File(filename);
-			FileReader fr = new FileReader(file);  			
-			BufferedReader br = new BufferedReader(fr);  
-			ArrayList<String> list = new ArrayList<String>();  
-			String line;
-			while((line = br.readLine()) != null)
-			{
-				list.add(line);    
-			}
-			fr.close();    
-            return list;
-		}
-		catch(IOException e)
-		{
-			e.printStackTrace();
-		}
-        throw new IllegalArgumentException("Erreur extraction des données du fichier");
-    }
-
-    public ArrayList<Couple<String,Class>> typeInference (String line){
-        String[] columns = line.split(",");
-        ArrayList<Couple<String,Class>> res = new ArrayList<Couple<String,Class>>();
-        int i = 0;
-        for (String column : columns){
-            try {
-                Integer.parseInt(column);
-                res.add(new Couple<String,Class>(String.valueOf(i), Integer.class));
-            } catch (NumberFormatException e){
-                try {
-                    Float.parseFloat(column);
-                    res.add(new Couple<String,Class>(String.valueOf(i), Float.class));
-                } catch (NumberFormatException e2){
-                    res.add(new Couple<String,Class>(String.valueOf(i), String.class));
-                }
-            }
-            i++;
-        }
-        return res;
-    }
-    
 
 }
