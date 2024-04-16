@@ -65,7 +65,6 @@ public class Dataframe {
         }
     }
 
-
     public Dataframe(String filename){
         ArrayList<String> list = extractFile(filename);
 
@@ -133,23 +132,23 @@ public class Dataframe {
 
     public ArrayList<String> extractFile(String filename){
         try
-		{
-			File file = new File(filename);
-			FileReader fr = new FileReader(file);  			
-			BufferedReader br = new BufferedReader(fr);  
-			ArrayList<String> list = new ArrayList<String>();  
-			String line;
-			while((line = br.readLine()) != null)
-			{
-				list.add(line);    
-			}
-			fr.close();    
+        {
+            File file = new File(filename);
+            FileReader fr = new FileReader(file);
+            BufferedReader br = new BufferedReader(fr);
+            ArrayList<String> list = new ArrayList<String>();
+            String line;
+            while((line = br.readLine()) != null)
+            {
+                list.add(line);
+            }
+            fr.close();
             return list;
-		}
-		catch(IOException e)
-		{
-			e.printStackTrace();
-		}
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
         throw new IllegalArgumentException("Erreur extraction des données du fichier");
     }
 
@@ -216,7 +215,7 @@ public class Dataframe {
         } else {
             throw new IllegalArgumentException("La colonne " + column + " contient des chaines de caractères");
         }
-            
+
     }
 
     public ArrayList<Float> mean(){
@@ -271,7 +270,7 @@ public class Dataframe {
         } else {
             throw new IllegalArgumentException("La colonne " + column + " contient des chaines de caractères");
         }
-            
+
     }
 
     public ArrayList<Float> min(){
@@ -330,7 +329,7 @@ public class Dataframe {
         } else {
             throw new IllegalArgumentException("La colonne " + column + " contient des chaines de caractères");
         }
-            
+
     }
 
     public ArrayList<Float> max(){
