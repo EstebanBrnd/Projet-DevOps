@@ -16,6 +16,52 @@ public class Dataframe {
     ArrayList<Couple<String,Class>> columnsNamesAndClasses;
 
     ArrayList<ArrayList> data;
+    //dataframe a partir d'un tableau de tableau de class et d'un tableau de nom de colonne
+
+    // public Dataframe(ArrayList<Couple<String,Class>> types){
+    //     columnsNamesAndClasses = new ArrayList<>();
+    //     data = new ArrayList<>();
+    //     if (types.size() == 0){
+    //         return;
+    //     }
+    //     for (Couple<String,Class> couple : types){
+    //         columnsNamesAndClasses.add(new Couple<String,Class>(couple.getFirst(),couple.getSecond()));
+    //         data.add(new ArrayList());
+    //     }
+    // }
+
+    public Dataframe( ArrayList<ArrayList<String>> data, ArrayList<String> columnNames){
+        columnsNamesAndClasses = new ArrayList<>();
+        this.data = new ArrayList<>();
+       
+        for (int j=0; j < data.size(); j++){
+            this.data.add(new ArrayList());
+            try {
+                Integer.parseInt(data.get(j).get(0));
+                columnsNamesAndClasses.add(new Couple<String,Class>(columnNames.get(j), Integer.class));
+            } catch (NumberFormatException e){
+                try {
+                    Float.parseFloat(data.get(j).get(0));
+                    columnsNamesAndClasses.add(new Couple<String,Class>(columnNames.get(j), Float.class));
+                } catch (NumberFormatException e2){
+                    columnsNamesAndClasses.add(new Couple<String,Class>(columnNames.get(j), String.class));
+                }
+            }
+        }
+        for (int j=0; j < data.size(); j++){
+            for(int i=0; i < data.get(j).size(); i++){
+                if (columnsNamesAndClasses.get(j).getSecond() == Integer.class){
+                    this.data.get(j).add(Integer.parseInt(data.get(j).get(i)));
+                } else if (columnsNamesAndClasses.get(j).getSecond() == Float.class){
+                    this.data.get(j).add(Float.parseFloat(data.get(j).get(i)));
+                } else {
+                    this.data.get(j).add(data.get(j).get(i));
+                }
+            }   
+
+        }
+    }
+
 
     public Dataframe(String filename){
         ArrayList<String> list = extractFile(filename);
@@ -41,14 +87,45 @@ public class Dataframe {
         }
     }
 
-    /*public void afficheData(){
-        for (int i = 0; i < data.size(); i++){
-            System.out.println("Colonne " + i + " : " + columnsNamesAndClasses.get(i).getFirst() + " de type " + columnsNamesAndClasses.get(i).getSecond());
-            for (int j = 0; j < data.get(i).size(); j++){
-                System.out.println("Elt " + j + " : " + data.get(i).get(j));
+    public String afficheData() {
+        StringBuilder output = new StringBuilder();
+        for (int i = 0; i < data.size(); i++) {
+            output.append("Colonne ").append(i).append(" : ").append(columnsNamesAndClasses.get(i).getFirst()).append(" de type ").append(columnsNamesAndClasses.get(i).getSecond()).append("\n");
+            for (int j = 0; j < data.get(i).size(); j++) {
+                output.append("Elt ").append(j).append(" : ").append(data.get(i).get(j)).append("\n");
             }
         }
-    }*/
+        return output.toString();
+    }
+
+
+    public String afficherPremieresLignes(int rowCount) {
+        if (rowCount > data.get(0).size()){
+            throw new IllegalArgumentException("Le nombre de lignes demandé est supérieur au nombre de lignes du dataframe");
+        }
+        if (rowCount <=0){
+            throw new IllegalArgumentException("Le nombre de lignes demandé est négatif ou nul");
+        }
+        StringBuilder output = new StringBuilder();
+        for (int i = 0; i < rowCount; i++) {
+            for (int j = 0; j < data.size(); j++) {
+                output.append(data.get(j).get(i)).append("\n");
+            }
+        }
+        return output.toString();
+    }
+
+    public String afficherDernieresLignes(int rowCount) {
+        int startingIndex = data.get(0).size() - rowCount; // Calculate the starting index
+        StringBuilder output = new StringBuilder();
+        for (int i = startingIndex; i < data.get(0).size(); i++) {
+            for (int j = 0; j < data.size(); j++) {
+                output.append(data.get(j).get(i)).append("\n");
+            }
+        }
+        return output.toString();
+    }
+
 
     public ArrayList<String> extractFile(String filename){
         try
@@ -94,15 +171,4 @@ public class Dataframe {
     }
     
 
-    public Dataframe(ArrayList<Class> types){
-        columnsNamesAndClasses = new ArrayList<>();
-        data = new ArrayList<>();
-        int i = 0;
-        for (Class type : types){
-            columnsNamesAndClasses.add(new Couple<String,Class>(String.valueOf(i),type));
-            // Ajoute une arraylist de type type à data
-            data.add(new ArrayList<Class>());
-            i++;
-        }
-    }
 }
