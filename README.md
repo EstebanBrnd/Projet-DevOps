@@ -34,6 +34,7 @@ Go to [Authors](/AUTHORS)
   - [Procédure validation PR/MR](#procédure-validation-prmr)
 - [Livraison continue](#livraison-continue)
 - [Site Github Pages](#site-gh-pages)
+- [Déploiement Maven](#déploiement-maven)
 - [Déploiement dans le Cloud](#déploiement-dans-le-cloud)
 - [Feedback](#feedback)
 
@@ -182,9 +183,9 @@ Il suffit de pull cette image et de la run.
 Nous avons également pu faire en sorte que ce ReadMe soit transformé en une page web accessible en cliquant [ici](https://estebanbrnd.github.io/Projet-DevOps/).
 A chaque mise à jour du ReadMe sur la branche main, le site est donc mis à jour.
 
-## Déploiement maven
+## Déploiement Maven
 
-Nous avons réaliser le déploiement sur GitHub des versions SNAPSHOT du projet. Pour cela on spécifie dans le fichier pom.xml le lient vers le projet où les fichiers .jar vont devoir être distribués lors de leur deployment. On utilise également une pipeline qui se déclanche lorsque l'on fait une pull-request sur la branche principale et un push sur la branch snapshot ce qui nous à permit de vérifier son bon fonctionnement avant de faire une pull request sur la branche principal de notre projet . Cette pipeline crait le .jar de la dernière version du projet, verif si il s'agit bien d'une version SNAPSHOT et le cas écheant déclanche le deployement de ce dernier.
+Nous avons réaliser le déploiement sur GitHub des versions SNAPSHOT du projet. Pour cela, on spécifie dans le fichier pom.xml le lien vers le projet où les fichiers .jar vont devoir être distribués lors de leur deploiement. On utilise également une pipeline qui se déclenche lorsque l'on fait une pull-request sur la branche principale et un push sur la branche snapshot ce qui nous à permis de vérifier son bon fonctionnement avant de faire une pull request sur la branche principale de notre projet. Cette pipeline crée le .jar de la dernière version du projet, verifie si il s'agit bien d'une version SNAPSHOT et le cas écheant déclenche le déploiement de ce dernier.
 
 
 ## Déploiement dans le Cloud
