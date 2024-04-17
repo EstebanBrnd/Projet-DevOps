@@ -95,6 +95,21 @@ dataframe.afficherDernieresLignes(5); // Affiche les 5 dernières lignes
 
 ### Selection
 
+Nous avons implémenté des fonctions de sélection pour le dataframe. Ainsi, il est possible de sélectionner des données grâce à leur index en ligne ou en ligne et colonne, ou encore grâce à leur label de colonne et même de ligne et colonne si la première colonne est une chaîne de caractères.
+
+```java
+Dataframe dataframe = new Dataframe("src/test/resources/data.csv");
+dataframe.iloc(0); // Selectionne la première ligne
+dataframe.iloc(0, 0); // Selectionne la première ligne et la première colonne
+dataframe.iloc([1,2]); // Sectionne la ligne 2 et 3
+dataframe.iloc([true,false,true]) // Selectionne la ligne 1 et 3
+
+dataframe.loc("Nom"); // Selectionne la colonne "Nom"
+dataframe.loc(["Nom", "Age"]); // Selectionne les colonnes "Nom" et "Age"
+dataframe.loc("Nom", "Test"); // Selectionne la colonne de "Nom" où la première ligne est "Test"
+dataframe.loc([true,false,false,false,true]); // Selectionne les colonnes 1 et 5
+```
+
 ### Statistiques
 
 Nous avons implémenté des fonctions de statistiques permettant de calculer la moyenne, le minimum ou le maximum de deux façons différentes. La première, prend un nom de colonne et renvoie la statistique demandée pour cette colonne. La deuxième ne prend rien en argument et renvoie une liste contenant la statistique demandée pour chaque colonne ou null si cette colonne ne contient ni des entiers, ni des flottants.  
