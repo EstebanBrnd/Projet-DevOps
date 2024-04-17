@@ -56,7 +56,7 @@ Dataframe dataframe = new Dataframe("src/test/resources/data.csv");
 
 #### Constructeur Tableau
 
-Le constructeur Tableau permet de créer un dataframe à partir d'une liste contenant les labels et types de chaque colonne. Il prend en paramètre une liste de labels et une liste de types. 
+Le constructeur Tableau permet de créer un dataframe à partir de deux listes. La première contenant des listes de donnée et la deuxième le label de chacune des listes de la première.
 
 Voici un exemple d'utilisation du constructeur Tableau :
 ```java
@@ -96,6 +96,8 @@ dataframe.afficherDernieresLignes(5); // Affiche les 5 dernières lignes
 ### Selection
 
 ### Statistiques
+
+Nous avons implémenté des fonctions de statistiques permétant de calculer la moyenne, le minimum ou le maximum de deux façon différentes. La première, prends un nom de colonne et renvoie la statistique demandée pour cette colonne. La deuxième ne prend rien en argument et renvoie une liste contenant la statistique demandé pour chaque colonne ou null si cette colonne ne contient ni des entiers, ni des flotants.  
 
 ## Outils utilisés
 
