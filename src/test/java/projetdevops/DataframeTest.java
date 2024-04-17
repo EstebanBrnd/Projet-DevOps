@@ -20,54 +20,54 @@ public class DataframeTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void test_init_dataframe_affichage(){
+    public void test_init_dataframe_affichage() {
         Dataframe test = DataframeTestMother.DataframeTestMother();
         System.out.println(test.afficheData());
     }
 
     @Test
-    public void test_init_dataframe_tableau(){
+    public void test_init_dataframe_tableau() {
         Dataframe test = DataframeTestMother.DataframeTestMother();
         System.out.println(test.afficheData());
-        assertEquals(test.columnsNamesAndClasses.size(),5);
-        assertEquals(test.data.size(),test.columnsNamesAndClasses.size());
-        assertEquals(test.columnsNamesAndClasses.get(0), new Couple<>("Nom",String.class));
-        assertEquals(test.columnsNamesAndClasses.get(1), new Couple<>("Nombre",Integer.class));
-        assertEquals(test.columnsNamesAndClasses.get(3), new Couple<>("Float",Float.class));
+        assertEquals(test.columnsNamesAndClasses.size(), 5);
+        assertEquals(test.data.size(), test.columnsNamesAndClasses.size());
+        assertEquals(test.columnsNamesAndClasses.get(0), new Couple<>("Nom", String.class));
+        assertEquals(test.columnsNamesAndClasses.get(1), new Couple<>("Nombre", Integer.class));
+        assertEquals(test.columnsNamesAndClasses.get(3), new Couple<>("Float", Float.class));
 
-        assertEquals(test.data.get(0).get(0),"Test");
-        assertEquals(test.data.get(1).get(1),3);
-        assertEquals(test.data.get(3).get(1),4f);
+        assertEquals(test.data.get(0).get(0), "Test");
+        assertEquals(test.data.get(1).get(1), 3);
+        assertEquals(test.data.get(3).get(1), 4f);
     }
 
     @Test
-    public void verify_init_dataframe_csv(){
+    public void verify_init_dataframe_csv() {
         Dataframe expected = DataframeTestMother.DataframeTestMother();
         Dataframe actual = new Dataframe("src/test/resources/data.csv");
-        System.out.println( actual.afficheData() );
-        for (int i = 0; i < expected.data.size(); i++){
-            for (int j = 0; j < expected.data.get(i).size(); j++){
-                assertEquals(expected.data.get(i).get(j),actual.data.get(i).get(j));
+        System.out.println(actual.afficheData());
+        for (int i = 0; i < expected.data.size(); i++) {
+            for (int j = 0; j < expected.data.get(i).size(); j++) {
+                assertEquals(expected.data.get(i).get(j), actual.data.get(i).get(j));
             }
         }
     }
 
     @Test
-    public void test_dataframe_tableau_empty(){
+    public void test_dataframe_tableau_empty() {
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         ArrayList<String> columnNames = new ArrayList<>();
-        Dataframe test = new Dataframe(data,columnNames);
-        assertEquals(test.columnsNamesAndClasses.size(),0);
-        assertEquals(test.data.size(),0);
+        Dataframe test = new Dataframe(data, columnNames);
+        assertEquals(test.columnsNamesAndClasses.size(), 0);
+        assertEquals(test.data.size(), 0);
 
     }
 
     @Test
-    public void test_dataframe_csv_empty(){
+    public void test_dataframe_csv_empty() {
         thrown.expect(IllegalArgumentException.class);
         Dataframe test = new Dataframe("");
-        assertEquals(test.columnsNamesAndClasses.size(),0);
-        assertEquals(test.data.size(),0);
+        assertEquals(test.columnsNamesAndClasses.size(), 0);
+        assertEquals(test.data.size(), 0);
 
     }
 
@@ -114,6 +114,7 @@ public class DataframeTest {
             System.err.println("Error reading from file: " + e.getMessage());
         }
     }
+
     @Test
     public void lastLines() {
         Dataframe test = new Dataframe("src/test/resources/data.csv");
@@ -137,55 +138,54 @@ public class DataframeTest {
     }
 
     @Test
-    public void test_init_dataframe_csv(){
+    public void test_init_dataframe_csv() {
         Dataframe test = new Dataframe("src/test/resources/data2.csv");
-        assertEquals(test.columnsNamesAndClasses.size(),4);
-        assertEquals(test.data.size(),4);
-        assertEquals(test.data.get(0).size(),4);
-        assertEquals(test.data.get(1).size(),4);
+        assertEquals(test.columnsNamesAndClasses.size(), 4);
+        assertEquals(test.data.size(), 4);
+        assertEquals(test.data.get(0).size(), 4);
+        assertEquals(test.data.get(1).size(), 4);
     }
 
     @Test
-    public void test_init_dataframe_csv2(){
+    public void test_init_dataframe_csv2() {
         Dataframe test = new Dataframe("src/test/resources/data2.csv");
-        assertEquals(test.columnsNamesAndClasses.get(0).getFirst(),"Nom");
-        assertEquals(test.columnsNamesAndClasses.get(0).getSecond(),String.class);
-        assertEquals(test.columnsNamesAndClasses.get(1).getFirst(),"Prenom");
-        assertEquals(test.columnsNamesAndClasses.get(1).getSecond(),String.class);
-        assertEquals(test.columnsNamesAndClasses.get(2).getFirst(),"Age");
-        assertEquals(test.columnsNamesAndClasses.get(2).getSecond(),Integer.class);
-        assertEquals(test.columnsNamesAndClasses.get(3).getFirst(),"Avenir");
-        assertEquals(test.columnsNamesAndClasses.get(3).getSecond(),String.class);
+        assertEquals(test.columnsNamesAndClasses.get(0).getFirst(), "Nom");
+        assertEquals(test.columnsNamesAndClasses.get(0).getSecond(), String.class);
+        assertEquals(test.columnsNamesAndClasses.get(1).getFirst(), "Prenom");
+        assertEquals(test.columnsNamesAndClasses.get(1).getSecond(), String.class);
+        assertEquals(test.columnsNamesAndClasses.get(2).getFirst(), "Age");
+        assertEquals(test.columnsNamesAndClasses.get(2).getSecond(), Integer.class);
+        assertEquals(test.columnsNamesAndClasses.get(3).getFirst(), "Avenir");
+        assertEquals(test.columnsNamesAndClasses.get(3).getSecond(), String.class);
     }
 
     @Test
-    public void test_init_dataframe_csv3(){
+    public void test_init_dataframe_csv3() {
         Dataframe test = new Dataframe("src/test/resources/data2.csv");
-        assertEquals(test.data.get(0).get(0),"Quintela");
-        assertEquals(test.data.get(1).get(0),"David");
-        assertEquals(test.data.get(2).get(0),42);
-        assertEquals(test.data.get(3).get(0),"Retraite");
+        assertEquals(test.data.get(0).get(0), "Quintela");
+        assertEquals(test.data.get(1).get(0), "David");
+        assertEquals(test.data.get(2).get(0), 42);
+        assertEquals(test.data.get(3).get(0), "Retraite");
 
-        assertEquals(test.data.get(0).get(1),"Bouvier");
-        assertEquals(test.data.get(1).get(1),"Lilou");
-        assertEquals(test.data.get(2).get(1),21);
-        assertEquals(test.data.get(3).get(1),"Aucun");
+        assertEquals(test.data.get(0).get(1), "Bouvier");
+        assertEquals(test.data.get(1).get(1), "Lilou");
+        assertEquals(test.data.get(2).get(1), 21);
+        assertEquals(test.data.get(3).get(1), "Aucun");
 
-        assertEquals(test.data.get(0).get(2),"Matyasik");
-        assertEquals(test.data.get(1).get(2),"Lukasz");
-        assertEquals(test.data.get(2).get(2),22);
-        assertEquals(test.data.get(3).get(2),"President");
+        assertEquals(test.data.get(0).get(2), "Matyasik");
+        assertEquals(test.data.get(1).get(2), "Lukasz");
+        assertEquals(test.data.get(2).get(2), 22);
+        assertEquals(test.data.get(3).get(2), "President");
 
-        assertEquals(test.data.get(0).get(3),"Barneaud");
-        assertEquals(test.data.get(1).get(3),"Esteban");
-        assertEquals(test.data.get(2).get(3),21);
-        assertEquals(test.data.get(3).get(3),"Agent secret");
+        assertEquals(test.data.get(0).get(3), "Barneaud");
+        assertEquals(test.data.get(1).get(3), "Esteban");
+        assertEquals(test.data.get(2).get(3), 21);
+        assertEquals(test.data.get(3).get(3), "Agent secret");
     }
 
 
-
     @Test
-    public void test_iloc_rows_with_integer(){
+    public void test_iloc_rows_with_integer() {
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         ArrayList<String> columnNames = new ArrayList<>();
         columnNames.add("Nom");
@@ -213,30 +213,30 @@ public class DataframeTest {
 
         Dataframe test = DataframeTestMother.DataframeTestMother();
         Dataframe iloc = test.iloc(1);
-        for (int i = 0; i < expected.data.size(); i++){
-            for (int j = 0; j < expected.data.get(i).size(); j++){
-                assertEquals(expected.data.get(i).get(j),iloc.data.get(i).get(j));
+        for (int i = 0; i < expected.data.size(); i++) {
+            for (int j = 0; j < expected.data.get(i).size(); j++) {
+                assertEquals(expected.data.get(i).get(j), iloc.data.get(i).get(j));
             }
         }
         assertTrue(expected.equals(iloc));
     }
 
     @Test
-    public void test_iloc_rows_with_integer_out_of_bound(){
+    public void test_iloc_rows_with_integer_out_of_bound() {
         thrown.expect(IllegalArgumentException.class);
         Dataframe test = DataframeTestMother.DataframeTestMother();
         Dataframe iloc = test.iloc(10);
     }
 
     @Test
-    public void test_iloc_rows_with_integer_negative(){
+    public void test_iloc_rows_with_integer_negative() {
         thrown.expect(IllegalArgumentException.class);
         Dataframe test = DataframeTestMother.DataframeTestMother();
         Dataframe iloc = test.iloc(-1);
     }
 
     @Test
-    public void test_iloc_rows_with_integer_list(){
+    public void test_iloc_rows_with_integer_list() {
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         ArrayList<String> columnNames = new ArrayList<>();
         columnNames.add("Nom");
@@ -269,44 +269,44 @@ public class DataframeTest {
 
         Dataframe test = DataframeTestMother.DataframeTestMother();
         Dataframe iloc = test.iloc(new int[]{1, 2});
-        for (int i = 0; i < expected.data.size(); i++){
-            for (int j = 0; j < expected.data.get(i).size(); j++){
-                assertEquals(expected.data.get(i).get(j),iloc.data.get(i).get(j));
+        for (int i = 0; i < expected.data.size(); i++) {
+            for (int j = 0; j < expected.data.get(i).size(); j++) {
+                assertEquals(expected.data.get(i).get(j), iloc.data.get(i).get(j));
             }
         }
         assertTrue(expected.equals(iloc));
     }
 
     @Test
-    public void test_iloc_rows_with_empty_integer_list(){
+    public void test_iloc_rows_with_empty_integer_list() {
         Dataframe expected = DataframeTestMother.DataframeTestMother();
 
         Dataframe test = DataframeTestMother.DataframeTestMother();
         Dataframe iloc = test.iloc(new int[]{});
-        for (int i = 0; i < expected.data.size(); i++){
-            for (int j = 0; j < expected.data.get(i).size(); j++){
-                assertEquals(expected.data.get(i).get(j),iloc.data.get(i).get(j));
+        for (int i = 0; i < expected.data.size(); i++) {
+            for (int j = 0; j < expected.data.get(i).size(); j++) {
+                assertEquals(expected.data.get(i).get(j), iloc.data.get(i).get(j));
             }
         }
         assertTrue(expected.equals(iloc));
     }
 
     @Test
-    public void test_iloc_rows_with_integer_list_out_of_bound(){
+    public void test_iloc_rows_with_integer_list_out_of_bound() {
         thrown.expect(IllegalArgumentException.class);
         Dataframe test = DataframeTestMother.DataframeTestMother();
         Dataframe iloc = test.iloc(new int[]{1, 3, 10});
     }
 
     @Test
-    public void test_iloc_rows_with_integer_list_negative(){
+    public void test_iloc_rows_with_integer_list_negative() {
         thrown.expect(IllegalArgumentException.class);
         Dataframe test = DataframeTestMother.DataframeTestMother();
         Dataframe iloc = test.iloc(new int[]{1, 3, -1});
     }
 
     @Test
-    public void test_iloc_rows_with_boolean_mask(){
+    public void test_iloc_rows_with_boolean_mask() {
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         ArrayList<String> columnNames = new ArrayList<>();
         columnNames.add("Nom");
@@ -333,17 +333,17 @@ public class DataframeTest {
         Dataframe expected = new Dataframe(data, columnNames);
 
         Dataframe test = DataframeTestMother.DataframeTestMother();
-        Dataframe iloc = test.iloc(new Boolean[]{false, true,false});
-        for (int i = 0; i < expected.data.size(); i++){
-            for (int j = 0; j < expected.data.get(i).size(); j++){
-                assertEquals(expected.data.get(i).get(j),iloc.data.get(i).get(j));
+        Dataframe iloc = test.iloc(new Boolean[]{false, true, false});
+        for (int i = 0; i < expected.data.size(); i++) {
+            for (int j = 0; j < expected.data.get(i).size(); j++) {
+                assertEquals(expected.data.get(i).get(j), iloc.data.get(i).get(j));
             }
         }
         assertTrue(expected.equals(iloc));
     }
 
     @Test
-    public void test_iloc_rows_with_boolean_mask2(){
+    public void test_iloc_rows_with_boolean_mask2() {
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         ArrayList<String> columnNames = new ArrayList<>();
         columnNames.add("Nom");
@@ -376,23 +376,23 @@ public class DataframeTest {
 
         Dataframe test = DataframeTestMother.DataframeTestMother();
         Dataframe iloc = test.iloc(new Boolean[]{true, false, true});
-        for (int i = 0; i < expected.data.size(); i++){
-            for (int j = 0; j < expected.data.get(i).size(); j++){
-                assertEquals(expected.data.get(i).get(j),iloc.data.get(i).get(j));
+        for (int i = 0; i < expected.data.size(); i++) {
+            for (int j = 0; j < expected.data.get(i).size(); j++) {
+                assertEquals(expected.data.get(i).get(j), iloc.data.get(i).get(j));
             }
         }
         assertTrue(expected.equals(iloc));
     }
 
     @Test
-    public void test_iloc_rows_with_boolean_mask_of_too_much_size(){
+    public void test_iloc_rows_with_boolean_mask_of_too_much_size() {
         thrown.expect(IllegalArgumentException.class);
         Dataframe test = DataframeTestMother.DataframeTestMother();
-        Dataframe iloc = test.iloc(new Boolean[]{false, true,false,true,false,true,false,true});
+        Dataframe iloc = test.iloc(new Boolean[]{false, true, false, true, false, true, false, true});
     }
 
     @Test
-    public void test_iloc_rows_with_boolean_mask_empty(){
+    public void test_iloc_rows_with_boolean_mask_empty() {
         Dataframe test = DataframeTestMother.DataframeTestMother();
         ArrayList<ArrayList<String>> data = new ArrayList<>();
 
@@ -404,7 +404,7 @@ public class DataframeTest {
     }
 
     @Test
-    public void test_iloc_both_with_integer(){
+    public void test_iloc_both_with_integer() {
         Dataframe test = DataframeTestMother.DataframeTestMother();
         ArrayList<ArrayList<String>> data = new ArrayList<>();
 
@@ -415,44 +415,44 @@ public class DataframeTest {
         Dataframe expected = new Dataframe(data, test.getColumnNames());
 
         Dataframe iloc = test.iloc(3, 1);
-        for (int i = 0; i < expected.data.size(); i++){
-            for (int j = 0; j < expected.data.get(i).size(); j++){
-                assertEquals(expected.data.get(i).get(j),iloc.data.get(i).get(j));
+        for (int i = 0; i < expected.data.size(); i++) {
+            for (int j = 0; j < expected.data.get(i).size(); j++) {
+                assertEquals(expected.data.get(i).get(j), iloc.data.get(i).get(j));
             }
         }
         assertTrue(expected.equals(iloc));
     }
 
     @Test
-    public void test_iloc_both_with_integer_out_of_bound(){
+    public void test_iloc_both_with_integer_out_of_bound() {
         thrown.expect(IllegalArgumentException.class);
         Dataframe test = DataframeTestMother.DataframeTestMother();
         Dataframe iloc = test.iloc(10, 1);
     }
 
     @Test
-    public void test_iloc_both_with_integer_out_of_bound2(){
+    public void test_iloc_both_with_integer_out_of_bound2() {
         thrown.expect(IllegalArgumentException.class);
         Dataframe test = DataframeTestMother.DataframeTestMother();
         Dataframe iloc = test.iloc(1, 10);
     }
 
     @Test
-    public void test_iloc_both_with_integer_negative(){
+    public void test_iloc_both_with_integer_negative() {
         thrown.expect(IllegalArgumentException.class);
         Dataframe test = DataframeTestMother.DataframeTestMother();
         Dataframe iloc = test.iloc(-1, 1);
     }
 
     @Test
-    public void test_iloc_both_with_integer_negative2(){
+    public void test_iloc_both_with_integer_negative2() {
         thrown.expect(IllegalArgumentException.class);
         Dataframe test = DataframeTestMother.DataframeTestMother();
         Dataframe iloc = test.iloc(1, -1);
     }
 
     @Test
-    public void test_iloc_both_with_integer_list(){
+    public void test_iloc_both_with_integer_list() {
         Dataframe test = DataframeTestMother.DataframeTestMother();
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         ArrayList<String> D1 = new ArrayList<>();
@@ -467,16 +467,16 @@ public class DataframeTest {
         Dataframe expected = new Dataframe(data, test.getColumnNames());
 
         Dataframe iloc = test.iloc(new int[]{0, 2}, new int[]{0, 3});
-        for (int i = 0; i < expected.data.size(); i++){
-            for (int j = 0; j < expected.data.get(i).size(); j++){
-                assertEquals(expected.data.get(i).get(j),iloc.data.get(i).get(j));
+        for (int i = 0; i < expected.data.size(); i++) {
+            for (int j = 0; j < expected.data.get(i).size(); j++) {
+                assertEquals(expected.data.get(i).get(j), iloc.data.get(i).get(j));
             }
         }
         assertTrue(expected.equals(iloc));
     }
 
     @Test
-    public void test_iloc_both_with_partialy_empty_integer_list(){
+    public void test_iloc_both_with_partialy_empty_integer_list() {
         Dataframe test = DataframeTestMother.DataframeTestMother();
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         ArrayList<String> D1 = new ArrayList<>();
@@ -493,16 +493,16 @@ public class DataframeTest {
         Dataframe expected = new Dataframe(data, test.getColumnNames());
 
         Dataframe iloc = test.iloc(new int[]{}, new int[]{0, 3});
-        for (int i = 0; i < expected.data.size(); i++){
-            for (int j = 0; j < expected.data.get(i).size(); j++){
-                assertEquals(expected.data.get(i).get(j),iloc.data.get(i).get(j));
+        for (int i = 0; i < expected.data.size(); i++) {
+            for (int j = 0; j < expected.data.get(i).size(); j++) {
+                assertEquals(expected.data.get(i).get(j), iloc.data.get(i).get(j));
             }
         }
         assertTrue(expected.equals(iloc));
     }
 
     @Test
-    public void test_iloc_both_with_partialy_empty_integer_list2(){
+    public void test_iloc_both_with_partialy_empty_integer_list2() {
         Dataframe test = DataframeTestMother.DataframeTestMother();
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         ArrayList<String> D1 = new ArrayList<>();
@@ -528,45 +528,45 @@ public class DataframeTest {
 
         Dataframe expected = new Dataframe(data, test.getColumnNames());
 
-        Dataframe iloc = test.iloc(new int[]{0,2}, new int[]{});
-        for (int i = 0; i < expected.data.size(); i++){
-            for (int j = 0; j < expected.data.get(i).size(); j++){
-                assertEquals(expected.data.get(i).get(j),iloc.data.get(i).get(j));
+        Dataframe iloc = test.iloc(new int[]{0, 2}, new int[]{});
+        for (int i = 0; i < expected.data.size(); i++) {
+            for (int j = 0; j < expected.data.get(i).size(); j++) {
+                assertEquals(expected.data.get(i).get(j), iloc.data.get(i).get(j));
             }
         }
         assertTrue(expected.equals(iloc));
     }
 
     @Test
-    public void test_iloc_both_with_empty_integer_list(){
+    public void test_iloc_both_with_empty_integer_list() {
         Dataframe test = DataframeTestMother.DataframeTestMother();
         Dataframe expected = DataframeTestMother.DataframeTestMother();
 
         Dataframe iloc = test.iloc(new int[]{}, new int[]{});
-        for (int i = 0; i < expected.data.size(); i++){
-            for (int j = 0; j < expected.data.get(i).size(); j++){
-                assertEquals(expected.data.get(i).get(j),iloc.data.get(i).get(j));
+        for (int i = 0; i < expected.data.size(); i++) {
+            for (int j = 0; j < expected.data.get(i).size(); j++) {
+                assertEquals(expected.data.get(i).get(j), iloc.data.get(i).get(j));
             }
         }
         assertTrue(expected.equals(iloc));
     }
 
     @Test
-    public void test_iloc_both_with_integer_list_out_of_bound(){
+    public void test_iloc_both_with_integer_list_out_of_bound() {
         thrown.expect(IllegalArgumentException.class);
         Dataframe test = DataframeTestMother.DataframeTestMother();
         Dataframe iloc = test.iloc(new int[]{1, 3, 10}, new int[]{1, 2});
     }
 
     @Test
-    public void test_iloc_both_with_integer_list_out_of_bound2(){
+    public void test_iloc_both_with_integer_list_out_of_bound2() {
         thrown.expect(IllegalArgumentException.class);
         Dataframe test = DataframeTestMother.DataframeTestMother();
         Dataframe iloc = test.iloc(new int[]{1, 3}, new int[]{1, 20});
     }
 
     @Test
-    public void test_iloc_both_with_boolean_mask(){
+    public void test_iloc_both_with_boolean_mask() {
         Dataframe test = DataframeTestMother.DataframeTestMother();
         ArrayList<ArrayList<String>> data = new ArrayList<>();
 
@@ -582,17 +582,17 @@ public class DataframeTest {
 
         Dataframe expected = new Dataframe(data, test.getColumnNames());
 
-        Dataframe iloc = test.iloc(new Boolean[]{true, false,true}, new Boolean[]{true,false,false,true,false});
-        for (int i = 0; i < expected.data.size(); i++){
-            for (int j = 0; j < expected.data.get(i).size(); j++){
-                assertEquals(expected.data.get(i).get(j),iloc.data.get(i).get(j));
+        Dataframe iloc = test.iloc(new Boolean[]{true, false, true}, new Boolean[]{true, false, false, true, false});
+        for (int i = 0; i < expected.data.size(); i++) {
+            for (int j = 0; j < expected.data.get(i).size(); j++) {
+                assertEquals(expected.data.get(i).get(j), iloc.data.get(i).get(j));
             }
         }
         assertTrue(expected.equals(iloc));
     }
 
     @Test
-    public void test_iloc_both_with_boolean_mask_partialy_empty(){
+    public void test_iloc_both_with_boolean_mask_partialy_empty() {
         Dataframe test = DataframeTestMother.DataframeTestMother();
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         ArrayList<String> D1 = new ArrayList<>();
@@ -608,17 +608,17 @@ public class DataframeTest {
 
         Dataframe expected = new Dataframe(data, test.getColumnNames());
 
-        Dataframe iloc = test.iloc(new Boolean[]{}, new Boolean[]{true,false,false,true,false});
-        for (int i = 0; i < expected.data.size(); i++){
-            for (int j = 0; j < expected.data.get(i).size(); j++){
-                assertEquals(expected.data.get(i).get(j),iloc.data.get(i).get(j));
+        Dataframe iloc = test.iloc(new Boolean[]{}, new Boolean[]{true, false, false, true, false});
+        for (int i = 0; i < expected.data.size(); i++) {
+            for (int j = 0; j < expected.data.get(i).size(); j++) {
+                assertEquals(expected.data.get(i).get(j), iloc.data.get(i).get(j));
             }
         }
         assertTrue(expected.equals(iloc));
     }
 
     @Test
-    public void test_iloc_both_with_boolean_partialy_empty2(){
+    public void test_iloc_both_with_boolean_partialy_empty2() {
         Dataframe test = DataframeTestMother.DataframeTestMother();
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         ArrayList<String> D1 = new ArrayList<>();
@@ -645,16 +645,16 @@ public class DataframeTest {
         Dataframe expected = new Dataframe(data, test.getColumnNames());
 
         Dataframe iloc = test.iloc(new Boolean[]{true, false, true}, new Boolean[]{});
-        for (int i = 0; i < expected.data.size(); i++){
-            for (int j = 0; j < expected.data.get(i).size(); j++){
-                assertEquals(expected.data.get(i).get(j),iloc.data.get(i).get(j));
+        for (int i = 0; i < expected.data.size(); i++) {
+            for (int j = 0; j < expected.data.get(i).size(); j++) {
+                assertEquals(expected.data.get(i).get(j), iloc.data.get(i).get(j));
             }
         }
         assertTrue(expected.equals(iloc));
     }
 
     @Test
-    public void test_iloc_both_with_empty_boolean(){
+    public void test_iloc_both_with_empty_boolean() {
         Dataframe test = DataframeTestMother.DataframeTestMother();
         ArrayList<ArrayList<String>> data = new ArrayList<>();
 
@@ -665,7 +665,7 @@ public class DataframeTest {
     }
 
     @Test
-    public void test_loc_on_label(){
+    public void test_loc_on_label() {
         Dataframe test = DataframeTestMother.DataframeTestMother();
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         ArrayList<String> D1 = new ArrayList<>();
@@ -678,23 +678,23 @@ public class DataframeTest {
 
 
         Dataframe loc = test.loc("Nom");
-        for (int i = 0; i < expected.data.size(); i++){
-            for (int j = 0; j < expected.data.get(i).size(); j++){
-                assertEquals(expected.data.get(i).get(j),loc.data.get(i).get(j));
+        for (int i = 0; i < expected.data.size(); i++) {
+            for (int j = 0; j < expected.data.get(i).size(); j++) {
+                assertEquals(expected.data.get(i).get(j), loc.data.get(i).get(j));
             }
         }
         assertTrue(expected.equals(loc));
     }
 
     @Test
-    public void test_loc_on_label_inexistant(){
+    public void test_loc_on_label_inexistant() {
         thrown.expect(IllegalArgumentException.class);
         Dataframe test = DataframeTestMother.DataframeTestMother();
         Dataframe loc = test.loc("Nom2");
     }
 
     @Test
-    public void test_loc_on_label_array(){
+    public void test_loc_on_label_array() {
         Dataframe test = DataframeTestMother.DataframeTestMother();
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         ArrayList<String> D1 = new ArrayList<>();
@@ -710,23 +710,23 @@ public class DataframeTest {
 
         Dataframe expected = new Dataframe(data, test.getColumnNames());
         Dataframe loc = test.loc(new String[]{"Nom", "Float"});
-        for (int i = 0; i < expected.data.size(); i++){
-            for (int j = 0; j < expected.data.get(i).size(); j++){
-                assertEquals(expected.data.get(i).get(j),loc.data.get(i).get(j));
+        for (int i = 0; i < expected.data.size(); i++) {
+            for (int j = 0; j < expected.data.get(i).size(); j++) {
+                assertEquals(expected.data.get(i).get(j), loc.data.get(i).get(j));
             }
         }
         assertTrue(expected.equals(loc));
     }
 
     @Test
-    public void test_loc_on_label_array_inexistant(){
+    public void test_loc_on_label_array_inexistant() {
         thrown.expect(IllegalArgumentException.class);
         Dataframe test = DataframeTestMother.DataframeTestMother();
         Dataframe loc = test.loc(new String[]{"Nom", "Float2"});
     }
 
     @Test
-    public void test_loc_on_label_array_empty(){
+    public void test_loc_on_label_array_empty() {
         Dataframe test = DataframeTestMother.DataframeTestMother();
         Dataframe expected = DataframeTestMother.DataframeTestMother();
         Dataframe loc = test.loc(new String[]{});
@@ -734,7 +734,7 @@ public class DataframeTest {
     }
 
     @Test
-    public void test_loc_on_boolean_array(){
+    public void test_loc_on_boolean_array() {
         Dataframe test = DataframeTestMother.DataframeTestMother();
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         ArrayList<String> D1 = new ArrayList<>();
@@ -750,23 +750,23 @@ public class DataframeTest {
 
         Dataframe expected = new Dataframe(data, test.getColumnNames());
         Dataframe loc = test.loc(new Boolean[]{true, false, false, true, false});
-        for (int i = 0; i < expected.data.size(); i++){
-            for (int j = 0; j < expected.data.get(i).size(); j++){
-                assertEquals(expected.data.get(i).get(j),loc.data.get(i).get(j));
+        for (int i = 0; i < expected.data.size(); i++) {
+            for (int j = 0; j < expected.data.get(i).size(); j++) {
+                assertEquals(expected.data.get(i).get(j), loc.data.get(i).get(j));
             }
         }
         assertTrue(expected.equals(loc));
     }
 
     @Test
-    public void test_loc_on_boolean_array_out_of_bound(){
+    public void test_loc_on_boolean_array_out_of_bound() {
         thrown.expect(IllegalArgumentException.class);
         Dataframe test = DataframeTestMother.DataframeTestMother();
         Dataframe loc = test.loc(new Boolean[]{true, false, false, true, false, true});
     }
 
     @Test
-    public void test_loc_on_boolean_array_empty(){
+    public void test_loc_on_boolean_array_empty() {
         Dataframe test = DataframeTestMother.DataframeTestMother();
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         Dataframe expected = new Dataframe(data, test.getColumnNames());
@@ -775,7 +775,7 @@ public class DataframeTest {
     }
 
     @Test
-    public void test_loc_on_both_labels(){
+    public void test_loc_on_both_labels() {
         Dataframe test = DataframeTestMother.DataframeTestMother();
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         ArrayList<String> D1 = new ArrayList<>();
@@ -788,21 +788,21 @@ public class DataframeTest {
     }
 
     @Test
-    public void test_loc_on_both_labels_inexistant(){
+    public void test_loc_on_both_labels_inexistant() {
         thrown.expect(IllegalArgumentException.class);
         Dataframe test = DataframeTestMother.DataframeTestMother();
         Dataframe loc = test.loc("Nombre7", "Test2");
     }
 
     @Test
-    public void test_loc_on_both_labels_inexistant2(){
+    public void test_loc_on_both_labels_inexistant2() {
         thrown.expect(IllegalArgumentException.class);
         Dataframe test = DataframeTestMother.DataframeTestMother();
         Dataframe loc = test.loc("Nombre", "Test7");
     }
 
     @Test
-    public void test_loc_on_both_boolean_array(){
+    public void test_loc_on_both_boolean_array() {
         Dataframe test = DataframeTestMother.DataframeTestMother();
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         ArrayList<String> D1 = new ArrayList<>();
@@ -815,14 +815,14 @@ public class DataframeTest {
     }
 
     @Test
-    public void test_loc_on_both_boolean_array_out_of_bound(){
+    public void test_loc_on_both_boolean_array_out_of_bound() {
         thrown.expect(IllegalArgumentException.class);
         Dataframe test = DataframeTestMother.DataframeTestMother();
         Dataframe loc = test.loc(new Boolean[]{false, true, false, false, false}, new Boolean[]{false, true, false, false});
     }
 
     @Test
-    public void test_loc_on_both_boolean_array_empty(){
+    public void test_loc_on_both_boolean_array_empty() {
         Dataframe test = DataframeTestMother.DataframeTestMother();
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         Dataframe expected = new Dataframe(data, test.getColumnNames());
@@ -831,7 +831,7 @@ public class DataframeTest {
     }
 
     @Test
-    public void test_loc_on_both_boolean_array_partialy_empty(){
+    public void test_loc_on_both_boolean_array_partialy_empty() {
         Dataframe test = DataframeTestMother.DataframeTestMother();
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         ArrayList<String> D1 = new ArrayList<>();
@@ -846,7 +846,7 @@ public class DataframeTest {
     }
 
     @Test
-    public void test_loc_on_both_boolean_array_partialy_empty2(){
+    public void test_loc_on_both_boolean_array_partialy_empty2() {
         Dataframe test = DataframeTestMother.DataframeTestMother();
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         ArrayList<String> D1 = new ArrayList<>();
@@ -877,32 +877,127 @@ public class DataframeTest {
 
     @Test
     public void test_linesWithColumnIntegerEqual() {
-        Dataframe test = new Dataframe("src/test/resources/data2.csv");
-        String output = test.linesWithColumnIntegerEqual("Age", 21);
-        if (output.isEmpty()){
-            throw new IllegalArgumentException("Could not find matching data");
-        }    }
-    @Test
-    public void test_linesWithColumnStringEqual() {
-        Dataframe test = new Dataframe("src/test/resources/data2.csv");
-        String output = test.linesWithColumnStringEqual("Nom","Matyasik");
-        if (output.isEmpty()){
-            throw new IllegalArgumentException("Could not find matching data");
-        }    }
-    @Test
-    public void test_linesWithColumnIntegerGreater() {
-        Dataframe test = new Dataframe("src/test/resources/data2.csv");
-        String output = test.linesWithColumnIntegerGreater("Age",10);
-        if (output.isEmpty()){
-            throw new IllegalArgumentException("Could not find matching data");
-        }    }
-    @Test
-    public void test_linesWithColumnIntegerLess() {
-        Dataframe test = new Dataframe("src/test/resources/data2.csv");
-        String output = test.linesWithColumnIntegerLess("Age",40);
-        if (output.isEmpty()){
-            throw new IllegalArgumentException("Could not find matching data");
-        }
+        Dataframe test = new Dataframe("src/test/resources/data.csv");
+        Dataframe output = test.linesWithColumnIntegerEqual("Nombre", 3);
+
+        ArrayList<ArrayList<String>> data = new ArrayList<>();
+        ArrayList<String> D1 = new ArrayList<>();
+        D1.add("Test2");
+        D1.add("3");
+        D1.add("23");
+        D1.add("4.0");
+        D1.add("7/4/2024");
+        data.add(D1);
+
+        Dataframe expected = new Dataframe(data, test.getColumnNames());
+        assertTrue(expected.equals(output));
     }
 
+    @Test
+    public void test_linesWithColumnStringEqual() {
+        Dataframe test = new Dataframe("src/test/resources/data.csv");
+        Dataframe output = test.linesWithColumnStringEqual("Nom", "Test3");
+
+        ArrayList<ArrayList<String>> data = new ArrayList<>();
+        ArrayList<String> D1 = new ArrayList<>();
+        D1.add("Test3");
+        D1.add("4");
+        D1.add("23");
+        D1.add("8.0");
+        D1.add("7/4/2024");
+        data.add(D1);
+
+        Dataframe expected = new Dataframe(data, test.getColumnNames());
+        assertTrue(expected.equals(output));
+    }
+
+    @Test
+    public void test_linesWithColumnIntegerGreater() {
+        Dataframe test = new Dataframe("src/test/resources/data.csv");
+        Dataframe output = test.linesWithColumnIntegerGreater("Nombre", 3);
+
+        ArrayList<ArrayList<String>> data = new ArrayList<>();
+        ArrayList<String> D1 = new ArrayList<>();
+        D1.add("Test3");
+        D1.add("4");
+        D1.add("23");
+        D1.add("8.0");
+        D1.add("7/4/2024");
+        data.add(D1);
+
+        Dataframe expected = new Dataframe(data, test.getColumnNames());
+        assertTrue(expected.equals(output));
+    }
+
+    @Test
+    public void test_linesWithColumnIntegerLess() {
+        Dataframe test = new Dataframe("src/test/resources/data.csv");
+        Dataframe output = test.linesWithColumnIntegerLess("Nombre", 3);
+
+        ArrayList<ArrayList<String>> data = new ArrayList<>();
+        ArrayList<String> D1 = new ArrayList<>();
+        D1.add("Test");
+        D1.add("2");
+        D1.add("23");
+        D1.add("2.0");
+        D1.add("7/4/2024");
+        data.add(D1);
+
+        Dataframe expected = new Dataframe(data, test.getColumnNames());
+        assertTrue(expected.equals(output));
+    }
+
+    @Test
+    public void test_linesWithColumnFloatEqual() {
+        Dataframe test = new Dataframe("src/test/resources/data.csv");
+        Dataframe output = test.linesWithColumnFloat("Float", 8.0f, "=");
+
+        ArrayList<ArrayList<String>> data = new ArrayList<>();
+        ArrayList<String> D1 = new ArrayList<>();
+        D1.add("Test3");
+        D1.add("4");
+        D1.add("23");
+        D1.add("8.0");
+        D1.add("7/4/2024");
+        data.add(D1);
+
+        Dataframe expected = new Dataframe(data, test.getColumnNames());
+        assertTrue(expected.equals(output));
+    }
+
+    @Test
+    public void test_linesWithColumnFloatGreater() {
+        Dataframe test = new Dataframe("src/test/resources/data.csv");
+        Dataframe output = test.linesWithColumnFloat("Float", 7.0f, ">");
+
+        ArrayList<ArrayList<String>> data = new ArrayList<>();
+        ArrayList<String> D1 = new ArrayList<>();
+        D1.add("Test3");
+        D1.add("4");
+        D1.add("23");
+        D1.add("8.0");
+        D1.add("7/4/2024");
+        data.add(D1);
+
+        Dataframe expected = new Dataframe(data, test.getColumnNames());
+        assertTrue(expected.equals(output));
+    }
+
+    @Test
+    public void test_linesWithColumnFloatLess() {
+        Dataframe test = new Dataframe("src/test/resources/data.csv");
+        Dataframe output = test.linesWithColumnFloat("Float", 3.0f, "<");
+
+        ArrayList<ArrayList<String>> data = new ArrayList<>();
+        ArrayList<String> D1 = new ArrayList<>();
+        D1.add("Test");
+        D1.add("2");
+        D1.add("23");
+        D1.add("2.0");
+        D1.add("7/4/2024");
+        data.add(D1);
+
+        Dataframe expected = new Dataframe(data, test.getColumnNames());
+        assertTrue(expected.equals(output));
+    }
 }
