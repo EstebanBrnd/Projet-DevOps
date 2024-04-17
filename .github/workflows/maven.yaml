@@ -46,7 +46,7 @@ jobs:
         echo "::set-output name=version::$VERSION"
 
     - name: Check if Version is Snapshot
-      run: echo ${{ steps.extract-version.outputs.version }} | grep -q "SNAPSHOT"
+      run: echo "${{ steps.extract-version.outputs.version }}" | grep -q "SNAPSHOT"
       id: snapshot-check
 
 
