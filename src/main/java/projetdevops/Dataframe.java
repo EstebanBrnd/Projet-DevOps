@@ -78,7 +78,7 @@ public class Dataframe {
 
     public Dataframe(String filename){
         ArrayList<String> list = extractFile(filename);
-        columnsNamesAndClasses = typeInference(list.get(0));
+        columnsNamesAndClasses = typeInference(list.get(0), list.get(1));
         // Ajout des données dans data
         data = new ArrayList<ArrayList>();
         for (int i = 0; i < columnsNamesAndClasses.size(); i++){

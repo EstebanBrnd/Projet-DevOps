@@ -240,13 +240,31 @@ public class DataframeTest {
     }
 
     @Test
-    public void test_select_rows_with_integer(){
-        ArrayList<Class> types = new ArrayList<>();
-        types.add(Integer.class);
-        Dataframe expected = new Dataframe(types);
-        expected.data.get(0).add(2);
-        expected.data.get(0).add(3);
-        expected.data.get(0).add(4);
+    public void test_iloc_rows_with_integer(){
+        ArrayList<ArrayList<String>> data = new ArrayList<>();
+        ArrayList<String> columnNames = new ArrayList<>();
+        columnNames.add("Nom");
+        columnNames.add("Nombre");
+        columnNames.add("Nombre2");
+        columnNames.add("Float");
+        columnNames.add("Date");
+        ArrayList<String> D1 = new ArrayList<>();
+        D1.add("Test2");
+        ArrayList<String> D2 = new ArrayList<>();
+        D2.add("3");
+        ArrayList<String> D3 = new ArrayList<>();
+        D3.add("23");
+        ArrayList<String> D4 = new ArrayList<>();
+        D4.add("4f");
+        ArrayList<String> D5 = new ArrayList<>();
+        D5.add("7/4/2024");
+        data.add(D1);
+        data.add(D2);
+        data.add(D3);
+        data.add(D4);
+        data.add(D5);
+
+        Dataframe expected = new Dataframe(data, columnNames);
 
         Dataframe test = DataframeTestMother.DataframeTestMother();
         Dataframe iloc = test.iloc(1);
