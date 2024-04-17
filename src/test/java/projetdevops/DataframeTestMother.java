@@ -5,29 +5,38 @@ import java.util.ArrayList;
 public class DataframeTestMother {
 
     public static Dataframe DataframeTestMother(){
-        ArrayList<Class> types = new ArrayList<>();
-        types.add(String.class);
-        types.add(Integer.class);
-        types.add(Integer.class);
-        types.add(Double.class);
-        types.add(String.class);
-        Dataframe test = new Dataframe(types);
-        test.data.get(0).add("Test");
-        test.data.get(0).add("Test2");
-        test.data.get(0).add("Test3");
-        test.data.get(1).add(2);
-        test.data.get(1).add(3);
-        test.data.get(1).add(4);
-        test.data.get(2).add(23);
-        test.data.get(2).add(23);
-        test.data.get(2).add(23);
-        test.data.get(3).add(2f);
-        test.data.get(3).add(4f);
-        test.data.get(3).add(8f);
-        test.data.get(4).add("7/4/2024");
-        test.data.get(4).add("7/4/2024");
-        test.data.get(4).add("7/4/2024");
-
-        return test;
+        ArrayList<ArrayList<String>> data = new ArrayList<>();
+        ArrayList<String> columnNames = new ArrayList<>();
+        columnNames.add("Nom");
+        columnNames.add("Nombre");
+        columnNames.add("Nombre2");
+        columnNames.add("Float");
+        columnNames.add("Date");
+        ArrayList<String> D1 = new ArrayList<>();
+        D1.add("Test");
+        D1.add("Test2");
+        D1.add("Test3");
+        ArrayList<String> D2 = new ArrayList<>();
+        D2.add("2");
+        D2.add("3");
+        D2.add("4");
+        ArrayList<String> D3 = new ArrayList<>();
+        D3.add("23");
+        D3.add("23");
+        D3.add("23");
+        ArrayList<String> D4 = new ArrayList<>();
+        D4.add("2f");
+        D4.add("4f");
+        D4.add("8f");
+        ArrayList<String> D5 = new ArrayList<>();
+        D5.add("7/4/2024");
+        D5.add("7/4/2024");
+        D5.add("7/4/2024");
+        data.add(D1);
+        data.add(D2);
+        data.add(D3);
+        data.add(D4);
+        data.add(D5);
+        return new Dataframe(data, columnNames);
     }
 }
