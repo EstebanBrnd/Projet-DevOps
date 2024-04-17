@@ -60,13 +60,25 @@ Le constructeur Tableau permet de créer un dataframe à partir d'une liste cont
 
 Voici un exemple d'utilisation du constructeur Tableau :
 ```java
-ArrayList<Couple<String,Class>> types = new ArrayList<>();
-types.add(new Couple<String,Class>("nom 1ere colonne", String.class));
-types.add(new Couple<String,Class>("nom 2eme colonne", Integer.class));
-types.add(new Couple<String,Class>("nom 3eme colonne", Integer.class));
-types.add(new Couple<String,Class>("nom 4eme colonne", Double.class));
-types.add(new Couple<String,Class>("nom 5eme colonne", String.class));
-Dataframe dataframe = new Dataframe(types);
+ArrayList<ArrayList<String>> data = new ArrayList<>();
+ArrayList<String> columnNames = new ArrayList<>();
+columnNames.add("Nom Colonne 1");
+columnNames.add("Nom Colonne 2");
+ArrayList<String> D1 = new ArrayList<>();
+D1.add("Test");
+ArrayList<String> D2 = new ArrayList<>();
+D2.add("2");
+ArrayList<String> D3 = new ArrayList<>();
+D3.add("23");
+ArrayList<String> D4 = new ArrayList<>();
+D4.add("2f");
+ArrayList<String> D5 = new ArrayList<>();
+D5.add("7/4/2024");
+data.add(D2);
+data.add(D3);
+data.add(D4);
+data.add(D5);
+Dataframe test = new Dataframe(data, columnNames);
 ```
 
 ### Affichage
