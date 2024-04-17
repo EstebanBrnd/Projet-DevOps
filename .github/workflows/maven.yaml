@@ -1,0 +1,58 @@
+name: Maven Install and Upload Jar
+
+on:
+  push:
+    branches:
+      - snapshot
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Java setup
+      uses: actions/setup-java@v2
+      with:
+        java-version: '17'
+        distribution: 'adopt'
+
+    - name: Build with Maven
+      run: mvn -B install
+
+  deploy:
+    
+    runs-on: ubuntu-latest
+  
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Java setup
+      uses: actions/setup-java@v2
+      with:
+        java-version: '17'
+        distribution: 'adopt'
+
+    - name: Extract Version
+      run: |
+        VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+        echo "Version: $VERSION" 
+        echo "::set-output name=version::$VERSION"
+      id: extract-version
+
+    - name: Check if Version is Snapshot
+      run: echo "${{ steps.extract-version.outputs.version }}" | grep -q "SNAPSHOT"
+      id: snapshot-check
+
+
+    - name: Deploy to GitHub Packages
+      if: steps.snapshot-check.outputs.return-code == '0'
+      run: mvn -B deploy
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
