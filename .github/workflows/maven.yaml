@@ -42,8 +42,9 @@ jobs:
     - name: Extract Version
       run: |
         VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
-        echo "Version: $VERSION"
+        echo "Version: $VERSION" 
         echo "::set-output name=version::$VERSION"
+      id: extract-version
 
     - name: Check if Version is Snapshot
       run: echo "${{ steps.extract-version.outputs.version }}" | grep -q "SNAPSHOT"
