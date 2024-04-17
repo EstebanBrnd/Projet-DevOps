@@ -1,18 +1,26 @@
 name: Execution dans le Cloud
 
+on: 
+  push:
+    branches:
+      - cloud
+
 jobs:
   terraform:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Set credentials as environment variable
-      run: |
-        cd ./terraform
-        echo "$CREDENTIALS" > mycredentials.json
-      env:
-        MY_CREDENTIALS_JSON: ${{ secrets.CREDENTIALS }}
+      - name: Set credentials as environment variable
+        run: |
+          cd ./cloud
+          echo "$CREDENTIALS" > CREDENTIALS.json
+          cat CREDENTIALS.json
+        env:
+          CREDENTIALS: ${{ secrets.CREDENTIALS }}
 
-    - name: Setup Terraform
+      - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: 1.0.0
@@ -22,6 +30,6 @@ jobs:
 
       - name: Terraform apply
         run: |
-          cd ./terraform
+          cd ./cloud
           terraform init
           terraform apply -auto-approve -destroy

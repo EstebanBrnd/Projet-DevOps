@@ -1,6 +1,6 @@
 
 provider "google" {
-  credentials = "${file("DevOpsProject.json")}"
+  credentials = "${file("CREDENTIALS.json")}"
   project     = var.project
   region      = var.region
   zone        = var.zone
