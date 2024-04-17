@@ -1,6 +1,9 @@
 # Projet de DevOps de M1 INFO
 
+
 ![Workflow](https://github.com/EstebanBrnd/Projet-DevOps/actions/workflows/main.yaml/badge.svg)
+![Workflow](https://github.com/EstebanBrnd/Projet-DevOps/actions/workflows/docker.yaml/badge.svg)
+![Workflow](https://github.com/EstebanBrnd/Projet-DevOps/actions/workflows/maven.yaml/badge.svg)
 
 Collaborateurs :   
 
@@ -8,6 +11,7 @@ Lilou Bouvier - lilou.bouvier@etu.univ-grenoble-alpes.fr
 David Quintela - david.quintela@etu.univ-grenoble-alpes.fr  
 Lukasz Matyasik - lukasz.matyasik@etu.univ-grenoble-alpes.fr  
 Esteban Barneaud - esteban.barneaud@etu.univ-grenoble-alpes.fr
+
 
 Go to [Authors](/AUTHORS)
 
@@ -30,6 +34,8 @@ Go to [Authors](/AUTHORS)
   - [Procédure validation PR/MR](#procédure-validation-prmr)
 - [Livraison continue](#livraison-continue)
 - [Site Github Pages](#site-gh-pages)
+- [Déploiement Maven](#déploiement-maven)
+- [Déploiement dans le Cloud](#déploiement-dans-le-cloud)
 - [Feedback](#feedback)
 
 
@@ -124,6 +130,16 @@ dataframe.linesWithColumnFloatGreater("Float", 4f); // Selectionne les lignes o�
 
 Nous avons implémenté des fonctions de statistiques permettant de calculer la moyenne, le minimum ou le maximum de deux façons différentes. La première, prend un nom de colonne et renvoie la statistique demandée pour cette colonne. La deuxième ne prend rien en argument et renvoie une liste contenant la statistique demandée pour chaque colonne ou null si cette colonne ne contient ni des entiers, ni des flottants.  
 
+```java
+Dataframe dataframe = new Dataframe("src/test/resources/data.csv");
+dataframe.mean();      // renvoie une liste contenant [0,0,age_mean,0] avec age_mean la moyenne de la colonne Age et les      
+                      // autres égales à 0 car correspondent à des colonnes de String 
+dataframe.mean("Age"); // renvoie la moyenne d'age
+dataframe.min();      // renvoie une liste contenant [0,0,age_min,0] avec age_min la valeur minimum de la colonne Age 
+dataframe.min("Age"); // renvoie l'age de la personne la plus jeune
+dataframe.max();      // renvoie une liste contenant [0,0,age_max,0] avec age_max la valeur maximum de la colonne Age 
+dataframe.max("Age");// renvoie l'age de la personne la plus agée
+```
 ## Outils utilisés
 
 ### Maven
@@ -174,8 +190,34 @@ Il suffit de pull cette image et de la run.
 
 ## Site GH Pages
 
-Nous avons également pu faire en sorte que ce ReadMe soit transformé en une page web accesible en cliquant [ici](https://estebanbrnd.github.io/Projet-DevOps/).
-A chaque mise à jour du ReadMe sur la branche dev, le site est donc mis à jour.
+Nous avons également pu faire en sorte que ce ReadMe soit transformé en une page web accessible en cliquant [ici](https://estebanbrnd.github.io/Projet-DevOps/).
+A chaque mise à jour du ReadMe sur la branche main, le site est donc mis à jour.
+
+## Déploiement Maven
+
+Nous avons réaliser le déploiement sur GitHub des versions SNAPSHOT du projet. Pour cela, on spécifie dans le fichier pom.xml le lien vers le projet où les fichiers .jar vont devoir être distribués lors de leur deploiement. On utilise également une pipeline qui se déclenche lorsque l'on fait une pull-request sur la branche principale et un push sur la branche snapshot ce qui nous à permis de vérifier son bon fonctionnement avant de faire une pull request sur la branche principale de notre projet. Cette pipeline crée le .jar de la dernière version du projet, verifie si il s'agit bien d'une version SNAPSHOT et le cas écheant déclenche le déploiement de ce dernier.
+
+
+## Déploiement dans le Cloud
+
+Nous avons pu réaliser le déploiement dans le cloud avec une pipeline ne se déclenchant que lorsque nous avons besoin. Elle ne se déclenche donc sur aucun merge ou push (mis à part sa branche conceptrice). Nous devons aller exécuter le pipeline si nous le souhaitons.
+
+Tous les fichiers nécessaires à l'éxecution sont situés dans le dossier cloud mis à part le fichier yaml situé avec les autres yaml dans le dossier ./github/workflows. 
+Nosu crééons donc une VM à souhait sur les serveurs de google puis nous récupérons l'image docker que nous avons à diposition avant de l'éxécuter. 
+
+L'execution du yaml se fait avec des variables stockées sur github. Si on souhaite tester en local, il est nécessaire de créer un fichier avec les credentials google clouds et de le placer dans le dossier cloud sous le nom:
+```
+CREDENTIALS.json
+```
+Avec l'abstraction fournie, il suffit ensuite de taper: 
+```
+terraform init
+```
+puis 
+```
+terraform apply
+```
+La VM est ensuite créée, le docker récupéré et éxécuté.
 
 
 ## Feedback
