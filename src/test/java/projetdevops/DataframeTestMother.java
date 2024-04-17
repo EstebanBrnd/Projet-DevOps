@@ -37,7 +37,6 @@ public class DataframeTestMother {
         data.add(D3);
         data.add(D4);
         data.add(D5);
-        Dataframe test = new Dataframe(data, columnNames);
-        return test;
+        return new Dataframe(data, columnNames);
     }
 }

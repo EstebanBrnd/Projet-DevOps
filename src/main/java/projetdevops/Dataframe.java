@@ -11,6 +11,10 @@ import java.lang.NumberFormatException;
 import java.lang.Integer;
 import java.lang.String;
 import java.lang.Class;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.function.Predicate;
 import java.lang.Float;
 
 import java.io.FileWriter;
@@ -20,6 +24,25 @@ public class Dataframe {
 
     ArrayList<ArrayList> data;
     //dataframe a partir d'un tableau de tableau de class et d'un tableau de nom de colonne
+
+    public ArrayList<String> getColumnNames() {
+        ArrayList<String> columnNames = new ArrayList<>();
+        for(Couple<String,Class> column : columnsNamesAndClasses){
+            columnNames.add(column.getFirst());
+        }
+        return columnNames;
+    }
+
+    public Dataframe concat(Dataframe concat) {
+        if(!columnsNamesAndClasses.equals(concat.columnsNamesAndClasses)){
+            throw new IllegalArgumentException("Les dataframes n'ont pas les mêmes colonnes");
+        }
+        for (int i = 0; i < concat.data.size(); i++){
+            this.data.get(i).addAll(concat.data.get(i));
+        }
+        return this;
+    }
+
 
     public Dataframe( ArrayList<ArrayList<String>> data, ArrayList<String> columnNames){
         columnsNamesAndClasses = new ArrayList<>();
@@ -55,8 +78,7 @@ public class Dataframe {
 
     public Dataframe(String filename){
         ArrayList<String> list = extractFile(filename);
-
-        columnsNamesAndClasses = typeInference(list.get(0),list.get(1));
+        columnsNamesAndClasses = typeInference(list.get(0));
         // Ajout des données dans data
         data = new ArrayList<ArrayList>();
         for (int i = 0; i < columnsNamesAndClasses.size(); i++){
@@ -161,7 +183,7 @@ public class Dataframe {
         }
         return res;
     }
-    
+
     public void printFile(String filename, String content){
         // Ajoute le contenu à la fin du fichier
         try {
@@ -350,62 +372,56 @@ public class Dataframe {
         if(i >= columnsNamesAndClasses.size() ){
             throw new IllegalArgumentException("L'index est supérieur à la taille du dataframe");
         }
-        if(i <= 0){
+        if(i < 0){
             throw new IllegalArgumentException("L'index est négatif");
         }
-        ArrayList<Class> types = new ArrayList<>();
-        types.add(columnsNamesAndClasses.get(i).getSecond());
-        Dataframe iloc = new Dataframe(types);
-        for (int j = 0; j < data.get(i).size(); j++){
-            iloc.data.get(0).add(data.get(i).get(j));
+        ArrayList<ArrayList<String>> donnees = new ArrayList<>();
+        for (ArrayList datum : data) {
+            ArrayList<String> D1 = new ArrayList<>();
+            D1.add(datum.get(i).toString());
+            donnees.add(D1);
         }
-        return iloc;
+        ArrayList<String> columnNames = getColumnNames();
+        return new Dataframe(donnees,columnNames);
     }
 
-    public Dataframe iloc(int[] integerArray){
-        ArrayList<Class> types = new ArrayList<>();
-        for (int i : integerArray){
-            if(i >= columnsNamesAndClasses.size() ){
+    public Dataframe iloc(int[] integerArray) {
+        if (integerArray.length == 0){
+            return this;
+        }
+        for (int i : integerArray) {
+            if (i >= columnsNamesAndClasses.size()) {
                 throw new IllegalArgumentException("L'index est supérieur à la taille du dataframe");
             }
-            if(i <= 0){
+            if (i < 0) {
                 throw new IllegalArgumentException("L'index est négatif");
             }
-            types.add(columnsNamesAndClasses.get(i).getSecond());
         }
-        Dataframe iloc = new Dataframe(types);
-        int index = 0;
-        for (int i : integerArray){
-            for (int j = 0; j < data.get(i).size(); j++){
-                iloc.data.get(index).add(data.get(i).get(j));
-            }
-            index ++;
+        Dataframe res = this.iloc(integerArray[0]);
+        for (int i = 1; i < integerArray.length; i++) {
+            res = res.concat(this.iloc(integerArray[i]));
         }
-        return iloc;
+        return res;
     }
 
     public Dataframe iloc(Boolean[] booleans) {
         if(booleans.length > columnsNamesAndClasses.size()){
             throw new IllegalArgumentException("La taille du tableau de booleans doit être inférieure ou égale à la taille du dataframe");
         }
-
-        ArrayList<Class> types = new ArrayList<>();
+        ArrayList<Integer> integerArrayList = new ArrayList<>();
         for (int i = 0; i < booleans.length; i++){
             if (booleans[i]){
-                types.add(columnsNamesAndClasses.get(i).getSecond());
+                integerArrayList.add(i);
             }
         }
-        Dataframe iloc = new Dataframe(types);
-        int index = 0;
-        for (int i = 0; i < booleans.length; i++){
-            if (booleans[i]){
-                for (int j = 0; j < data.get(i).size(); j++){
-                    iloc.data.get(index).add(data.get(i).get(j));
-                }
-                index ++;
-            }
+        int[] integerArray = new int[integerArrayList.size()];
+        for (int i = 0; i < integerArrayList.size(); i++){
+            integerArray[i] = integerArrayList.get(i);
         }
-        return iloc;
+        if(integerArray.length == 0){
+            return new Dataframe(new ArrayList<>(), getColumnNames());
+        }
+        return iloc(integerArray);
     }
 
     public Dataframe iloc(int i, int j){
@@ -415,72 +431,148 @@ public class Dataframe {
         if( i <= 0 || j <= 0){
             throw new IllegalArgumentException("L'index est négatif");
         }
-        ArrayList<Class> types = new ArrayList<>();
-        types.add(columnsNamesAndClasses.get(i).getSecond());
-        Dataframe iloc = new Dataframe(types);
-        iloc.data.get(0).add(data.get(i).get(j));
-        return iloc;
+        ArrayList<ArrayList<String>> donnees = new ArrayList<>();
+        ArrayList<String> D1 = new ArrayList<>();
+        D1.add(data.get(i).get(j).toString());
+        donnees.add(D1);
+        ArrayList<String> columnNames = getColumnNames();
+        return new Dataframe(donnees,columnNames);
     }
 
     public Dataframe iloc(int[] iS, int[] jS)
     {
+        ArrayList<ArrayList<String>> donnees = new ArrayList<>();
+        if(iS.length == 0){
+            iS = new int[data.get(0).size()];
+            for(int i = 0; i < data.get(0).size(); i++){
+                iS[i] = i;
+            }
+        }
+        if(jS.length == 0){
+            jS = new int[columnsNamesAndClasses.size()];
+            for(int i = 0; i < columnsNamesAndClasses.size(); i++){
+                jS[i] = i;
+            }
+        }
         for(int i : iS)
         {
-            if(i >= columnsNamesAndClasses.size() ){
+            if(i >= data.get(0).size() ){
                 throw new IllegalArgumentException("L'index est supérieur à la taille du dataframe");
             }
-            if(i <= 0){
+            if(i < 0){
                 throw new IllegalArgumentException("L'index est négatif");
             }
         }
         for(int j : jS)
         {
-            if(j >= data.get(0).size()){
+            if(j >= columnsNamesAndClasses.size()){
                 throw new IllegalArgumentException("L'index est supérieur à la taille du dataframe");
             }
-            if(j <= 0){
+            if(j < 0){
                 throw new IllegalArgumentException("L'index est négatif");
             }
         }
 
-        ArrayList<Class> types = new ArrayList<>();
-        for (int i : iS){
-            types.add(columnsNamesAndClasses.get(i).getSecond());
-        }
-        Dataframe iloc = new Dataframe(types);
-        int index = 0;
-        for (int i : iS){
-            for (int j : jS){
-                iloc.data.get(index).add(data.get(i).get(j));
+        for(int j : jS)
+        {
+            ArrayList<String> D1 = new ArrayList<>();
+            for(int i : iS)
+            {
+                D1.add(data.get(j).get(i).toString());
             }
-            index ++;
+            donnees.add(D1);
         }
-        return iloc;
+        ArrayList<String> columnNames = getColumnNames();
+        return new Dataframe(donnees, columnNames);
     }
 
     public Dataframe iloc(Boolean[] iBooleans, Boolean[] jBooleans) {
-        if(iBooleans.length > columnsNamesAndClasses.size() || jBooleans.length > data.get(0).size()){
+        if(iBooleans.length > data.get(0).size() || jBooleans.length > columnsNamesAndClasses.size()){
             throw new IllegalArgumentException("La taille des tableaux de booleans doit être inférieure ou égale à la taille du dataframe");
         }
+        ArrayList<Integer> iArrayList = new ArrayList<>();
+        ArrayList<Integer> jArrayList = new ArrayList<>();
+        for (int i = 0; i < iBooleans.length; i++){
+            if (iBooleans[i]){
+                iArrayList.add(i);
+            }
+        }
+        for (int i = 0; i < jBooleans.length; i++){
+            if (jBooleans[i]){
+                jArrayList.add(i);
+            }
+        }
+        int[] iArray = new int[iArrayList.size()];
+        for (int i = 0; i < iArrayList.size(); i++){
+            iArray[i] = iArrayList.get(i);
+        }
+        int[] jArray = new int[jArrayList.size()];
+        for (int i = 0; i < jArrayList.size(); i++){
+            jArray[i] = jArrayList.get(i);
+        }
+        if(iArray.length == 0 && jArray.length == 0){
+            return new Dataframe(new ArrayList<>(), getColumnNames());
+        }
+        return iloc(iArray, jArray);
+    }
 
-        ArrayList<Class> types = new ArrayList<>();
-        for (int i = 0; i < iBooleans.length; i++){
-            if (iBooleans[i]){
-                types.add(columnsNamesAndClasses.get(i).getSecond());
+    public Dataframe loc(String label){
+        for(String columnName : getColumnNames()){
+            if (columnName.equals(label)){
+                return iloc(new int[]{}, new int[]{getColumnNames().indexOf(label)});
             }
         }
-        Dataframe iloc = new Dataframe(types);
-        int index = 0;
-        for (int i = 0; i < iBooleans.length; i++){
-            if (iBooleans[i]){
-                for (int j = 0; j < data.get(i).size(); j++){
-                    if(jBooleans[j])
-                        iloc.data.get(index).add(data.get(i).get(j));
-                }
-                index ++;
+        throw new IllegalArgumentException("La colonne n'existe pas");
+    }
+
+    public Dataframe loc(String[] labels){
+        ArrayList<Integer> indexes = new ArrayList<>();
+        if(labels.length == 0){
+            return this;
+        }
+        for(String label : labels){
+            if(!getColumnNames().contains(label)){
+                throw new IllegalArgumentException("La colonne" + label + "n'existe pas");
+            }
+                indexes.add(getColumnNames().indexOf(label));
+        }
+        int[] indexesArray = new int[indexes.size()];
+        for (int i = 0; i < indexes.size(); i++){
+            indexesArray[i] = indexes.get(i);
+        }
+        return iloc(new int[]{}, indexesArray);
+    }
+
+    public Dataframe loc(Boolean[] booleans){
+        if(booleans.length > columnsNamesAndClasses.size()){
+            throw new IllegalArgumentException("La taille du tableau de booleans doit être inférieure ou égale à la taille du dataframe");
+        }
+        ArrayList<Integer> indexes = new ArrayList<>();
+        for(int i = 0; i < booleans.length; i++){
+            if(booleans[i]){
+                indexes.add(i);
             }
         }
-        return iloc;
+        int[] indexesArray = new int[indexes.size()];
+        for (int i = 0; i < indexes.size(); i++){
+            indexesArray[i] = indexes.get(i);
+        }
+        if(indexesArray.length == 0){
+            return new Dataframe(new ArrayList<>(), getColumnNames());
+        }
+        return iloc(new int[]{},indexesArray);
+    }
+
+    public Dataframe loc(String column, String row){
+        if(!data.get(0).contains(row)){
+            throw new IllegalArgumentException("La ligne" + row + "n'existe pas");
+        }
+        int index = data.get(0).indexOf(row);
+        return loc(column).iloc(new int[]{index},new int[]{});
+    }
+
+    public Dataframe loc(Boolean[] columnBooleans, Boolean[] rowBooleans){
+        return iloc(rowBooleans,columnBooleans);
     }
 
     public boolean equals(Dataframe obj) {
@@ -488,6 +580,15 @@ public class Dataframe {
             return false;
         }
         for (int i = 0; i < this.data.size(); i++){
+            if(this.data.get(i).size() != obj.data.get(i).size()){
+                return false;
+            }
+            if(!this.columnsNamesAndClasses.get(i).getFirst().equals(obj.columnsNamesAndClasses.get(i).getFirst())){
+                return false;
+            }
+            if(!this.columnsNamesAndClasses.get(i).getSecond().equals(obj.columnsNamesAndClasses.get(i).getSecond())){
+                return false;
+            }
             for (int j = 0; j < this.data.get(i).size(); j++){
                 if(!this.data.get(i).get(j).equals(obj.data.get(i).get(j))){
                     return false;
