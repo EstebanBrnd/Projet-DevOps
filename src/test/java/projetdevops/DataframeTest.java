@@ -7,7 +7,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import javax.xml.crypto.Data;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -876,128 +875,642 @@ public class DataframeTest {
     }
 
     @Test
-    public void test_linesWithColumnIntegerEqual() {
-        Dataframe test = new Dataframe("src/test/resources/data.csv");
-        Dataframe output = test.linesWithColumnIntegerEqual("Nombre", 3);
+    public void test_linesWithColumnStringEqual() {
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe output = test.linesWithColumnStringEqual("Date", "7/4/2024");
 
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         ArrayList<String> D1 = new ArrayList<>();
+        D1.add("Test");
         D1.add("Test2");
-        D1.add("3");
-        D1.add("23");
-        D1.add("4.0");
-        D1.add("7/4/2024");
+        D1.add("Test3");
+        ArrayList<String> D2 = new ArrayList<>();
+        D2.add("2");
+        D2.add("3");
+        D2.add("4");
+        ArrayList<String> D3 = new ArrayList<>();
+        D3.add("23");
+        D3.add("23");
+        D3.add("23");
+        ArrayList<String> D4 = new ArrayList<>();
+        D4.add("2f");
+        D4.add("4f");
+        D4.add("8f");
+        ArrayList<String> D5 = new ArrayList<>();
+        D5.add("7/4/2024");
+        D5.add("7/4/2024");
+        D5.add("7/4/2024");
         data.add(D1);
+        data.add(D2);
+        data.add(D3);
+        data.add(D4);
+        data.add(D5);
 
         Dataframe expected = new Dataframe(data, test.getColumnNames());
         assertTrue(expected.equals(output));
     }
 
     @Test
-    public void test_linesWithColumnStringEqual() {
-        Dataframe test = new Dataframe("src/test/resources/data.csv");
+    public void test_linesWithColumnStringEqual2() {
+        Dataframe test = DataframeTestMother.DataframeTestMother();
         Dataframe output = test.linesWithColumnStringEqual("Nom", "Test3");
 
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         ArrayList<String> D1 = new ArrayList<>();
         D1.add("Test3");
-        D1.add("4");
-        D1.add("23");
-        D1.add("8.0");
-        D1.add("7/4/2024");
+        ArrayList<String> D2 = new ArrayList<>();
+        D2.add("4");
+        ArrayList<String> D3 = new ArrayList<>();
+        D3.add("23");
+        ArrayList<String> D4 = new ArrayList<>();
+        D4.add("8f");
+        ArrayList<String> D5 = new ArrayList<>();
+        D5.add("7/4/2024");
         data.add(D1);
+        data.add(D2);
+        data.add(D3);
+        data.add(D4);
+        data.add(D5);
 
+        Dataframe expected = new Dataframe(data, test.getColumnNames());
+        assertTrue(expected.equals(output));
+    }
+
+    @Test
+    public void test_linesWithColumnStringEqual3() {
+        ArrayList<String> columnNames = DataframeTestMother.DataframeTestMother().getColumnNames();
+        ArrayList<ArrayList<String>> data = new ArrayList<>();
+        ArrayList<String> D1 = new ArrayList<>();
+        D1.add("Test");
+        D1.add("Test2");
+        D1.add("Test3");
+        ArrayList<String> D2 = new ArrayList<>();
+        D2.add("2");
+        D2.add("3");
+        D2.add("4");
+        ArrayList<String> D3 = new ArrayList<>();
+        D3.add("23");
+        D3.add("23");
+        D3.add("28");
+        ArrayList<String> D4 = new ArrayList<>();
+        D4.add("2f");
+        D4.add("4f");
+        D4.add("8f");
+        ArrayList<String> D5 = new ArrayList<>();
+        D5.add("7/4/2024");
+        D5.add("9/4/2024");
+        D5.add("7/4/2024");
+        data.add(D1);
+        data.add(D2);
+        data.add(D3);
+        data.add(D4);
+        data.add(D5);
+        Dataframe test = new Dataframe(data, columnNames);
+
+        for(ArrayList<String> line : data) {
+            line.remove(1);
+        }
+
+        Dataframe output = test.linesWithColumnStringEqual("Date", "7/4/2024");
+        Dataframe expected = new Dataframe(data, test.getColumnNames());
+
+        assertTrue(expected.equals(output));
+    }
+
+    @Test
+    public void test_linesWithColumnStringEqual_bad_column(){
+        thrown.expect(IllegalArgumentException.class);
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe output = test.linesWithColumnStringEqual("Date2", "7/04/2024");
+    }
+
+    @Test
+    public void test_linesWithColumnStringEqual_bad_column2(){
+        thrown.expect(IllegalArgumentException.class);
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe output = test.linesWithColumnStringEqual("Nombre", "7/04/2024");
+    }
+
+    @Test
+    public void test_linesWithColumnStringEqual_inexistant(){
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe output = test.linesWithColumnStringEqual("Nom", "Michel");
+
+        ArrayList<ArrayList<String>> data = new ArrayList<>();
+        Dataframe expected = new Dataframe(data, test.getColumnNames());
+        assertTrue(expected.equals(output));
+    }
+
+    @Test
+    public void test_linesWithColumnIntegerEqual() {
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe output = test.linesWithColumnIntegerEqual("Nombre", 3);
+
+        ArrayList<ArrayList<String>> data = new ArrayList<>();
+        ArrayList<String> D1 = new ArrayList<>();
+        D1.add("Test2");
+        ArrayList<String> D2 = new ArrayList<>();
+        D2.add("3");
+        ArrayList<String> D3 = new ArrayList<>();
+        D3.add("23");
+        ArrayList<String> D4 = new ArrayList<>();
+        D4.add("4f");
+        ArrayList<String> D5 = new ArrayList<>();
+        D5.add("7/4/2024");
+        data.add(D1);
+        data.add(D2);
+        data.add(D3);
+        data.add(D4);
+        data.add(D5);
+
+        Dataframe expected = new Dataframe(data, test.getColumnNames());
+        assertTrue(expected.equals(output));
+    }
+
+    @Test
+    public void test_linesWithColumnIntegerEqual2() {
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe output = test.linesWithColumnIntegerEqual("Nombre2", 23);
+
+        ArrayList<ArrayList<String>> data = new ArrayList<>();
+        ArrayList<String> D1 = new ArrayList<>();
+        D1.add("Test");
+        D1.add("Test2");
+        D1.add("Test3");
+        ArrayList<String> D2 = new ArrayList<>();
+        D2.add("2");
+        D2.add("3");
+        D2.add("4");
+        ArrayList<String> D3 = new ArrayList<>();
+        D3.add("23");
+        D3.add("23");
+        D3.add("23");
+        ArrayList<String> D4 = new ArrayList<>();
+        D4.add("2f");
+        D4.add("4f");
+        D4.add("8f");
+        ArrayList<String> D5 = new ArrayList<>();
+        D5.add("7/4/2024");
+        D5.add("7/4/2024");
+        D5.add("7/4/2024");
+        data.add(D1);
+        data.add(D2);
+        data.add(D3);
+        data.add(D4);
+        data.add(D5);
+
+        Dataframe expected = new Dataframe(data, test.getColumnNames());
+        assertTrue(expected.equals(output));
+    }
+
+    @Test
+    public void test_linesWithColumnIntegerEqual3() {
+        ArrayList<String> columnNames = DataframeTestMother.DataframeTestMother().getColumnNames();
+        ArrayList<ArrayList<String>> data = new ArrayList<>();
+        ArrayList<String> D1 = new ArrayList<>();
+        D1.add("Test");
+        D1.add("Test2");
+        D1.add("Test3");
+        ArrayList<String> D2 = new ArrayList<>();
+        D2.add("2");
+        D2.add("3");
+        D2.add("4");
+        ArrayList<String> D3 = new ArrayList<>();
+        D3.add("23");
+        D3.add("23");
+        D3.add("28");
+        ArrayList<String> D4 = new ArrayList<>();
+        D4.add("2f");
+        D4.add("4f");
+        D4.add("8f");
+        ArrayList<String> D5 = new ArrayList<>();
+        D5.add("7/4/2024");
+        D5.add("7/4/2024");
+        D5.add("7/4/2024");
+        data.add(D1);
+        data.add(D2);
+        data.add(D3);
+        data.add(D4);
+        data.add(D5);
+        Dataframe test = new Dataframe(data, columnNames);
+
+        for(ArrayList<String> line : data) {
+            line.remove(2);
+        }
+
+        Dataframe output = test.linesWithColumnIntegerEqual("Nombre2", 23);
+        Dataframe expected = new Dataframe(data, test.getColumnNames());
+
+        assertTrue(expected.equals(output));
+    }
+
+    @Test
+    public void test_linesWithColumnIntegerEqual_bad_column() {
+        thrown.expect(IllegalArgumentException.class);
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe output = test.linesWithColumnIntegerEqual("Nombre8", 3);
+    }
+
+    @Test
+    public void test_linesWithColumnIntegerEqual_bad_column2() {
+        thrown.expect(IllegalArgumentException.class);
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe output = test.linesWithColumnIntegerEqual("Nom", 3);
+    }
+
+    @Test
+    public void test_linesWithColumnIntegerEqual_inexistant(){
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe output = test.linesWithColumnIntegerEqual("Nombre", 5);
+
+        ArrayList<ArrayList<String>> data = new ArrayList<>();
         Dataframe expected = new Dataframe(data, test.getColumnNames());
         assertTrue(expected.equals(output));
     }
 
     @Test
     public void test_linesWithColumnIntegerGreater() {
-        Dataframe test = new Dataframe("src/test/resources/data.csv");
-        Dataframe output = test.linesWithColumnIntegerGreater("Nombre", 3);
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe output = test.linesWithColumnIntegerGreater("Nombre", 2);
 
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         ArrayList<String> D1 = new ArrayList<>();
+        D1.add("Test2");
         D1.add("Test3");
-        D1.add("4");
-        D1.add("23");
-        D1.add("8.0");
-        D1.add("7/4/2024");
+        ArrayList<String> D2 = new ArrayList<>();
+        D2.add("3");
+        D2.add("4");
+        ArrayList<String> D3 = new ArrayList<>();
+        D3.add("23");
+        D3.add("23");
+        ArrayList<String> D4 = new ArrayList<>();
+        D4.add("4f");
+        D4.add("8f");
+        ArrayList<String> D5 = new ArrayList<>();
+        D5.add("7/4/2024");
+        D5.add("7/4/2024");
         data.add(D1);
+        data.add(D2);
+        data.add(D3);
+        data.add(D4);
+        data.add(D5);
+
+        Dataframe expected = new Dataframe(data, test.getColumnNames());
+        System.out.println(expected.afficheData());
+        assertTrue(expected.equals(output));
+    }
+
+    @Test
+    public void test_linesWithColumnIntegerToMuchGreater() {
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe output = test.linesWithColumnIntegerGreater("Nombre", 6);
+
+        ArrayList<ArrayList<String>> data = new ArrayList<>();
 
         Dataframe expected = new Dataframe(data, test.getColumnNames());
         assertTrue(expected.equals(output));
+    }
+
+    @Test
+    public void test_linesWithColumnIntegerGreater_bad_column(){
+        thrown.expect(IllegalArgumentException.class);
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe output = test.linesWithColumnIntegerGreater("Date2", 2);
+    }
+
+    @Test
+    public void test_linesWithColumnIntegerGreater_bad_column2(){
+        thrown.expect(IllegalArgumentException.class);
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe output = test.linesWithColumnIntegerGreater("Date", 2);
     }
 
     @Test
     public void test_linesWithColumnIntegerLess() {
-        Dataframe test = new Dataframe("src/test/resources/data.csv");
-        Dataframe output = test.linesWithColumnIntegerLess("Nombre", 3);
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe output = test.linesWithColumnIntegerLess("Nombre", 4);
 
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         ArrayList<String> D1 = new ArrayList<>();
         D1.add("Test");
-        D1.add("2");
-        D1.add("23");
-        D1.add("2.0");
-        D1.add("7/4/2024");
+        D1.add("Test2");
+        ArrayList<String> D2 = new ArrayList<>();
+        D2.add("2");
+        D2.add("3");
+        ArrayList<String> D3 = new ArrayList<>();
+        D3.add("23");
+        D3.add("23");
+        ArrayList<String> D4 = new ArrayList<>();
+        D4.add("2f");
+        D4.add("4f");
+        ArrayList<String> D5 = new ArrayList<>();
+        D5.add("7/4/2024");
+        D5.add("7/4/2024");
         data.add(D1);
+        data.add(D2);
+        data.add(D3);
+        data.add(D4);
+        data.add(D5);
 
         Dataframe expected = new Dataframe(data, test.getColumnNames());
         assertTrue(expected.equals(output));
+    }
+
+    @Test
+    public void test_linesWithColumnIntegerLessToMuch() {
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe output = test.linesWithColumnIntegerLess("Nombre", 2);
+
+        ArrayList<ArrayList<String>> data = new ArrayList<>();
+
+        Dataframe expected = new Dataframe(data, test.getColumnNames());
+        assertTrue(expected.equals(output));
+    }
+
+    @Test
+    public void test_linesWithColumnIntegerLess_bad_column(){
+        thrown.expect(IllegalArgumentException.class);
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe output = test.linesWithColumnIntegerLess("Date2", 2);
+    }
+
+    @Test
+    public void test_linesWithColumnIntegerLess_bad_column2(){
+        thrown.expect(IllegalArgumentException.class);
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe output = test.linesWithColumnIntegerLess("Date", 2);
     }
 
     @Test
     public void test_linesWithColumnFloatEqual() {
-        Dataframe test = new Dataframe("src/test/resources/data.csv");
-        Dataframe output = test.linesWithColumnFloat("Float", 8.0f, "=");
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe output = test.linesWithColumnFloatEqual("Float", 8f);
 
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         ArrayList<String> D1 = new ArrayList<>();
         D1.add("Test3");
-        D1.add("4");
-        D1.add("23");
-        D1.add("8.0");
-        D1.add("7/4/2024");
+        ArrayList<String> D2 = new ArrayList<>();
+        D2.add("4");
+        ArrayList<String> D3 = new ArrayList<>();
+        D3.add("23");
+        ArrayList<String> D4 = new ArrayList<>();
+        D4.add("8f");
+        ArrayList<String> D5 = new ArrayList<>();
+        D5.add("7/4/2024");
         data.add(D1);
+        data.add(D2);
+        data.add(D3);
+        data.add(D4);
+        data.add(D5);
 
         Dataframe expected = new Dataframe(data, test.getColumnNames());
         assertTrue(expected.equals(output));
+    }
+
+    @Test
+    public void test_linesWithColumnFloatEqual2() {
+        ArrayList<String> columnNames = DataframeTestMother.DataframeTestMother().getColumnNames();
+        ArrayList<ArrayList<String>> data = new ArrayList<>();
+        ArrayList<String> D1 = new ArrayList<>();
+        D1.add("Test");
+        D1.add("Test2");
+        D1.add("Test3");
+        ArrayList<String> D2 = new ArrayList<>();
+        D2.add("2");
+        D2.add("3");
+        D2.add("4");
+        ArrayList<String> D3 = new ArrayList<>();
+        D3.add("23");
+        D3.add("23");
+        D3.add("28");
+        ArrayList<String> D4 = new ArrayList<>();
+        D4.add("2f");
+        D4.add("4f");
+        D4.add("4f");
+        ArrayList<String> D5 = new ArrayList<>();
+        D5.add("7/4/2024");
+        D5.add("9/4/2024");
+        D5.add("7/4/2024");
+        data.add(D1);
+        data.add(D2);
+        data.add(D3);
+        data.add(D4);
+        data.add(D5);
+        Dataframe test = new Dataframe(data, columnNames);
+
+        for(ArrayList<String> line : data) {
+            line.remove(0);
+        }
+
+        Dataframe output = test.linesWithColumnFloatEqual("Float", 4f);
+        Dataframe expected = new Dataframe(data, test.getColumnNames());
+
+        assertTrue(expected.equals(output));
+    }
+
+    @Test
+    public void test_linesWithColumnFloat_bad_column(){
+        thrown.expect(IllegalArgumentException.class);
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe output = test.linesWithColumnFloatEqual("Date2", 2f);
+    }
+
+    @Test
+    public void test_linesWithColumnFloat_bad_column2(){
+        thrown.expect(IllegalArgumentException.class);
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe output = test.linesWithColumnFloatEqual("Nombre", 2f);
     }
 
     @Test
     public void test_linesWithColumnFloatGreater() {
-        Dataframe test = new Dataframe("src/test/resources/data.csv");
-        Dataframe output = test.linesWithColumnFloat("Float", 7.0f, ">");
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe output = test.linesWithColumnFloatGreater("Float", 7.0f);
 
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         ArrayList<String> D1 = new ArrayList<>();
         D1.add("Test3");
-        D1.add("4");
-        D1.add("23");
-        D1.add("8.0");
-        D1.add("7/4/2024");
+        ArrayList<String> D2 = new ArrayList<>();
+        D2.add("4");
+        ArrayList<String> D3 = new ArrayList<>();
+        D3.add("23");
+        ArrayList<String> D4 = new ArrayList<>();
+        D4.add("8f");
+        ArrayList<String> D5 = new ArrayList<>();
+        D5.add("7/4/2024");
         data.add(D1);
+        data.add(D2);
+        data.add(D3);
+        data.add(D4);
+        data.add(D5);
 
         Dataframe expected = new Dataframe(data, test.getColumnNames());
         assertTrue(expected.equals(output));
     }
 
     @Test
-    public void test_linesWithColumnFloatLess() {
-        Dataframe test = new Dataframe("src/test/resources/data.csv");
-        Dataframe output = test.linesWithColumnFloat("Float", 3.0f, "<");
+    public void test_linesWithColumnFloatGreater2() {
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe output = test.linesWithColumnFloatGreater("Float", 1.0f);
 
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         ArrayList<String> D1 = new ArrayList<>();
         D1.add("Test");
-        D1.add("2");
-        D1.add("23");
-        D1.add("2.0");
-        D1.add("7/4/2024");
+        D1.add("Test2");
+        D1.add("Test3");
+        ArrayList<String> D2 = new ArrayList<>();
+        D2.add("2");
+        D2.add("3");
+        D2.add("4");
+        ArrayList<String> D3 = new ArrayList<>();
+        D3.add("23");
+        D3.add("23");
+        D3.add("23");
+        ArrayList<String> D4 = new ArrayList<>();
+        D4.add("2f");
+        D4.add("4f");
+        D4.add("8f");
+        ArrayList<String> D5 = new ArrayList<>();
+        D5.add("7/4/2024");
+        D5.add("7/4/2024");
+        D5.add("7/4/2024");
         data.add(D1);
+        data.add(D2);
+        data.add(D3);
+        data.add(D4);
+        data.add(D5);
 
         Dataframe expected = new Dataframe(data, test.getColumnNames());
         assertTrue(expected.equals(output));
+    }
+
+    @Test
+    public void test_linesWithColumnFloatGreater_inexistant() {
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        ArrayList<ArrayList<String>> data = new ArrayList<>();
+
+        Dataframe output = test.linesWithColumnFloatGreater("Float", 9f);
+        Dataframe expected = new Dataframe(data, test.getColumnNames());
+
+        assertTrue(expected.equals(output));
+    }
+
+    @Test
+    public void test_linesWithColumnFloatToMuchGreater(){
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe output = test.linesWithColumnFloatGreater("Float", 8.0f);
+
+        ArrayList<ArrayList<String>> data = new ArrayList<>();
+
+        Dataframe expected = new Dataframe(data, test.getColumnNames());
+        assertTrue(expected.equals(output));
+    }
+
+    @Test
+    public void test_linesWithColumnFloatGreater_bad_column(){
+        thrown.expect(IllegalArgumentException.class);
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe output = test.linesWithColumnFloatGreater("Date2", 2f);
+    }
+
+    @Test
+    public void test_linesWithColumnFloatGreater_bad_column2(){
+        thrown.expect(IllegalArgumentException.class);
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe output = test.linesWithColumnFloatGreater("Date", 2f);
+    }
+
+    @Test
+    public void test_linesWithColumnFloatLess() {
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe output = test.linesWithColumnFloatLess("Float", 7.0f);
+
+        ArrayList<ArrayList<String>> data = new ArrayList<>();
+        ArrayList<String> D1 = new ArrayList<>();
+        D1.add("Test");
+        D1.add("Test2");
+        ArrayList<String> D2 = new ArrayList<>();
+        D2.add("2");
+        D2.add("3");
+        ArrayList<String> D3 = new ArrayList<>();
+        D3.add("23");
+        D3.add("23");
+        ArrayList<String> D4 = new ArrayList<>();
+        D4.add("2f");
+        D4.add("4f");
+        ArrayList<String> D5 = new ArrayList<>();
+        D5.add("7/4/2024");
+        D5.add("7/4/2024");
+        data.add(D1);
+        data.add(D2);
+        data.add(D3);
+        data.add(D4);
+        data.add(D5);
+
+        Dataframe expected = new Dataframe(data, test.getColumnNames());
+        System.out.println(expected.afficheData());
+        System.out.println(output.afficheData());
+        assertTrue(expected.equals(output));
+    }
+
+    @Test
+    public void test_linesWithColumnFloatLess2() {
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe output = test.linesWithColumnFloatLess("Float", 9.0f);
+
+        ArrayList<ArrayList<String>> data = new ArrayList<>();
+        ArrayList<String> D1 = new ArrayList<>();
+        D1.add("Test");
+        D1.add("Test2");
+        D1.add("Test3");
+        ArrayList<String> D2 = new ArrayList<>();
+        D2.add("2");
+        D2.add("3");
+        D2.add("4");
+        ArrayList<String> D3 = new ArrayList<>();
+        D3.add("23");
+        D3.add("23");
+        D3.add("23");
+        ArrayList<String> D4 = new ArrayList<>();
+        D4.add("2f");
+        D4.add("4f");
+        D4.add("8f");
+        ArrayList<String> D5 = new ArrayList<>();
+        D5.add("7/4/2024");
+        D5.add("7/4/2024");
+        D5.add("7/4/2024");
+        data.add(D1);
+        data.add(D2);
+        data.add(D3);
+        data.add(D4);
+        data.add(D5);
+
+        Dataframe expected = new Dataframe(data, test.getColumnNames());
+        assertTrue(expected.equals(output));
+    }
+
+    @Test
+    public void test_linesWithColumnFloatToMuchLess(){
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe output = test.linesWithColumnFloatLess("Float", 1.0f);
+
+        ArrayList<ArrayList<String>> data = new ArrayList<>();
+
+        Dataframe expected = new Dataframe(data, test.getColumnNames());
+        assertTrue(expected.equals(output));
+    }
+
+    @Test
+    public void test_linesWithColumnFloatLess_bad_column(){
+        thrown.expect(IllegalArgumentException.class);
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe output = test.linesWithColumnFloatLess("Date2", 2f);
+    }
+
+    @Test
+    public void test_linesWithColumnFloatLess_bad_column2(){
+        thrown.expect(IllegalArgumentException.class);
+        Dataframe test = DataframeTestMother.DataframeTestMother();
+        Dataframe output = test.linesWithColumnFloatLess("Date", 2f);
     }
 }
