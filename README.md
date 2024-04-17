@@ -114,6 +114,16 @@ dataframe.loc([true,false,false,false,true]); // Selectionne les colonnes 1 et 5
 
 Nous avons implémenté des fonctions de statistiques permettant de calculer la moyenne, le minimum ou le maximum de deux façons différentes. La première, prend un nom de colonne et renvoie la statistique demandée pour cette colonne. La deuxième ne prend rien en argument et renvoie une liste contenant la statistique demandée pour chaque colonne ou null si cette colonne ne contient ni des entiers, ni des flottants.  
 
+```java
+Dataframe dataframe = new Dataframe("src/test/resources/data.csv");
+dataframe.mean();      // renvoie une liste contenant [0,0,age_mean,0] avec age_mean la moyenne de la colonne Age et les      
+                      // autres égales à 0 car correspondent à des colonnes de String 
+dataframe.mean("Age"); // renvoie la moyenne d'age
+dataframe.min();      // renvoie une liste contenant [0,0,age_min,0] avec age_min la valeur minimum de la colonne Age 
+dataframe.min("Age"); // renvoie l'age de la personne la plus jeune
+dataframe.max();      // renvoie une liste contenant [0,0,age_max,0] avec age_max la valeur maximum de la colonne Age 
+dataframe.max("Age");// renvoie l'age de la personne la plus agée
+```
 ## Outils utilisés
 
 ### Maven
