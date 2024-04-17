@@ -5,7 +5,7 @@ FROM openjdk:8-jdk-alpine
 WORKDIR /app
 
 # Copier le fichier JAR dans le conteneur
-COPY target/projetdevops-y.jar /app/demo.jar
+COPY target/projetdevops*.jar /app/demo.jar
 
 COPY src/test/resources/data2.csv /app/src/test/resources/data2.csv
 
