@@ -1,0 +1,25 @@
+- name: Installation de Docker
+  tasks:
+    - name: Installation de Docker
+      apt:
+        name: docker.io
+        state: present
+        update_cache: yes
+      when: ansible_distribution == 'Debian'
+
+    - name: Démarrage du service Docker
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Pull Docker image
+      community.docker.docker_image:
+        name: ghcr.io/estebanbrnd/projetdevops
+        source: pull
+
+    - name: Run Docker container
+      community.docker.docker_container:
+        name: my_devops
+        image: ghcr.io/estebanbrnd/projetdevops:latest  
+        state: started
