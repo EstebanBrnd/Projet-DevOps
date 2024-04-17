@@ -110,6 +110,16 @@ dataframe.loc("Nom", "Test"); // Selectionne la colonne de "Nom" où la premièr
 dataframe.loc([true,false,false,false,true]); // Selectionne les colonnes 1 et 5
 ```
 
+Il est également possible de sélectionner des données grâce à des conditions sur une seule colonne. Ainsi on peut vouloir faire en sorte qu'une colonne soit égale à une valeur, et même inférieur ou supérieur lorsqu'il y a des nombres.
+
+```java
+Dataframe dataframe = new Dataframe("src/test/resources/data.csv");
+dataframe.linesWithColumnStringEqual("Nom", "Test"); // Selectionne les lignes où la colonne "Nom" est égale à "Test"
+dataframe.linesWithColumnIntegerEqual("Age", 23); // Selectionne les lignes où la colonne "Age" est égale à 23
+dataframe.linesWithColumnIntegerLess("Age", 23); // Selectionne les lignes où la colonne "Age" est inférieure à 23
+dataframe.linesWithColumnFloatGreater("Float", 4f); // Selectionne les lignes où la colonne "Float" est supérieure à 4.0
+```
+
 ### Statistiques
 
 Nous avons implémenté des fonctions de statistiques permettant de calculer la moyenne, le minimum ou le maximum de deux façons différentes. La première, prend un nom de colonne et renvoie la statistique demandée pour cette colonne. La deuxième ne prend rien en argument et renvoie une liste contenant la statistique demandée pour chaque colonne ou null si cette colonne ne contient ni des entiers, ni des flottants.  
