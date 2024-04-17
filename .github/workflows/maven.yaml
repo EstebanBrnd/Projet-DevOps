@@ -3,8 +3,10 @@ name: Maven Install and Upload Jar
 on:
   push:
     branches:
+      - snapshot
+  pull_request:
+    branches:
       - main
-      -snapshot
 
 jobs:
   build:
