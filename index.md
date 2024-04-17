@@ -172,6 +172,7 @@ A chaque mise à jour du ReadMe sur la branche dev, le site est donc mis à jour
 
 ```
 Les revues de code obligatoires avant merge sont autant un avantage permettant plus de sécurité dans le développement, autant qu'un frein au développement car cela nous force à attendre les revues d'autres collaborateurs.
+Les problèmes de synchronisation entre les différentes branches ont été récurents et difficiles à résoudre, nous faisant perdre souvent beaucoup de temps inutilement. Nous avons donc réussi tant bien que mal à contourner ce problème de temps à autre afin d'avancer un peu plus rapidement.
 ```
 
 
