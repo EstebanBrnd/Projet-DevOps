@@ -180,7 +180,7 @@ Il suffit de pull cette image et de la run.
 ## Site GH Pages
 
 Nous avons également pu faire en sorte que ce ReadMe soit transformé en une page web accessible en cliquant [ici](https://estebanbrnd.github.io/Projet-DevOps/).
-A chaque mise à jour du ReadMe sur la branche dev, le site est donc mis à jour.
+A chaque mise à jour du ReadMe sur la branche main, le site est donc mis à jour.
 
 
 ## Déploiement dans le Cloud
