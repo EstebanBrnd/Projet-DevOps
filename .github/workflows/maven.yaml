@@ -43,6 +43,17 @@ jobs:
       run : echo $VERSION | grep -q "SNAPSHOT"
       id: snapshot-check
 
+    - name: Extract Version
+      run: |
+        VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+        echo "Version: $VERSION"
+        echo "::set-output name=version::$VERSION"
+
+    - name: Check if Version is Snapshot
+      run: echo ${{ steps.extract-version.outputs.version }} | grep -q "SNAPSHOT"
+      id: snapshot-check
+
+
     - name: Deploy to GitHub Packages
       if: steps.snapshot-check.outputs.return-code == '0'
       run: mvn -B deploy
