@@ -1,10 +1,14 @@
-name: Run tests before merging
+name: Execution des tests
 
 on: 
   pull_request:
     branches:
       - main
       - dev
+  push:
+    branches:
+      - docs
+      - config-pipeline
 
 
 jobs:
@@ -23,6 +27,18 @@ jobs:
 
       - name: Execution des tests
         run: mvn test
+  more-tests:
+    name: Plus de tests
+    needs: tests-check
 
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        
+      - name: Check code coverage
+        run: mvn verify
   
-
+      - name: Generate JaCoCo report
+        run: mvn jacoco:report

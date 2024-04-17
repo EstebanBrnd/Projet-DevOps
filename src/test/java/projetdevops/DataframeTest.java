@@ -1,8 +1,5 @@
 package projetdevops;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -12,6 +9,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import static org.junit.Assert.*;
 
 public class DataframeTest {
 
@@ -43,7 +42,6 @@ public class DataframeTest {
     public void verify_init_dataframe_csv() {
         Dataframe expected = DataframeTestMother.DataframeTestMother();
         Dataframe actual = new Dataframe("src/test/resources/data.csv");
-        System.out.println(actual.afficheData());
         for (int i = 0; i < expected.data.size(); i++) {
             for (int j = 0; j < expected.data.get(i).size(); j++) {
                 assertEquals(expected.data.get(i).get(j), actual.data.get(i).get(j));
@@ -58,7 +56,6 @@ public class DataframeTest {
         Dataframe test = new Dataframe(data, columnNames);
         assertEquals(test.columnsNamesAndClasses.size(), 0);
         assertEquals(test.data.size(), 0);
-
     }
 
     @Test
@@ -182,6 +179,67 @@ public class DataframeTest {
         assertEquals(test.data.get(3).get(3), "Agent secret");
     }
 
+    @Test
+    public void test_mean_colonne(){
+        Dataframe test = new Dataframe("src/test/resources/data2.csv");
+        float mean = test.mean_colonne("Age");
+        assertEquals(mean,26.5,0.1);
+        // On attend IllegalArgumentException car la colonne "Nom" n'est pas numérique
+        thrown.expect(IllegalArgumentException.class);
+        test.mean_colonne("Nom");
+    }
+
+    @Test
+    public void test_max_colonne(){
+        Dataframe test = new Dataframe("src/test/resources/data2.csv");
+        float max = test.max_colonne("Age");
+        assertEquals(42.0,max,0.1);
+        thrown.expect(IllegalArgumentException.class);
+        test.max_colonne("Nom");
+    }
+
+    @Test
+    public void test_min_colonne(){
+        Dataframe test = new Dataframe("src/test/resources/data2.csv");
+        float min = test.min_colonne("Age");
+        assertEquals(min,21.0,0.1);
+        thrown.expect(IllegalArgumentException.class);
+        test.min_colonne("Nom");
+    }
+
+    @Test
+    public void test_mean(){
+        Dataframe test = new Dataframe("src/test/resources/data2.csv");
+        ArrayList<Float> mean = test.mean();
+
+        assertNull(mean.get(0));
+        assertNull(mean.get(1));
+
+        assertEquals(mean.get(2),26.5,0.1);
+        assertNull(mean.get(3));
+    }
+
+    @Test
+    public void test_max(){
+        Dataframe test = new Dataframe("src/test/resources/data2.csv");
+        ArrayList<Float> max = test.max();
+
+        assertNull(max.get(0));
+        assertNull(max.get(1));
+        assertEquals(max.get(2),42,0.1);
+        assertNull(max.get(3));
+    }
+
+    @Test
+    public void test_min(){
+        Dataframe test = new Dataframe("src/test/resources/data2.csv");
+        ArrayList<Float> min = test.min();
+
+        assertNull(min.get(0));
+        assertNull(min.get(1));
+        assertEquals(min.get(2),21,0);
+        assertNull(min.get(3));
+    }
 
     @Test
     public void test_iloc_rows_with_integer() {
