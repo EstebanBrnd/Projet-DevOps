@@ -598,4 +598,208 @@ public class Dataframe {
         return true;
     }
 
+    public Dataframe linesWithColumnStringEqual(String columnName, String value) {
+        if (!getColumnNames().contains(columnName)) {
+            throw new IllegalArgumentException("La colonne n'existe pas");
+        }
+        int indexOfColumn = getColumnNames().indexOf(columnName);
+        if(!columnsNamesAndClasses.get(indexOfColumn).getSecond().equals(String.class)){
+            throw new IllegalArgumentException("La colonne n'est pas de type String");
+        }
+        ArrayList<Integer> indexesWhereEquals = new ArrayList<>();
+        for (int i = 0; i < data.get(indexOfColumn).size(); i++){
+            if(data.get(indexOfColumn).get(i).equals(value)){
+                indexesWhereEquals.add(i);
+            }
+        }
+        if(indexesWhereEquals.isEmpty()){
+            return new Dataframe(new ArrayList<>(), getColumnNames());
+        }
+        return iloc(indexesWhereEquals.stream().mapToInt(i -> i).toArray());
+    }
+
+    public Dataframe linesWithColumnIntegerEqual(String columnName, Integer value) {
+        if (!getColumnNames().contains(columnName)) {
+            throw new IllegalArgumentException("La colonne n'existe pas");
+        }
+        int indexOfColumn = getColumnNames().indexOf(columnName);
+        if(!columnsNamesAndClasses.get(indexOfColumn).getSecond().equals(Integer.class)){
+            throw new IllegalArgumentException("La colonne n'est pas de type Int");
+        }
+
+        ArrayList<Integer> indexesWhereEquals = new ArrayList<>();
+        for (int i = 0; i < data.get(indexOfColumn).size(); i++){
+            if(data.get(indexOfColumn).get(i).equals(value)){
+                indexesWhereEquals.add(i);
+            }
+        }
+        if(indexesWhereEquals.isEmpty()){
+            return new Dataframe(new ArrayList<>(), getColumnNames());
+        }
+        return iloc(indexesWhereEquals.stream().mapToInt(i -> i).toArray());
+    }
+
+    public Dataframe linesWithColumnIntegerGreater(String columnName, Integer value) {
+        if (!getColumnNames().contains(columnName)) {
+            throw new IllegalArgumentException("La colonne n'existe pas");
+        }
+        int indexOfColumn = getColumnNames().indexOf(columnName);
+        if(!columnsNamesAndClasses.get(indexOfColumn).getSecond().equals(Integer.class)){
+            throw new IllegalArgumentException("La colonne n'est pas de type Int");
+        }
+
+        ArrayList<Integer> indexesWhereEquals = new ArrayList<>();
+        for (int i = 0; i < data.get(indexOfColumn).size(); i++){
+            if((Integer) data.get(indexOfColumn).get(i) > value){
+                indexesWhereEquals.add(i);
+            }
+        }
+        if(indexesWhereEquals.isEmpty()){
+            return new Dataframe(new ArrayList<>(), getColumnNames());
+        }
+        return iloc(indexesWhereEquals.stream().mapToInt(i -> i).toArray());
+    }
+
+    public Dataframe linesWithColumnIntegerLess(String columnName, Integer value) {
+        if (!getColumnNames().contains(columnName)) {
+            throw new IllegalArgumentException("La colonne n'existe pas");
+        }
+        int indexOfColumn = getColumnNames().indexOf(columnName);
+        if(!columnsNamesAndClasses.get(indexOfColumn).getSecond().equals(Integer.class)){
+            throw new IllegalArgumentException("La colonne n'est pas de type Int");
+        }
+
+        ArrayList<Integer> indexesWhereEquals = new ArrayList<>();
+        for (int i = 0; i < data.get(indexOfColumn).size(); i++){
+            if((Integer) data.get(indexOfColumn).get(i) < value){
+                indexesWhereEquals.add(i);
+            }
+        }
+        if(indexesWhereEquals.isEmpty()){
+            return new Dataframe(new ArrayList<>(), getColumnNames());
+        }
+        return iloc(indexesWhereEquals.stream().mapToInt(i -> i).toArray());
+    }
+
+    public Dataframe linesWithColumnFloatEqual(String columnName, Float value) {
+        if (!getColumnNames().contains(columnName)) {
+            throw new IllegalArgumentException("La colonne n'existe pas");
+        }
+        int indexOfColumn = getColumnNames().indexOf(columnName);
+        if(!columnsNamesAndClasses.get(indexOfColumn).getSecond().equals(Float.class)){
+            throw new IllegalArgumentException("La colonne n'est pas de type Float");
+        }
+
+        ArrayList<Integer> indexesWhereEquals = new ArrayList<>();
+        for (int i = 0; i < data.get(indexOfColumn).size(); i++){
+            if(data.get(indexOfColumn).get(i).equals(value)){
+                indexesWhereEquals.add(i);
+            }
+        }
+        if(indexesWhereEquals.isEmpty()){
+            return new Dataframe(new ArrayList<>(), getColumnNames());
+        }
+        return iloc(indexesWhereEquals.stream().mapToInt(i -> i).toArray());
+    }
+
+    public Dataframe linesWithColumnFloatGreater(String columnName, Float value) {
+        if (!getColumnNames().contains(columnName)) {
+            throw new IllegalArgumentException("La colonne n'existe pas");
+        }
+        int indexOfColumn = getColumnNames().indexOf(columnName);
+        if(!columnsNamesAndClasses.get(indexOfColumn).getSecond().equals(Float.class)){
+            throw new IllegalArgumentException("La colonne n'est pas de type Float");
+        }
+
+        ArrayList<Integer> indexesWhereEquals = new ArrayList<>();
+        for (int i = 0; i < data.get(indexOfColumn).size(); i++){
+            if((Float) data.get(indexOfColumn).get(i) > value){
+                indexesWhereEquals.add(i);
+            }
+        }
+        if(indexesWhereEquals.isEmpty()){
+            return new Dataframe(new ArrayList<>(), getColumnNames());
+        }
+        return iloc(indexesWhereEquals.stream().mapToInt(i -> i).toArray());
+    }
+
+    public Dataframe linesWithColumnFloatLess(String columnName, Float value) {
+        if (!getColumnNames().contains(columnName)) {
+            throw new IllegalArgumentException("La colonne n'existe pas");
+        }
+        int indexOfColumn = getColumnNames().indexOf(columnName);
+        if(!columnsNamesAndClasses.get(indexOfColumn).getSecond().equals(Float.class)){
+            throw new IllegalArgumentException("La colonne n'est pas de type Float");
+        }
+
+        ArrayList<Integer> indexesWhereEquals = new ArrayList<>();
+        for (int i = 0; i < data.get(indexOfColumn).size(); i++){
+            if((Float) data.get(indexOfColumn).get(i) < value){
+                indexesWhereEquals.add(i);
+            }
+        }
+        if(indexesWhereEquals.isEmpty()){
+            return new Dataframe(new ArrayList<>(), getColumnNames());
+        }
+        return iloc(indexesWhereEquals.stream().mapToInt(i -> i).toArray());
+    }
+
+
+    /*public Dataframe linesWithColumnFloat(String columnName, Float value, String comparisonOperator) {
+        if (columnName.isEmpty()) {
+            throw new IllegalArgumentException("Column name cannot be empty");
+        }
+        if (!comparisonOperator.equals("<") && !comparisonOperator.equals(">") && !comparisonOperator.equals("=")) {
+            throw new IllegalArgumentException("Invalid comparison operator. Use '<', '>', or '='.");
+        }
+
+        int columnIndex = -1;
+        for (int i = 0; i < columnsNamesAndClasses.size(); i++) {
+            if (columnsNamesAndClasses.get(i).getFirst().equals(columnName)) {
+                columnIndex = i;
+                break;
+            }
+        }
+        if (columnIndex == -1) {
+            throw new IllegalArgumentException("Empty dataframe");
+        }
+        ArrayList<ArrayList<String>> donnees = new ArrayList<>();
+        for (int i = 0; i < data.get(0).size(); i++) {
+            Object columnValueObject = data.get(columnIndex).get(i);
+            Float columnValue = null;
+            if (columnValueObject instanceof Float) {
+                columnValue = (Float) columnValueObject;
+            } else if (columnValueObject instanceof String) {
+                try {
+                    columnValue = Float.parseFloat((String) columnValueObject);
+                } catch (NumberFormatException e) {
+                    continue;
+                }
+            }
+            if (columnValue == null) {
+                throw new IllegalArgumentException("Could not read a value from dataframe");
+            }
+            boolean conditionMet = false;
+            switch (comparisonOperator) {
+                case "<":
+                    conditionMet = columnValue < value;
+                    break;
+                case ">":
+                    conditionMet = columnValue > value;
+                    break;
+                case "=":
+                    conditionMet = Float.compare(columnValue, value) == 0;
+                    break;
+            }
+            if (conditionMet) {
+                ArrayList<String> row = new ArrayList<>();
+                for (int j = 0; j < data.size(); j++) {
+                    row.add(data.get(j).get(i).toString());
+                }
+                donnees.add(row);
+            }
+        }
+        ArrayList<String> columnNames = getColumnNames();
+        return new Dataframe(donnees,columnNames);
+    }*/
 }
