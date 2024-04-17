@@ -126,6 +126,10 @@ Le rapport de ces tests est ensuite mis à disposition avec la page web génér�
 ### GitHub Actions
 
 Nous avons configuré un pipeline d'intégration continue pour notre projet. Ce pipeline est déclenché à chaque fois qu'une Pull Request concernant la branche main ou dev est ouverte sur notre dépôt Git. Le pipeline vérifie que les tests passent correctement et que la couverture de code est suffisante. Si ces conditions sont remplies, alors le feu vert est donné pour ces tests là.
+Nous avons également la création du jar et le dépot docker qui est réalisée dans la pipeline.
+
+Voir nos fichiers yaml :
+[ici](/.github/workflows/main.yaml) et [ici](/.github/workflows/docker.yaml)
 
 ### Procédure validation PR/MR
 
@@ -135,7 +139,7 @@ Nos branches main et dev nécessite donc 2 revues de code avant de merge dedans.
 
 ## Livraison continue
 
-Nous avons pu déployer une image docker réalisant une démonstration rapide de quelques fonctions de notre librairie. Cette image docker est accessible en suivant ce lien :
+Nous avons pu déployer une image docker réalisant une démonstration rapide de quelques fonctions de notre librairie ([voir le fichier](/src/main/java/projetdevops/Demo.java)). Cette image docker est accessible en suivant ce lien :
 ```
 ghcr.io/estebanbrnd/projetdevops
 ```
@@ -144,6 +148,8 @@ Il suffit de pull cette image et de la run.
 ## Site GH Pages
 
 Nous avons également pu faire en sorte que ce ReadMe soit transformé en une page web accesible en cliquant [ici](https://estebanbrnd.github.io/Projet-DevOps/).
+A chaque mise à jour du ReadMe sur la branche dev, le site est donc mis à jour.
+
 
 ## Feedback
 
