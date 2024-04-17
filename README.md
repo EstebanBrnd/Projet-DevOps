@@ -30,6 +30,7 @@ Go to [Authors](/AUTHORS)
   - [Procédure validation PR/MR](#procédure-validation-prmr)
 - [Livraison continue](#livraison-continue)
 - [Site Github Pages](#site-gh-pages)
+- [Déploiement dans le Cloud](#déploiement-dans-le-cloud)
 - [Feedback](#feedback)
 
 
@@ -174,8 +175,30 @@ Il suffit de pull cette image et de la run.
 
 ## Site GH Pages
 
-Nous avons également pu faire en sorte que ce ReadMe soit transformé en une page web accesible en cliquant [ici](https://estebanbrnd.github.io/Projet-DevOps/).
+Nous avons également pu faire en sorte que ce ReadMe soit transformé en une page web accessible en cliquant [ici](https://estebanbrnd.github.io/Projet-DevOps/).
 A chaque mise à jour du ReadMe sur la branche dev, le site est donc mis à jour.
+
+
+## Déploiement dans le Cloud
+
+Nous avons pu réaliser le déploiement dans le cloud avec une pipeline ne se déclenchant que lorsque nous avons besoin. Elle ne se déclenche donc sur aucun merge ou push (mis à part sa branche conceptrice). Nous devons aller exécuter le pipeline si nous le souhaitons.
+
+Tous les fichiers nécessaires à l'éxecution sont situés dans le dossier cloud mis à part le fichier yaml situé avec les autres yaml dans le dossier ./github/workflows. 
+Nosu crééons donc une VM à souhait sur les serveurs de google puis nous récupérons l'image docker que nous avons à diposition avant de l'éxécuter. 
+
+L'execution du yaml se fait avec des variables stockées sur github. Si on souhaite tester en local, il est nécessaire de créer un fichier avec les credentials google clouds et de le placer dans le dossier cloud sous le nom:
+```
+CREDENTIALS.json
+```
+Avec l'abstraction fournie, il suffit ensuite de taper: 
+```
+terraform init
+```
+puis 
+```
+terraform apply
+```
+La VM est ensuite créée, le docker récupéré et éxécuté.
 
 
 ## Feedback
