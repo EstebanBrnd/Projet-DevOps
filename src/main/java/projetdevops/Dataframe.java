@@ -412,4 +412,146 @@ public class Dataframe {
         return true;
     }
 
+    public String linesWithColumnStringEqual(String columnName, String value) {
+        StringBuilder output = new StringBuilder();
+        if (value.isEmpty()) {
+            throw new IllegalArgumentException("Value cannot be empty");
+        }
+        if (columnName.isEmpty()) {
+            throw new IllegalArgumentException("ColumnName cannot be empty");
+        }
+        int columnIndex = -1;
+        for (int i = 0; i < columnsNamesAndClasses.size(); i++) {
+            if (columnsNamesAndClasses.get(i).getFirst().equals(columnName)) {
+                columnIndex = i;
+                break;
+            }
+        }
+        if (columnIndex == -1) {
+            return output.toString();
+        }
+        for (int i = 0; i < data.get(0).size(); i++) {
+            if (data.get(columnIndex).get(i).equals(value)) {
+                for (int j = 0; j < data.size(); j++) {
+                    output.append(data.get(j).get(i));
+                    if (j < data.size() - 1) {
+                        output.append(", ");
+                    }
+                }
+                output.append("\n");
+            }
+        }
+        return output.toString();
+    }
+
+    public String linesWithColumnIntegerEqual(String columnName, Integer value) {
+        StringBuilder output = new StringBuilder();
+        if (value <= 0) {
+            throw new IllegalArgumentException("Value must be greater than 0");
+        }
+        if (columnName.isEmpty()) {
+            throw new IllegalArgumentException("ColumnName cannot be empty");
+        }
+        int columnIndex = -1;
+        for (int i = 0; i < columnsNamesAndClasses.size(); i++) {
+            if (columnsNamesAndClasses.get(i).getFirst().equals(columnName)) {
+                columnIndex = i;
+                break;
+            }
+        }
+        if (columnIndex == -1) {
+            return output.toString();
+        }
+        for (int i = 0; i < data.get(0).size(); i++) {
+            if (data.get(columnIndex).get(i).equals(value)) {
+                for (int j = 0; j < data.size(); j++) {
+                    output.append(data.get(j).get(i));
+                    if (j < data.size() - 1) {
+                        output.append(", ");
+                    }
+                }
+                output.append("\n");
+            }
+        }
+        return output.toString();
+    }
+    public String linesWithColumnIntegerGreater(String columnName, Integer value) {
+        StringBuilder output = new StringBuilder();
+        if (value <= 0) {
+            throw new IllegalArgumentException("Value must be greater than 0");
+        }
+        if (columnName.isEmpty()) {
+            throw new IllegalArgumentException("Column name cannot be empty");
+        }
+        int columnIndex = -1;
+        for (int i = 0; i < columnsNamesAndClasses.size(); i++) {
+            if (columnsNamesAndClasses.get(i).getFirst().equals(columnName)) {
+                columnIndex = i;
+                break;
+            }
+        }
+        if (columnIndex == -1) {
+            return output.toString();
+        }
+        for (int i = 0; i < data.get(0).size(); i++) {
+            Object columnValueObject = data.get(columnIndex).get(i);
+            Integer columnValue = null;
+            if (columnValueObject instanceof Integer) {
+                columnValue = (Integer) columnValueObject;
+            }
+            if (columnValue == null){
+                throw new IllegalArgumentException("Could not read a value from dataframe");
+            }
+            if (columnValue > value) {
+                for (int j = 0; j < data.size(); j++) {
+                    output.append(data.get(j).get(i));
+                    if (j < data.size() - 1) {
+                        output.append(", ");
+                    }
+                }
+                output.append("\n");
+            }
+        }
+        return output.toString();
+    }
+
+    public String linesWithColumnIntegerLess(String columnName, Integer value) {
+        StringBuilder output = new StringBuilder();
+        if (value <= 0) {
+            throw new IllegalArgumentException("Value must be greater than 0");
+        }
+        if (columnName.isEmpty()) {
+            throw new IllegalArgumentException("Column name cannot be empty");
+        }
+        int columnIndex = -1;
+        for (int i = 0; i < columnsNamesAndClasses.size(); i++) {
+            if (columnsNamesAndClasses.get(i).getFirst().equals(columnName)) {
+                columnIndex = i;
+                break;
+            }
+        }
+        if (columnIndex == -1) {
+            return output.toString();
+        }
+        for (int i = 0; i < data.get(0).size(); i++) {
+            Object columnValueObject = data.get(columnIndex).get(i);
+            Integer columnValue = null;
+            if (columnValueObject instanceof Integer) {
+                columnValue = (Integer) columnValueObject;
+            }
+            if (columnValue == null){
+                throw new IllegalArgumentException("Could not read a value from dataframe");
+            }
+            if (columnValue < value) {
+                for (int j = 0; j < data.size(); j++) {
+                    output.append(data.get(j).get(i));
+                    if (j < data.size() - 1) {
+                        output.append(", ");
+                    }
+                }
+                output.append("\n");
+            }
+        }
+        return output.toString();
+    }
 }

@@ -92,6 +92,7 @@ public class DataframeTest {
         }
 
     }
+
     @Test
     public void firstLines() {
         Dataframe test = new Dataframe("src/test/resources/data.csv");
@@ -872,6 +873,36 @@ public class DataframeTest {
         Dataframe expected = new Dataframe(data, test.getColumnNames());
         Dataframe loc = test.loc(new Boolean[]{}, new Boolean[]{true, false, true});
         assertTrue(expected.equals(loc));
+    }
+
+    @Test
+    public void test_linesWithColumnIntegerEqual() {
+        Dataframe test = new Dataframe("src/test/resources/data2.csv");
+        String output = test.linesWithColumnIntegerEqual("Age", 21);
+        if (output.isEmpty()){
+            throw new IllegalArgumentException("Could not find matching data");
+        }    }
+    @Test
+    public void test_linesWithColumnStringEqual() {
+        Dataframe test = new Dataframe("src/test/resources/data2.csv");
+        String output = test.linesWithColumnStringEqual("Nom","Matyasik");
+        if (output.isEmpty()){
+            throw new IllegalArgumentException("Could not find matching data");
+        }    }
+    @Test
+    public void test_linesWithColumnIntegerGreater() {
+        Dataframe test = new Dataframe("src/test/resources/data2.csv");
+        String output = test.linesWithColumnIntegerGreater("Age",10);
+        if (output.isEmpty()){
+            throw new IllegalArgumentException("Could not find matching data");
+        }    }
+    @Test
+    public void test_linesWithColumnIntegerLess() {
+        Dataframe test = new Dataframe("src/test/resources/data2.csv");
+        String output = test.linesWithColumnIntegerLess("Age",40);
+        if (output.isEmpty()){
+            throw new IllegalArgumentException("Could not find matching data");
+        }
     }
 
 }
