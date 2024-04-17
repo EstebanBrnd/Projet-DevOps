@@ -38,10 +38,6 @@ jobs:
       with:
         java-version: '17'
         distribution: 'adopt'
-    
-    - name: check version Snapshot
-      run : echo $VERSION | grep -q "SNAPSHOT"
-      id: snapshot-check
 
     - name: Extract Version
       run: |

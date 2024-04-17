@@ -136,10 +136,9 @@
     <repository>
         <id>github</id>
         <name>GitHub Packages</name>
-        <url>https://maven.pkg.github.com/EstebanBrnd/projetdevopst</url>
+        <url>https://maven.pkg.github.com/EstebanBrnd/Projet-DevOps</url>
     </repository>
 </distributionManagement>
 </project>
-
 
 
