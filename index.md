@@ -1,6 +1,8 @@
 # Projet de DevOps de M1 INFO
 
 ![Workflow](https://github.com/EstebanBrnd/Projet-DevOps/actions/workflows/main.yaml/badge.svg)
+![Workflow](https://github.com/EstebanBrnd/Projet-DevOps/actions/workflows/docker.yaml/badge.svg)
+![Workflow](https://github.com/EstebanBrnd/Projet-DevOps/actions/workflows/maven.yaml/badge.svg)
 
 Collaborateurs :   
 
